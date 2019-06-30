@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2019-06-30T01:38:16.525Z</updated>
+  <updated>2019-06-30T03:12:51.228Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>基于腾讯云的COS存储静态资源</title>
+    <link href="https://lylgjiavg.github.io/2019/06/30/ji-yu-teng-xun-yun-de-cos-cun-chu-jing-tai-zi-yuan/"/>
+    <id>https://lylgjiavg.github.io/2019/06/30/ji-yu-teng-xun-yun-de-cos-cun-chu-jing-tai-zi-yuan/</id>
+    <published>2019-06-30T02:03:17.000Z</published>
+    <updated>2019-06-30T03:12:51.228Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;对象存储-COS-简介&quot;&gt;&lt;a href=&quot;#对象存储-COS-简介&quot; class=&quot;headerlink&quot; title=&quot;对象存储 COS 简介&quot;&gt;&lt;/a&gt;对象存储 COS 简介&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&lt;u&gt;对象存储（Cloud
+        
+      
+    
+    </summary>
+    
+      <category term="博客搭建" scheme="https://lylgjiavg.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+    
+      <category term="COS" scheme="https://lylgjiavg.github.io/tags/COS/"/>
+    
+  </entry>
   
   <entry>
     <title>2019-6-30</title>

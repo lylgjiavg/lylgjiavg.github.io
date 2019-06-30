@@ -45,10 +45,10 @@
   
   <entry>
     <title>2019-6-30</title>
-    <link href="https://lylgjiavg.github.io/2019/06/30/2019-6-30/"/>
-    <id>https://lylgjiavg.github.io/2019/06/30/2019-6-30/</id>
+    <link href="https://lylgjiavg.github.io/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/"/>
+    <id>https://lylgjiavg.github.io/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/</id>
     <published>2019-06-30T01:35:36.000Z</published>
-    <updated>2019-06-30T01:38:16.525Z</updated>
+    <updated>2019-06-30T04:07:21.604Z</updated>
     
     <summary type="html">
     
@@ -62,31 +62,10 @@
     
     </summary>
     
+      <category term="博客搭建" scheme="https://lylgjiavg.github.io/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
-      <category term="测试COS图片文件访问" scheme="https://lylgjiavg.github.io/tags/%E6%B5%8B%E8%AF%95COS%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE/"/>
     
-  </entry>
-  
-  <entry>
-    <title>第一篇博客文章</title>
-    <link href="https://lylgjiavg.github.io/2019/06/29/di-yi-pian-bo-ke-wen-zhang/"/>
-    <id>https://lylgjiavg.github.io/2019/06/29/di-yi-pian-bo-ke-wen-zhang/</id>
-    <published>2019-06-29T12:57:35.000Z</published>
-    <updated>2019-06-29T12:59:22.485Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;第一章&quot;&gt;&lt;a href=&quot;#第一章&quot; class=&quot;headerlink&quot; title=&quot;第一章&quot;&gt;&lt;/a&gt;第一章&lt;/h2&gt;&lt;p&gt;内容&lt;/p&gt;
-&lt;h2 id=&quot;第二章&quot;&gt;&lt;a href=&quot;#第二章&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
+      <category term="COS图片文件访问" scheme="https://lylgjiavg.github.io/tags/COS%E5%9B%BE%E7%89%87%E6%96%87%E4%BB%B6%E8%AE%BF%E9%97%AE/"/>
     
   </entry>
   

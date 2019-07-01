@@ -54,6 +54,31 @@
     
     
     <entry>
+      <title>代码段测试</title>
+      <link href="/2019/06/30/dai-ma-duan-ce-shi/"/>
+      <url>/2019/06/30/dai-ma-duan-ce-shi/</url>
+      
+        <content type="html"><![CDATA[<pre class=" language-java"><code class="language-java">    <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CmsPage</span> <span class="token punctuation">{</span>        <span class="token comment" spellcheck="true">/**         * 页面名称、别名、访问地址、类型（静态/动态）、页面模版、状态         */</span>        <span class="token comment" spellcheck="true">//站点ID</span>        <span class="token keyword">private</span> String siteId<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//页面ID</span>        <span class="token annotation punctuation">@Id</span>        <span class="token keyword">private</span> String pageId<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//页面名称</span>        <span class="token keyword">private</span> String pageName<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//别名</span>        <span class="token keyword">private</span> String pageAliase<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//访问地址</span>        <span class="token keyword">private</span> String pageWebPath<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//参数</span>        <span class="token keyword">private</span> String pageParameter<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//物理路径</span>        <span class="token keyword">private</span> String pagePhysicalPath<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//类型（静态/动态）</span>        <span class="token keyword">private</span> String pageType<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//页面模版</span>        <span class="token keyword">private</span> String pageTemplate<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//页面静态化内容</span>        <span class="token keyword">private</span> String pageHtml<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//状态</span>        <span class="token keyword">private</span> String pageStatus<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//创建时间</span>        <span class="token keyword">private</span> Date pageCreateTime<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//模版id</span>        <span class="token keyword">private</span> String templateId<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//参数列表</span>        <span class="token keyword">private</span> List<span class="token operator">&lt;</span>CmsPageParam<span class="token operator">></span> pageParams<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//模版文件Id</span>        <span class="token comment" spellcheck="true">//    private String templateFileId;</span>        <span class="token comment" spellcheck="true">//静态文件Id</span>        <span class="token keyword">private</span> String htmlFileId<span class="token punctuation">;</span>        <span class="token comment" spellcheck="true">//数据Url</span>        <span class="token keyword">private</span> String dataUrl<span class="token punctuation">;</span>    <span class="token punctuation">}</span></code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 测试 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>COS图片文件访问</title>
       <link href="/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/"/>
       <url>/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/</url>

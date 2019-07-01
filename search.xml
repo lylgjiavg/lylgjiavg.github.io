@@ -54,31 +54,6 @@
     
     
     <entry>
-      <title>COS图片文件访问</title>
-      <link href="/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/"/>
-      <url>/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/</url>
-      
-        <content type="html"><![CDATA[<h2 id="测试COS"><a href="#测试COS" class="headerlink" title="测试COS"></a>测试COS</h2><p><img src="https://blog-static-1255761885.cos.ap-chengdu.myqcloud.com/image/a6f63d74ab6c3c1e735f0ca1e6010592.jpg" alt="RUNOOB 图标"></p><h2 id="Ending"><a href="#Ending" class="headerlink" title="Ending"></a>Ending</h2>]]></content>
-      
-      
-      <categories>
-          
-          <category> 博客搭建 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> COS图片文件访问 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>代码段测试</title>
       <link href="/2019/06/30/dai-ma-duan-ce-shi/"/>
       <url>/2019/06/30/dai-ma-duan-ce-shi/</url>
@@ -96,6 +71,31 @@
         <tags>
             
             <tag> 测试 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>COS图片文件访问</title>
+      <link href="/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/"/>
+      <url>/2019/06/30/ce-shi-cos-jing-tai-zi-yuan/</url>
+      
+        <content type="html"><![CDATA[<h2 id="测试COS"><a href="#测试COS" class="headerlink" title="测试COS"></a>测试COS</h2><p><img src="https://blog-static-1255761885.cos.ap-chengdu.myqcloud.com/image/a6f63d74ab6c3c1e735f0ca1e6010592.jpg" alt="RUNOOB 图标"></p><h2 id="Ending"><a href="#Ending" class="headerlink" title="Ending"></a>Ending</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 博客搭建 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> COS图片文件访问 </tag>
             
         </tags>
       

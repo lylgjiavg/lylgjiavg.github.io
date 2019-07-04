@@ -439,15 +439,17 @@
         ListNode next<span class="token punctuation">;</span>  
         <span class="token function">ListNode</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">{</span> val <span class="token operator">=</span> x<span class="token punctuation">;</span> <span class="token punctuation">}</span>  
     <span class="token punctuation">}</span></code></pre>
-<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h2><blockquote>
-<p>注意:在进行交换时:要保证链表的各个部分的引用均不被丢弃.</p>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h2><p>注意:在进行交换时:要保证链表的各个部分的引用均不被丢弃.<br><img src="https://img-blog.csdnimg.cn/20190525105831364.png" alt></p>
+</blockquote>
+<blockquote>
+<blockquote>
 <p> <strong>(一般情况)</strong></p>
-<p>情况一(绿色线段表示):当两两交换的链表处于链表的第一和第二位置<br>步骤一:保存奇数节点(节点3)的引用;<br>步骤二:保存偶数节点(节点4)的引用;<br>是步骤四的前提,如果不保存,步骤三过后节点4的引用将被丢弃.<br>(步骤三和步骤四不可调换,否则需要额外的内存(引用)来保存节点5的引用信息)<br>步骤三:节点3.next=节点5;<br>步骤四:节点4.next=节点3;</p>
+<p><strong>情况一(绿色线段表示):当两两交换的链表处于链表的第一和第二位置</strong><br>步骤一:保存奇数节点(节点3)的引用;<br>步骤二:保存偶数节点(节点4)的引用;<br>是步骤四的前提,如果不保存,步骤三过后节点4的引用将被丢弃.<br>(步骤三和步骤四不可调换,否则需要额外的内存(引用)来保存节点5的引用信息)<br>步骤三:节点3.next=节点5;<br>步骤四:节点4.next=节点3;</p>
 </blockquote>
 </blockquote>
 <blockquote>
 <blockquote>
-<p> <strong>(特殊情况)</strong><br>情况二(黑色线段表示):当两两交换的链表不是处于链表的第一和第二位置<br>步骤一:保存奇数节点(节点1)的引用;<br>步骤二:保存偶数节点(节点2)的引用;<br>与情况一不同的是:保存偶数节点的引用为交换后链表的头引用,而不能是情况一的中间变量,否则中间变量在进行<br>下一重循环而重新赋值后,交换后的链表头的引用将被丢弃.<br>(步骤三和步骤四不可调换,否则需要额外的内存(引用)来保存节点3的引用信息)<br>步骤三:节点1.next=节点3;<br>步骤四:节点2.next=节点1;</p>
+<p> <strong>(特殊情况)</strong><br><strong>情况二(黑色线段表示):当两两交换的链表不是处于链表的第一和第二位置</strong><br>步骤一:保存奇数节点(节点1)的引用;<br>步骤二:保存偶数节点(节点2)的引用;<br>与情况一不同的是:保存偶数节点的引用为交换后链表的头引用,而不能是情况一的中间变量,否则中间变量在进行<br>下一重循环而重新赋值后,交换后的链表头的引用将被丢弃.<br>(步骤三和步骤四不可调换,否则需要额外的内存(引用)来保存节点3的引用信息)<br>步骤三:节点1.next=节点3;<br>步骤四:节点2.next=节点1;</p>
 </blockquote>
 </blockquote>
 <h2 id="具体代码1"><a href="#具体代码1" class="headerlink" title="具体代码1:"></a>具体代码1:</h2><pre class=" language-java"><code class="language-java"><span class="token keyword">public</span> ListNode <span class="token function">swapPairs</span><span class="token punctuation">(</span>ListNode head<span class="token punctuation">)</span> <span class="token punctuation">{</span>
@@ -1027,7 +1029,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">2.7k</span>
+                <span class="white-color">2.5k</span>
             
 
             

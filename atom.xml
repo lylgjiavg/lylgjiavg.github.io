@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2019-07-19T02:35:36.134Z</updated>
+  <updated>2019-07-19T02:39:14.735Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://lylgjiavg.github.io/2019/07/19/cha-ru-pai-xu/"/>
     <id>https://lylgjiavg.github.io/2019/07/19/cha-ru-pai-xu/</id>
     <published>2019-07-19T02:17:55.000Z</published>
-    <updated>2019-07-19T02:35:36.134Z</updated>
+    <updated>2019-07-19T02:39:14.735Z</updated>
     
     <summary type="html">
     
@@ -38,7 +38,9 @@
       <category term="数据结构和算法" scheme="https://lylgjiavg.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="LeetCode,算法导论" scheme="https://lylgjiavg.github.io/tags/LeetCode-%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+      <category term="LeetCode" scheme="https://lylgjiavg.github.io/tags/LeetCode/"/>
+    
+      <category term="算法导论" scheme="https://lylgjiavg.github.io/tags/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
     
   </entry>
   

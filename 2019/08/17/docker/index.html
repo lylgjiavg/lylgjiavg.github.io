@@ -29,7 +29,8 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<link rel="stylesheet" href="/css/prism.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -437,7 +438,7 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="Docker描述"><a href="#Docker描述" class="headerlink" title="Docker描述"></a>Docker描述</h1><pre><code>    Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到
-任何流行的 Linux或Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</code></pre><h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><pre class=" language-java"><code class="language-java">进入yum目录
+任何流行的 Linux或Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</code></pre><h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><pre class="line-numbers language-java"><code class="language-java">进入yum目录
 <span class="token punctuation">[</span>root<span class="token annotation punctuation">@bogon</span> yum<span class="token punctuation">.</span>repos<span class="token punctuation">.</span>d<span class="token punctuation">]</span>cd <span class="token operator">/</span>etc<span class="token operator">/</span>yum<span class="token punctuation">.</span>repos<span class="token punctuation">.</span>d<span class="token operator">/</span>
 
 下载repo
@@ -470,7 +471,7 @@ repolist<span class="token operator">:</span> <span class="token number">13</spa
 
 <span class="token punctuation">[</span>root<span class="token annotation punctuation">@bogon</span> yum<span class="token punctuation">.</span>repos<span class="token punctuation">.</span>d<span class="token punctuation">]</span># docker <span class="token operator">--</span>version
 Docker version <span class="token number">19.03</span><span class="token punctuation">.</span><span class="token number">1</span><span class="token punctuation">,</span> build 74b1e89
-</code></pre>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <h1 id="配置Docker加速器Json"><a href="#配置Docker加速器Json" class="headerlink" title="配置Docker加速器Json"></a>配置Docker加速器Json</h1><pre><code>[root@bogon yum.repos.d]# mkdir /etc/docker/
 [root@bogon yum.repos.d]# vi /etc/docker/daemon.json 
 

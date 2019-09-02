@@ -4,13 +4,9 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="插入排序, Jiavg">
-    <meta name="description" content="题目：leetcode(912):
-    给定一个整数数组 nums，将该数组升序排列。
-        示例 1：   
-            输入：[5,2,3,1]
-            输出：[1,2,3,5]
-       ">
+    <meta name="keywords" content="RabbitMQ快速入门, Jiavg">
+    <meta name="description" content="RabbitMQ入门RabbitMQ 中 Connection 和 Channel  我们知道无论是生产者还是消费者，都需要和 RabbitMQ Broker 建立连接，这个连接就是一条 TCP 连接，也就是 Connection。
+  一">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +14,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>插入排序 | Jiavg</title>
+    <title>RabbitMQ快速入门 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -265,13 +261,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        插入排序
+                        RabbitMQ快速入门
                     </div>
                 </div>
             </div>
@@ -382,12 +378,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/LeetCode/" target="_blank">
-                                <span class="chip bg-color">LeetCode</span>
+                            <a href="/tags/RabbitMQ/" target="_blank">
+                                <span class="chip bg-color">RabbitMQ</span>
                             </a>
                         
-                            <a href="/tags/算法导论/" target="_blank">
-                                <span class="chip bg-color">算法导论</span>
+                            <a href="/tags/消息中间件/" target="_blank">
+                                <span class="chip bg-color">消息中间件</span>
                             </a>
                         
                     </div>
@@ -398,8 +394,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/数据结构和算法/" class="post-category" target="_blank">
-                                数据结构和算法
+                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
+                                消息中间件
                             </a>
                         
                     </div>
@@ -410,21 +406,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-07-21
+                    2019-09-02
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        659
+                        1,448
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        6 分
                     </div>
                     
                 
@@ -440,108 +436,149 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h1><pre><code class="java">leetcode(912):
-    给定一个整数数组 nums，将该数组升序排列。
-        示例 1：   
-            输入：[5,2,3,1]
-            输出：[1,2,3,5]
-        示例 2：
-            输入：[5,1,1,2,0,0]
-            输出：[0,0,1,1,2,5]
-    提示：
-        1 &lt;= A.length &lt;= 10000
-        -50000 &lt;= A[i] &lt;= 50000
-    来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/sort-an-array
-    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</code></pre>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h1><pre><code class="java">    (稍后总结)</code></pre>
-<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码:"></a>具体代码:</h1><pre><code class="java">class Solution {
-    public int[] sortArray(int[] nums) {
-        if(nums == null || nums.length == 1){
-            return nums;
+                <h2 id="RabbitMQ入门"><a href="#RabbitMQ入门" class="headerlink" title="RabbitMQ入门"></a>RabbitMQ入门</h2><h3 id="RabbitMQ-中-Connection-和-Channel"><a href="#RabbitMQ-中-Connection-和-Channel" class="headerlink" title="RabbitMQ 中 Connection 和 Channel"></a>RabbitMQ 中 Connection 和 Channel</h3><p>  我们知道无论是生产者还是消费者，都需要和 RabbitMQ Broker 建立连接，这个连接就是一条 TCP 连接，也就是 Connection。</p>
+<p>  一旦 TCP 连接建立起来，客户端紧接着可以创建一个 AMQP 信道（Channel），每个信道都会被指派一个唯一的 ID。</p>
+<p>信道是建立在 Connection 之上的虚拟连接，RabbitMQ 处理的每条 AMQP 指令都是通过信道完成的。</p>
+<p>我们完全可以使用 Connection 就能完成信道的工作，为什么还要引入信道呢？</p>
+<p>试想这样一个场景，一个应用程序中有很多个线程需要从 RabbitMQ 中消费消息，或者生产消息，那么必然需要建立很多个 Connection，也就是多个 TCP 连接。然而对于操作系统而言，建立和销毁 TCP 连接是非常昂贵的开销，如果遇到使用高峰，性能瓶颈也随之显现。</p>
+<p>RabbitMQ 采用类似 NIO（Non-blocking I/O）的做法，选择 TCP 连接复用，不仅可以减少性能开销，同时也便于管理。</p>
+<p>每个线程把持一个信道，所以信道复用了 Connection 的 TCP 连接。同时 RabbitMQ 可以确保每个线程的私密性，就像拥有独立的连接一样。当每个信道的<br>流量不是很大时，复用单一的 Connection 可以在产生性能瓶颈的情况下有效地节省 TCP 连接资源。但是信道本身的流量很大时，这时候多个信道复用一个<br>Connection 就会产生性能瓶颈，进而使整体的流量被限制了。此时就需要开辟多个 Connection，将这些信道均摊到这些 Connection 中，至于这些相关<br>的调优策略需要根据业务自身的实际情况进行调节。</p>
+<p>信道在 AMQP 中是一个很重要的概念，大多数操作都是在信道这个层面展开的。<br>比如 channel.exchangeDeclare、channel.queueDeclare、channel.basicPublish、channel.basicConsume 等方法。<br>RabbitMQ 相关的 API 与 AMQP 紧密相连，比如 channel.basicPublish 对应 AMQP 的 Basic.Publish 命令。</p>
+<p><strong>名词解释：</strong><br>NIO，也称非阻塞 I/O，包含三大核心部分：Channel（信道）、Buffer（缓冲区）和 Selector（选择器）。<br>NIO 基于 Channel 和 Buffer 进行操作，数据总是从信道读取数据到缓冲区中，或者从缓冲区写入到信道中。<br>Selector 用于监听多个信道的时间（比如连接打开，数据到达等）。因此，单线程可以监听多个数据的信道。</p>
+<h3 id="创建Java项目"><a href="#创建Java项目" class="headerlink" title="创建Java项目"></a>创建Java项目</h3><p>在pom文件中引入RabbitMQ依赖项:</p>
+<pre><code class="java">&lt;!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.rabbitmq&lt;/groupId&gt;
+    &lt;artifactId&gt;amqp-client&lt;/artifactId&gt;
+    &lt;version&gt;3.6.5&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="创建消费者"><a href="#创建消费者" class="headerlink" title="创建消费者"></a>创建消费者</h3><pre><code class="java">import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.QueueingConsumer;
+
+/**
+ * @Classname Consumer
+ * @Description RabbitMQ消费者
+ * @Date 2019/9/2 11:02
+ * @Created by Jiavg
+ */
+public class Consumer {
+
+    public static void main(String[] args) throws Exception {
+        // 1.创建一个ConnectionFactory,并进行配置
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+
+        // 2.通过连接工厂创建连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过connection创建一个Channel
+        Channel channel = connection.createChannel();
+
+        // 4.声明(创建)一个队列
+        String queueName = &quot;test001&quot;;
+        // queueDeclare(String queue, boolean durable, boolean exclusive, boolean autoDelete,Map&lt;String, Object&gt; arguments)
+        // param queue the name of the queue
+        //  @param durable true if we are declaring a durable queue (the queue will survive a server restart)
+        //  @param exclusive true if we are declaring an exclusive queue (restricted to this connection)
+        //  @param autoDelete true if we are declaring an autodelete queue (server will delete it when no longer in use)
+        //  @param arguments other properties (construction arguments) for the queue
+        channel.queueDeclare(queueName, true, false,false,null);
+
+        // 5.创建消费者
+        QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
+
+        // 6.设置Channel
+        channel.basicConsume(queueName, true, queueingConsumer);
+
+        // 7.获取消息
+        while (true){
+            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
+
+            byte[] body = delivery.getBody();
+            String msg = new String(body);
+            System.out.println(&quot;消费者:&quot; + msg);
         }
-
-        for(int currentInsetIndex = 1; currentInsetIndex &lt; nums.length; currentInsetIndex++){
-            // currentInset:当前进行插入的数字
-            int currentInset = nums[currentInsetIndex];
-
-            // 当前进行比较的下标
-            int currentCompareIndex = currentInsetIndex - 1;
-
-            // 二分查找到正确位置
-            int index = Solution.binarySearch(nums, 0, currentCompareIndex, currentInset);
-
-            // 在正确位置进行插入
-            Solution.insertNum(nums, 0, currentInsetIndex, index);
-        }
-
-        return nums;
-    }
-
-    /**
-     * 二分查找数值在已排序数组中正确的下标
-     * @param array 进行查找的数组
-     * @param lower 查找下界
-     * @param up 查找上界
-     * @param num 查找数字
-     * @return 下标
-     */
-    public static int binarySearch(int[] array, int lower, int up, int num){
-
-        int lowerSearch = lower;
-        int upSearch = up;
-
-        int middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        while(lowerSearch &lt;= upSearch){
-
-            if(array[middle] &gt; num){
-                upSearch = middle - 1;
-            }else{
-                lowerSearch = middle + 1;
-            }
-            middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        }
-
-        return middle;
-    }
-
-    /**
-     * 插入值到数组中(数组范围内的一个数插入到本数组的另一个位置)
-     * @param array 进行插入的数组
-     * @param lower 插入范围下界
-     * @param up 插入范围上界(也是要进行插入的值)
-     * @param index 插入下标
-     */
-    public static void  insertNum(int[] array, int lower, int up, int index){
-        // unlawfulness
-        if(up &lt;= index &amp;&amp; index &lt; lower){
-            return;
-        }
-
-        // save a value of insert
-        int num = array[up];
-
-        // move inserted value of last to last
-        for (int i = up; i &gt; index &amp;&amp; i &gt; lower; i--){
-            array[i] = array[i-1];
-        }
-
-        // insert value
-        array[index] = num;
     }
 }</code></pre>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果:"></a>运行结果:</h1><pre><code class="java">执行结果：
-    通过 显示详情
-    执行用时 :
-        314 ms, 在所有 Java 提交中击败了8.58%的用户
-    内存消耗 :
-        52.1 MB, 在所有 Java 提交中击败了100.00%的用户</code></pre>
-<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析:"></a>结果分析:</h1><pre><code class="java">    本来对这个算法寄予了很大期望:
-        1.利用二分查找法解决了进行线性查找而需要的线性时间,进而把查找时间压缩到了lg(n).
-        2.利用迭代替换掉递归,进而解决了在数组长度过大时出现的java.lang.StackOverflowError
-    对于第一次用算法结合的方式进行排序冷静分析后:
-        1.对于内存消耗还是很好理解,原址排序.
-        2.对于执行用时,虽然用二分查找法代替掉了线性查找,但还是改变不了算法本身是插入排序,而对于插入排序最忌惮的就是数组长度.</code></pre>
+<h3 id="运行消费者类"><a href="#运行消费者类" class="headerlink" title="运行消费者类"></a>运行消费者类</h3><p>  <strong>在运行消费者类</strong>Consumer<strong>后,RabbitMQ的浏览器管控台信息状况如下图所示:</strong></p>
+<p>  <strong>运行消费者类之前:</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_123852.jpg" alt></p>
+<p>  由上图可以看到:</p>
+<ul>
+<li><p>在全局参数(Global counts)中:连接数量(Connections)为0,信道(Channels)数量为0,队列(Queues)数量为0,以及消费者(Consumers)数量为0</p>
+<p><strong>运行消费者之后</strong><br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_124813.jpg" alt><br>由上图可以看到:</p>
+</li>
+<li><p>在全局参数(Global counts)中:连接数量(Connections)为1,信道(Channels)数量为1,队列(Queues)数量为1,以及消费者(Consumers)数量为1.</p>
+</li>
+</ul>
+<p>  可以了解到:</p>
+<ul>
+<li><p>channel.queueDeclare(queueName, true, false,false,null);<br>此行代码创建了一个名字为”test001”(即queueName变量值)的队列,且与RabbitMQ保持一个连接,此连接内包含一个信道.</p>
+</li>
+<li><p>QueueingConsumer queueingConsumer = new QueueingConsumer(channel);channel.basicConsume(queueName, true, queueingConsumer);<br>这两行代码创建一个消费者,并把消费者绑定到已创建的队列上.</p>
+</li>
+</ul>
+<h3 id="创建生产者类"><a href="#创建生产者类" class="headerlink" title="创建生产者类"></a>创建生产者类</h3><pre><code class="java">import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+/**
+ * @Classname Producter
+ * @Description RabbitMQ生产者
+ * @Date 2019/9/2 10:54
+ * @Created by Jiavg
+ */
+public class Producter {
+
+    public static void main(String[] args) throws Exception { 
+
+        // 1.创建一个ConnectionFactory,并进行配置
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+
+        // 2.通过连接工厂创建连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过connection创建一个Channel
+        Channel channel = connection.createChannel();
+
+        for (int i = 0; i &lt; 5; i++){
+            String message = &quot;Hello RabbitMQ!&quot;;
+            // 4.通过Channel发送数据
+            // basicPublish(String exchange, String routingKey, BasicProperties props, byte[] body)
+            channel.basicPublish(&quot;&quot;, &quot;test001&quot;, null, message.getBytes());
+        }
+
+        // 5.关闭相关连接
+        channel.close();
+        connection.close();;
+
+    }
+
+}
+</code></pre>
+<h3 id="运行生产者类"><a href="#运行生产者类" class="headerlink" title="运行生产者类"></a>运行生产者类</h3><p>  <strong>在运行生产者类</strong>Producter<strong>后,RabbitMQ的浏览器管控台信息状况如下图所示:</strong></p>
+<p><strong>运行生产者类之前:</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_124813.jpg" alt><br>  由上图可以看到:</p>
+<ul>
+<li><p>消息队列(Queued messages)为空,消息消费速率(Message rates)也为0</p>
+<p><strong>运行生产者之后</strong><br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_125848.jpg" alt></p>
+<p><strong>且消费者控制台显示:</strong><br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_130204.jpg" alt></p>
+<p>由上图可以看到:</p>
+</li>
+<li><p>消息队列(Queued messages)为空,消息消费速率(Message rates)迅速上升并下降</p>
+</li>
+<li><p>消费者接收到生产者发送的信息</p>
+</li>
+</ul>
+<p>以上便是RabbitMQ快速入门.</p>
 
             </div>
             <hr/>
@@ -700,9 +737,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《插入排序》
+                    《RabbitMQ快速入门》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/21/插入排序-递归+二分查找/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/02/RabbitMQ03/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -764,46 +801,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/08/14/ArrayList/">
+                <a href="/2019/09/02/RabbitMQ03/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ArrayList">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="RabbitMQ快速入门">
                         
-                        <span class="card-title">ArrayList</span>
+                        <span class="card-title">RabbitMQ快速入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ArrayList(线性表-顺序存储)
+                            RabbitMQ快速入门
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/数据结构和算法/" class="post-category" target="_blank">
-                                    数据结构和算法
+                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
+                                    消息中间件
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/数据结构/" target="_blank">
-                        <span class="chip bg-color">数据结构</span>
+                    <a href="/tags/RabbitMQ/" target="_blank">
+                        <span class="chip bg-color">RabbitMQ</span>
+                    </a>
+                    
+                    <a href="/tags/消息中间件/" target="_blank">
+                        <span class="chip bg-color">消息中间件</span>
                     </a>
                     
                 </div>
@@ -817,31 +860,31 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/07/20/插入排序-递归实现/">
+                <a href="/2019/09/02/RabbitMQ02/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="插入排序(递归实现)">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="RabbitMQ命令行与管控台操作">
                         
-                        <span class="card-title">插入排序(递归实现)</span>
+                        <span class="card-title">RabbitMQ命令行与管控台操作</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            插入排序-递归实现(Insertion-Sort)
+                            RabbitMQ命令行与管控台操作
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-20
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/数据结构和算法/" class="post-category" target="_blank">
-                                    数据结构和算法
+                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
+                                    消息中间件
                                 </a>
                             
                             
@@ -851,12 +894,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/LeetCode/" target="_blank">
-                        <span class="chip bg-color">LeetCode</span>
+                    <a href="/tags/RabbitMQ/" target="_blank">
+                        <span class="chip bg-color">RabbitMQ</span>
                     </a>
                     
-                    <a href="/tags/算法导论/" target="_blank">
-                        <span class="chip bg-color">算法导论</span>
+                    <a href="/tags/消息中间件/" target="_blank">
+                        <span class="chip bg-color">消息中间件</span>
                     </a>
                     
                 </div>

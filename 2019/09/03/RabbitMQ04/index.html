@@ -4,9 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ安装及基本设置, Jiavg">
-    <meta name="description" content="安装环境摘要为了完整模拟RabbitMQ安装的从无到有,本次安装使用了VMware克隆了一个初始状态下的CentOS7镜像,下面介绍一下安装前的准备工作建议配置
-更换阿里巴巴的yum仓库,便于下载所需文件:  CentOS  1、备份  m">
+    <meta name="keywords" content="RabbitMQ-Exchange, Jiavg">
+    <meta name="description" content="Exchanges(交换机)  Exchange:接收消息,并根据路由键转发消息所绑定的队列.  下图为RabbitMQ的整体工作示意图:  
+  交换机属性:
+
+Name: 交换机名称
+Type: 交换机类型:direct,topic,f">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RabbitMQ安装及基本设置 | Jiavg</title>
+    <title>RabbitMQ-Exchange | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -261,13 +264,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RabbitMQ安装及基本设置
+                        RabbitMQ-Exchange
                     </div>
                 </div>
             </div>
@@ -406,21 +409,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-01
+                    2019-09-03
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1,015
+                        2,393
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        11 分
                     </div>
                     
                 
@@ -436,78 +439,365 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="安装环境摘要"><a href="#安装环境摘要" class="headerlink" title="安装环境摘要"></a>安装环境摘要</h2><pre><code>为了完整模拟RabbitMQ安装的从无到有,本次安装使用了VMware克隆了一个初始状态下的CentOS7镜像,下面介绍一下安装前的准备工作</code></pre><h3 id="建议配置"><a href="#建议配置" class="headerlink" title="建议配置"></a>建议配置</h3><ul>
-<li>更换阿里巴巴的yum仓库,便于下载所需文件:<br>  <strong>CentOS</strong><br>  <strong>1、备份</strong><br>  <em>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</em><br>  <strong>2、下载新的CentOS-Base.repo 到/etc/yum.repos.d/</strong><br>  <em>CentOS 7</em><br>  <em>wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-7.repo" target="_blank" rel="noopener">http://mirrors.aliyun.com/repo/Centos-7.repo</a></em><br>  或者<br>  <em>curl -o /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-7.repo" target="_blank" rel="noopener">http://mirrors.aliyun.com/repo/Centos-7.repo</a></em><br>  <strong>3、之后运行yum makecache生成缓存</strong><br>  具体可参考<a href="https://opsx.alibaba.com" title="阿里巴巴镜像站" target="_blank" rel="noopener">阿里巴巴镜像站</a></li>
-<li>更换主机名<br>  <em>进入主机名配置文件,并修改主机名(在安装RabbitMQ后RabbitMQ会使用主机名,建议配置)</em><br>  *vim /etc/hostname *
-  本机修改为Jiavg</li>
+                <h1 id="Exchanges-交换机"><a href="#Exchanges-交换机" class="headerlink" title="Exchanges(交换机)"></a>Exchanges(交换机)</h1><p>  <strong>Exchange:接收消息,并根据路由键转发消息所绑定的队列.</strong><br>  下图为RabbitMQ的整体工作示意图:<br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_125946.jpg" alt></p>
+<p>  <strong>交换机属性:</strong></p>
+<ul>
+<li>Name: 交换机名称</li>
+<li>Type: 交换机类型:direct,topic,fanout,headers</li>
+<li>Durability: 是否需要持久化,true为持久化</li>
+<li>Auto Delete:当最后一个绑定到ExChange的队列删除后,自动删除该Exchange</li>
+<li>Internal:当前Exchange是否用于RabbitMQ内部使用,默认为false</li>
+<li>Arguments:扩展参数,用于扩展AMQP协议自制定化使用</li>
 </ul>
-<h2 id="RabbitMQ安装步骤"><a href="#RabbitMQ安装步骤" class="headerlink" title="RabbitMQ安装步骤"></a>RabbitMQ安装步骤</h2><h3 id="1-创建下载文件所需的文件夹"><a href="#1-创建下载文件所需的文件夹" class="headerlink" title="1.创建下载文件所需的文件夹"></a>1.创建下载文件所需的文件夹</h3><p>  [root@Jiavg /]# mkdir -p /usr/local/software/<br>  [root@Jiavg /]# cd /usr/local/software/<br>  [root@Jiavg software]#</p>
-<h3 id="2-下载所需文件"><a href="#2-下载所需文件" class="headerlink" title="2.下载所需文件"></a>2.下载所需文件</h3><p>  <strong>下载erlang和rabbitmq-server的rpm:</strong></p>
-<p>  [root@Jiavg software]#wget <a href="http://www.rabbitmq.com/releases/erlang/erlang-19.0.4-1.el7.centos.x86_64.rpm" target="_blank" rel="noopener">http://www.rabbitmq.com/releases/erlang/erlang-19.0.4-1.el7.centos.x86_64.rpm</a></p>
-<p>  [root@Jiavg software]#wget <a href="http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm" target="_blank" rel="noopener">http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm</a></p>
-<p>  <strong>验证文件是否下载成功</strong><br>  [root@Jiavg software]# ls<br>  erlang-19.0.4-1.el7.centos.x86_64.rpm  rabbitmq-server-3.6.6-1.el7.noarch.rpm</p>
-<h3 id="3-安装Erlang"><a href="#3-安装Erlang" class="headerlink" title="3.安装Erlang"></a>3.安装Erlang</h3><p>  <strong>安装erlang</strong><br>  [root@Jiavg software]#rpm -ivh erlang-19.0.4-1.el7.centos.x86_64.rpm    </p>
-<p>  <strong>验证erlang是否安装成功</strong><br>  [root@Jiavg software]# erl<br>  Erlang/OTP 19 [erts-8.0.3] [source] [64-bit] [smp:2:2] [async-threads:10] [hipe] [kernel-poll:false]</p>
-<p>  Eshell V8.0.3  (abort with ^G)<br>  1&gt; </p>
-<h3 id="4-安装RabbitMQ"><a href="#4-安装RabbitMQ" class="headerlink" title="4.安装RabbitMQ"></a>4.安装RabbitMQ</h3><p>  <strong>安装socat(安装RabbitMQ需要此命令进行密匙校验)</strong><br>  [root@Jiavg software]# yum install socat</p>
-<p>  如果不安装socat,则会出现以下情况:<br>  [root@Jiavg software]# rpm -ivh rabbitmq-server-3.6.6-1.el7.noarch.rpm<br>  警告：rabbitmq-server-3.6.6-1.el7.noarch.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID 6026dfca:  NOKEY<br>  错误：依赖检测失败：<br>        socat 被 rabbitmq-server-3.6.6-1.el7.noarch 需要</p>
-<p>  <strong>安装RabbitMQ</strong><br>  [root@Jiavg software]# rpm -ivh rabbitmq-server-3.6.6-1.el7.noarch.rpm<br>  警告：rabbitmq-server-3.6.6-1.el7.noarch.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID 6026dfca: NOKEY<br>  准备中…                          ################################# [100%]<br>  正在升级/安装…<br>  1:rabbitmq-server-3.6.6-1.el7      ################################# [100%]</p>
-<h3 id="5-修改基本配置文件"><a href="#5-修改基本配置文件" class="headerlink" title="5.修改基本配置文件"></a>5.修改基本配置文件</h3><p>  <strong>进入RabbitMQ配置文件目录</strong><br>  [root@Jiavg ebin]# cd /usr/lib/rabbitmq/lib/rabbitmq_server-3.6.6/ebin/</p>
-<p>  <strong>修改rabbit.app文件</strong><br>  [root@Jiavg ebin]#vim rabbit.app</p>
-<p>  <strong>在vim中使用/loopback定位需要修改的文件位置</strong><br>  /loopback</p>
-<p>  文件被定位到<br>  {loopback_users, [&lt;&lt;”guest”&gt;&gt;]},<br>  修改为<br>  {loopback_users, [guest]},<br>  即:删除&lt;&lt;”和”&gt;&gt;</p>
-<p>  保存并退出</p>
-<h3 id="6-安装RabbitMQ的rabbitmq-management插件"><a href="#6-安装RabbitMQ的rabbitmq-management插件" class="headerlink" title="6.安装RabbitMQ的rabbitmq_management插件"></a>6.安装RabbitMQ的rabbitmq_management插件</h3><p>  RabbitMQ的rabbitmq_management插件可以通过浏览器的可视化界面来管理RabbitMQ</p>
-<p>  <strong>启动RabbitMQ</strong></p>
-<pre><code>[root@Jiavg ebin]# rabbitmq-server start &amp;
-[1] 9843
-[root@Jiavg ebin]# 
-              RabbitMQ 3.6.6. Copyright (C) 2007-2016 Pivotal Software, Inc.
-  ##  ##      Licensed under the MPL.  See http://www.rabbitmq.com/
-  ##  ##
-  ##########  Logs: /var/log/rabbitmq/rabbit@Jiavg.log
-  ######  ##        /var/log/rabbitmq/rabbit@Jiavg-sasl.log
-  ##########
-              Starting broker...</code></pre><p>  <strong>查看本地可用插件</strong></p>
-<pre><code>[root@Jiavg ebin]# rabbitmq-plugins list
- Configured: E = explicitly enabled; e = implicitly enabled
- | Status:   [failed to contact rabbit@Jiavg - status not shown]
- |/
-[  ] amqp_client                       3.6.6
-[  ] cowboy                            1.0.3
-[  ] cowlib                            1.0.1
-[  ] mochiweb                          2.13.1
-[  ] rabbitmq_amqp1_0                  3.6.6
-[  ] rabbitmq_auth_backend_ldap        3.6.6
-[  ] rabbitmq_auth_mechanism_ssl       3.6.6
-[  ] rabbitmq_consistent_hash_exchange 3.6.6
-[  ] rabbitmq_event_exchange           3.6.6
-[  ] rabbitmq_federation               3.6.6
-[  ] rabbitmq_federation_management    3.6.6
-[  ] rabbitmq_jms_topic_exchange       3.6.6
-[  ] rabbitmq_management               3.6.6
-[  ] rabbitmq_management_agent         3.6.6
-[  ] rabbitmq_management_visualiser    3.6.6
-[  ] rabbitmq_mqtt                     3.6.6
-[  ] rabbitmq_recent_history_exchange  1.2.1
-[  ] rabbitmq_sharding                 0.1.0
-[  ] rabbitmq_shovel                   3.6.6
-[  ] rabbitmq_shovel_management        3.6.6
-[  ] rabbitmq_stomp                    3.6.6
-[  ] rabbitmq_top                      3.6.6
-[  ] rabbitmq_tracing                  3.6.6
-[  ] rabbitmq_trust_store              3.6.6
-[  ] rabbitmq_web_dispatch             3.6.6
-[  ] rabbitmq_web_stomp                3.6.6
-[  ] rabbitmq_web_stomp_examples       3.6.6
-[  ] sockjs                            0.3.4
-[  ] webmachine                        1.10.3</code></pre><p>  <strong>安装rabbitmq_management插件</strong><br>  [root@Jiavg ebin]# rabbitmq-plugins enable rabbitmq_management</p>
-<h3 id="7-测试RabbitMQ的rabbitmq-management插件"><a href="#7-测试RabbitMQ的rabbitmq-management插件" class="headerlink" title="7.测试RabbitMQ的rabbitmq_management插件"></a>7.测试RabbitMQ的rabbitmq_management插件</h3><p>  <strong>使用浏览器访问 IP地址:15672</strong><br>  把<strong>IP地址</strong>替换为你的RabbitMQ安装的主机IP</p>
-<p>  注意:如果不能正常访问,可能是防火墙问题<br>   此时需要开启15672端口的访问权限</p>
-<p>  <strong>如以上步骤都正确,则浏览器会显示以下页面</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-01_114644.jpg" alt></p>
-<p>  <strong>在对应的输入框输入如下</strong><br>  Username:guest<br>  Password:guest<br>  <em>即:用户名和密码都是guest,这是RabbitMQ默认的账号和密码</em></p>
-<p>  <strong>在成功输入账户和密码后会进入如下界面</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-01_115023.jpg" alt></p>
-<p>  <strong>此时,RabbitMQ已经安装完成.</strong></p>
+<p>  <strong>交换机类型</strong></p>
+<ul>
+<li>direct<br>处理路由键。需要将一个队列绑定到交换机上，要求该消息与一个特定的路由键完全匹配。这是一个完整的<br>匹配。如果一个队列绑定到该交换机上要求路由键 “abc”，则只有被标记为“abc”的消息才被转发，不会转发<br>abc.def，也不会转发dog.ghi，只会转发abc。</li>
+<li>topic<br>将路由键和某模式进行匹配。此时队列需要绑定要一个模式上。符号“#”匹配一个或多个词，符号“”匹配不多<br>不少一个词。因此“abc.#”能够匹配到“abc.def.ghi”，但是“abc.” 只会匹配到“abc.def”。</li>
+<li>fanout<br>不处理路由键。你只需要简单的将队列绑定到交换机上。一个发送到交换机的消息都会被转发到与该交换机<br>绑定的所有队列上。很像子网广播，每台子网内的主机都获得了一份复制的消息。Fanout交换机转发消息是最<br>快的。</li>
+<li>headers<br>不处理路由键。而是根据发送的消息内容中的headers属性进行匹配。在绑定Queue与Exchange时指定一组<br>键值对；当消息发送到RabbitMQ时会取到该消息的headers与Exchange绑定时指定的键值对进行匹配；如果完<br>全匹配则消息会路由到该队列，否则不会路由到该队列。headers属性是一个键值对，可以是Hashtable，键值<br>对的值可以是任何类型。而fanout，direct，topic 的路由键都需要要字符串形式的。<br>匹配规则x-match有下列两种类型：<br>x-match = all ：表示所有的键值对都匹配才能接受到消息<br>x-match = any ：表示只要有键值对匹配就能接受到消息</li>
+</ul>
+<h2 id="Direct-Exchange"><a href="#Direct-Exchange" class="headerlink" title="Direct Exchange"></a>Direct Exchange</h2><p>  <strong>所有发送到Direct Exchange的消息被转发到RouteKey中指定的Queue.</strong><br>  以下为Direct模式下Exchange的工作示意图:<br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_132343.jpg" alt><br>  注意:Direct模式可以使用RabbitMQ自带的Exchange:default Exchange,所以不需要将Exchange进行任何<br>绑定(binding)操作,消息传递时,RoutKey必须完全匹配才会被队列接收,否则该消息会被抛弃.</p>
+<h3 id="Direct-Exchange演示"><a href="#Direct-Exchange演示" class="headerlink" title="Direct Exchange演示"></a>Direct Exchange演示</h3><h4 id="消费者代码"><a href="#消费者代码" class="headerlink" title="消费者代码"></a>消费者代码</h4><p>  消费者代码如下</p>
+<pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.QueueingConsumer;
+
+/**
+ * @Classname Consumer
+ * @Description RabbitMQ的Direct模式:消费者
+ * @Date 2019/9/3 13:37
+ * @Created by Jiavg
+ */
+public class Consumer {
+
+    public static void main(String[] args) throws Exception{
+
+        // 1.创建ConnectionFactory
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+
+        // 2.通过连接工厂获得连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过连接创建信道
+        Channel channel = connection.createChannel();
+
+        String exchangeName = &quot;test_Direct_Exchange&quot;;
+        String exchangeType = &quot;direct&quot;;
+        String queueName = &quot;test_Direct_Queue&quot;;
+        String routeKey = &quot;test.direct&quot;;
+
+        // 4.声明一个交换机
+        channel.exchangeDeclare(exchangeName,exchangeType,true, false, false, null);
+
+        // 5.声明一个队列
+        channel.queueDeclare(queueName, true, false, false, null);
+
+        // 6. 建立一个绑定关系
+        channel.queueBind(queueName, exchangeName, routeKey);
+
+        // 7.创建一个消费者
+        QueueingConsumer consumer = new QueueingConsumer(channel);
+
+        // 8.设置信道参数:队列,是否自动ACK,Consumer
+        channel.basicConsume(queueName, true, consumer);
+
+        // 9.读取消息
+        while (true){
+            QueueingConsumer.Delivery delivery = consumer.nextDelivery();
+
+            byte[] body = delivery.getBody();
+            String msg = new String(body);
+            System.out.println(msg);
+        }                        
+    }    
+}
+</code></pre>
+<h4 id="消费者运行"><a href="#消费者运行" class="headerlink" title="消费者运行"></a>消费者运行</h4><p>  在运行消费者后,RabbitMQ的管控台变化如下:<br>  <strong>Connections视口</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_135555.jpg" alt></p>
+<p>  <strong>Channel视口</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_135807.jpg" alt></p>
+<p>  <strong>Exchanges视口</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_135922.jpg" alt><br>  <em>由上图可以观察到,声明的交换机(“test_Direct_Exchange”)为direct模式.</em></p>
+<p>  <strong>Queues视口</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_140103.jpg" alt></p>
+<h4 id="生产者代码"><a href="#生产者代码" class="headerlink" title="生产者代码"></a>生产者代码</h4><p>  生产者代码如下</p>
+<pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+/**
+ * @Classname Producter
+ * @Description RabbitMQ的Direct模式:生产者
+ * @Date 2019/9/3 13:27
+ * @Created by Jiavg
+ */
+public class Producter {
+
+    public static void main(String[] args) throws Exception{
+
+        // 1.创建ConnectionFactory
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+
+        // 2.通过连接工厂获得连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过连接创建信道
+        Channel channel = connection.createChannel();
+
+        // 4.声明交换机名称及路由键
+        String exchangeName = &quot;test_Direct_Exchange&quot;;
+        String routeKey = &quot;test.direct&quot;;
+
+        // 5.发送消息
+        String msg = &quot;Hello World RabbitMQ 4 Direct Exchange message...&quot;;
+        channel.basicPublish(exchangeName, routeKey, null, msg.getBytes());
+
+        // 6.关闭资源
+        channel.close();
+        connection.close();
+    }    
+}
+</code></pre>
+<h4 id="生产者运行"><a href="#生产者运行" class="headerlink" title="生产者运行"></a>生产者运行</h4><p>  在运行生产者代码后,RabbitMQ的管控台界面如下图所示:<br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_140513.jpg" alt></p>
+<p>  并且消费者控制台输出如下<br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_140853.jpg" alt></p>
+<p>  可见,在交换机类型为direct模式时,RabbitMQ的交换机根据路由键将接受到的消息路由到相应的队列中,并<br>被相应的监听消费者消费该消息.</p>
+<h2 id="Topic-Exchange"><a href="#Topic-Exchange" class="headerlink" title="Topic Exchange"></a>Topic Exchange</h2><ul>
+<li><p><strong>所有发送到Topic Exchange的消息被转发到所有关心RouteKey中指定的Topic Queue上</strong></p>
+</li>
+<li><p><strong>Exchange将RouteKey和某Topic进行模糊匹配,此时队列需要绑定一个Topic</strong><br>以下为Topic模式下Exchange的工作示意图:<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_1223123.png" alt><br>注意:可以使用通配符进行模糊匹配<br>符号: “#”匹配一个或多个词<br>符号: “*”匹配不多不少一个词<br>例如: “log.#”能够匹配到”log.info.oa”<br>“log.*”只会匹配到”log.error”</p>
+</li>
+</ul>
+<h3 id="Topic-Exchange演示"><a href="#Topic-Exchange演示" class="headerlink" title="Topic Exchange演示"></a>Topic Exchange演示</h3><h4 id="消费者代码-1"><a href="#消费者代码-1" class="headerlink" title="消费者代码"></a>消费者代码</h4><p>  消费者代码如下</p>
+<pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.QueueingConsumer;
+
+/**
+ * @Classname Consumer
+ * @Description RabbitMQ的Topic模式:消费者
+ * @Date 2019/9/3 16:02
+ * @Created by Jiavg
+ */
+public class Consumer {
+
+    public static void main(String[] args) throws Exception{
+
+        // 1.创建ConnectionFactory
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+
+        // 2.通过连接工厂获得连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过连接创建信道
+        Channel channel = connection.createChannel();
+
+        String exchangeName = &quot;test_Topic_Exchange&quot;;
+        String exchangeType = &quot;topic&quot;;
+        String routeKey = &quot;test.*&quot;;
+        String queueName = &quot;test_Topic_Queue&quot;;
+
+        //  4.声明交换机 
+        channel.exchangeDeclare(exchangeName, exchangeType, true, false,false,null);
+
+        // 5.声明队列
+        channel.queueDeclare(queueName, true, false, false, null);
+
+        // 6.创建消费者
+        QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
+
+        // 7.绑定队列到交换机上(利用topic模式的routeKey)
+        channel.queueBind(queueName, exchangeName, routeKey);
+
+        // 8.设置参数
+        channel.basicConsume(queueName, true, queueingConsumer);
+
+        // 8.接收消息
+        while (true) {
+            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
+
+            byte[] body = delivery.getBody();
+            String msg = new String(body);
+            System.out.printf(msg);
+        }        
+    }    
+}
+</code></pre>
+<h4 id="消费者运行-1"><a href="#消费者运行-1" class="headerlink" title="消费者运行"></a>消费者运行</h4><p>  在运行消费者后,RabbitMQ的管控台变化如下:</p>
+<p>  <strong>Exchanges视口</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_164608.jpg" alt><br>  <em>由上图可以观察到,声明的交换机(“test_Topic_Exchange”)为topic模式.</em></p>
+<h4 id="生产者代码-1"><a href="#生产者代码-1" class="headerlink" title="生产者代码"></a>生产者代码</h4><p>  生产者代码如下</p>
+<pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+/**
+ * @Classname Producter
+ * @Description RabbitMQ的Topic模式:生产者
+ * @Date 2019/9/3 15:56
+ * @Created by Jiavg
+ */
+public class Producter {
+
+    public static void main(String[] args) throws Exception{
+
+        // 1.创建ConnectionFactory
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+
+        // 2.通过连接工厂获得连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过连接创建信道
+        Channel channel = connection.createChannel();
+
+        String msg1 = &quot;Hello World Topic Exchange with routeKey for test.hello&quot;;
+        String msg2 = &quot;Hello World Topic Exchange with routeKey for test.hello.world&quot;;
+        String msg3 = &quot;Hello World Topic Exchange with routeKey for hello.world&quot;;
+
+        String routeKey1 = &quot;test.hello&quot;;
+        String routeKey2 = &quot;test.hello.world&quot;;
+        String routeKey3 = &quot;hello.world&quot;;
+
+        String exchangeName = &quot;test_Topic_Exchange&quot;;
+
+        // 4.发送消息
+        channel.basicPublish(exchangeName, routeKey1, null, msg1.getBytes());
+        channel.basicPublish(exchangeName, routeKey2, null, msg2.getBytes());
+        channel.basicPublish(exchangeName, routeKey3, null, msg3.getBytes());
+
+        // 5.关闭资源
+        channel.close();
+        connection.close();        
+    }    
+}
+</code></pre>
+<h4 id="生产者运行-1"><a href="#生产者运行-1" class="headerlink" title="生产者运行"></a>生产者运行</h4><p>  消费者控制台输出如下<br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_164918.jpg" alt></p>
+<p>  可见,在交换机类型为topic模式时,RabbitMQ的交换机根据生产者发送消息的路由键将接受到的消息根据<br>topic模式的路由键路由到相应的队列中,并被相应的监听消费者消费该消息.(注意通配符的模糊匹配)</p>
+<h2 id="Fanout-Exchange"><a href="#Fanout-Exchange" class="headerlink" title="Fanout Exchange"></a>Fanout Exchange</h2><ul>
+<li><strong>不处理路由键,只需要简单的将队列绑定到交换机上</strong></li>
+<li><strong>发送到交换机的消息都会被转发到与该交换机绑定的所有队列上</strong></li>
+<li><strong>Fanout交换机转发消息是最快的</strong><br>以下为Fanout模式下Exchange的工作示意图:<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_1649199.jpg" alt></li>
+</ul>
+<h3 id="Fanout-Exchange演示"><a href="#Fanout-Exchange演示" class="headerlink" title="Fanout Exchange演示"></a>Fanout Exchange演示</h3><h4 id="消费者代码-2"><a href="#消费者代码-2" class="headerlink" title="消费者代码"></a>消费者代码</h4><p>  消费者代码如下</p>
+<pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.QueueingConsumer;
+
+/**
+ * @Classname Consumer
+ * @Description RabbitMQ的Fanout模式:消费者
+ * @Date 2019/9/3 17:14
+ * @Created by Jiavg
+ */
+public class Consumer {
+
+    public static void main(String[] args) throws Exception{
+
+        // 1.创建ConnectionFactory
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+
+        // 2.通过连接工厂获得连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过连接创建信道
+        Channel channel = connection.createChannel();   
+
+        String exchangeName = &quot;test_Fanout_Exchange&quot;;
+        String exchangeType = &quot;fanout&quot;;
+
+        String queueName = &quot;test_Fanout_Queue&quot;;
+        String routeKey = &quot;&quot;;
+
+        channel.exchangeDeclare(exchangeName, exchangeType, true, false,false, null);
+
+        channel.queueDeclare(queueName, true, false, false, null);
+
+        channel.queueBind(queueName, exchangeName, routeKey);
+
+        QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
+
+        channel.basicConsume(queueName, true, queueingConsumer);
+
+        while (true) {
+            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
+
+            byte[] body = delivery.getBody();
+            String msg = new String(body);
+            System.out.printf(msg);
+        }        
+    }    
+}
+</code></pre>
+<h4 id="消费者运行-2"><a href="#消费者运行-2" class="headerlink" title="消费者运行"></a>消费者运行</h4><p>  在运行消费者后,RabbitMQ的管控台变化如下:</p>
+<p>  <strong>Exchanges视口</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_223726.jpg" alt><br>  <em>由上图可以观察到,声明的交换机(“test_Fanout_Queue”)为fanout模式.</em></p>
+<h4 id="生产者代码-2"><a href="#生产者代码-2" class="headerlink" title="生产者代码"></a>生产者代码</h4><p>  生产者代码如下</p>
+<pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+/**
+ * @Classname Producter
+ * @Description RabbitMQ的Fanout模式:生产者
+ * @Date 2019/9/3 22:14
+ * @Created by Jiavg
+ */
+public class Producter {
+
+    public static void main(String[] args) throws Exception{
+
+        // 1.创建ConnectionFactory
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+
+        // 2.通过连接工厂获得连接
+        Connection connection = connectionFactory.newConnection();
+
+        // 3.通过连接创建信道
+        Channel channel = connection.createChannel();
+
+        String exchangeName = &quot;test_Fanout_Exchange&quot;;
+        String routeKey = &quot;&quot;;
+
+        String msg = &quot;Hello World Fanout Exchange&quot;;
+
+        channel.basicPublish(exchangeName, routeKey, null, msg.getBytes());     
+    }   
+}
+</code></pre>
+<h4 id="生产者运行-2"><a href="#生产者运行-2" class="headerlink" title="生产者运行"></a>生产者运行</h4><p>  消费者控制台输出如下<br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-03_224743.jpg" alt></p>
+<p>  可见,在交换机类型为fanout模式时,RabbitMQ不处理路由键,只需要简单的将队列绑定到交换机上,发送<br>到交换机的消息都会被转发到与该交换机绑定的所有队列上.</p>
 
             </div>
             <hr/>
@@ -666,9 +956,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RabbitMQ安装及基本设置》
+                    《RabbitMQ-Exchange》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/01/RabbitMQ安装01/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/03/RabbitMQ04/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -730,29 +1020,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/09/02/RabbitMQ02/">
+                <a href="/2019/09/03/RabbitMQ04/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="RabbitMQ命令行与管控台操作">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="RabbitMQ-Exchange">
                         
-                        <span class="card-title">RabbitMQ命令行与管控台操作</span>
+                        <span class="card-title">RabbitMQ-Exchange</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ命令行与管控台操作
+                            RabbitMQ之交换机
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-03
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -765,6 +1056,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -787,31 +1079,31 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/01/RabbitMQ/">
+                <a href="/2019/09/02/设计模式01/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="RabbitMQ特点">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="设计模式概要">
                         
-                        <span class="card-title">RabbitMQ特点</span>
+                        <span class="card-title">设计模式概要</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ特点
+                            设计模式(Design Pattern)概要
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-01
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                    消息中间件
+                            <a href="/categories/设计模式/" class="post-category" target="_blank">
+                                    设计模式
                                 </a>
                             
                             
@@ -821,12 +1113,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RabbitMQ/" target="_blank">
-                        <span class="chip bg-color">RabbitMQ</span>
-                    </a>
-                    
-                    <a href="/tags/消息中间件/" target="_blank">
-                        <span class="chip bg-color">消息中间件</span>
+                    <a href="/tags/设计模式/" target="_blank">
+                        <span class="chip bg-color">设计模式</span>
                     </a>
                     
                 </div>

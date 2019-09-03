@@ -4,9 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ安装及基本设置, Jiavg">
-    <meta name="description" content="安装环境摘要为了完整模拟RabbitMQ安装的从无到有,本次安装使用了VMware克隆了一个初始状态下的CentOS7镜像,下面介绍一下安装前的准备工作建议配置
-更换阿里巴巴的yum仓库,便于下载所需文件:  CentOS  1、备份  m">
+    <meta name="keywords" content="设计模式概要, Jiavg">
+    <meta name="description" content="设计模式的目的  在编写软件的过程中,程序员面临着来自耦合性,内聚性以及可维护性,可扩展性,重用性,灵活性等多方面的挑战,设计模式是为了让程序(软件),具有更好
+
+代码重用性 (即:相同功能的代码,不用多次编写)
+可读性 (即:编程规范性,">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RabbitMQ安装及基本设置 | Jiavg</title>
+    <title>设计模式概要 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -261,13 +263,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RabbitMQ安装及基本设置
+                        设计模式概要
                     </div>
                 </div>
             </div>
@@ -378,12 +380,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RabbitMQ/" target="_blank">
-                                <span class="chip bg-color">RabbitMQ</span>
-                            </a>
-                        
-                            <a href="/tags/消息中间件/" target="_blank">
-                                <span class="chip bg-color">消息中间件</span>
+                            <a href="/tags/设计模式/" target="_blank">
+                                <span class="chip bg-color">设计模式</span>
                             </a>
                         
                     </div>
@@ -394,8 +392,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                消息中间件
+                            <a href="/categories/设计模式/" class="post-category" target="_blank">
+                                设计模式
                             </a>
                         
                     </div>
@@ -406,21 +404,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-01
+                    2019-09-02
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1,015
+                        596
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        2 分
                     </div>
                     
                 
@@ -436,78 +434,35 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="安装环境摘要"><a href="#安装环境摘要" class="headerlink" title="安装环境摘要"></a>安装环境摘要</h2><pre><code>为了完整模拟RabbitMQ安装的从无到有,本次安装使用了VMware克隆了一个初始状态下的CentOS7镜像,下面介绍一下安装前的准备工作</code></pre><h3 id="建议配置"><a href="#建议配置" class="headerlink" title="建议配置"></a>建议配置</h3><ul>
-<li>更换阿里巴巴的yum仓库,便于下载所需文件:<br>  <strong>CentOS</strong><br>  <strong>1、备份</strong><br>  <em>mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</em><br>  <strong>2、下载新的CentOS-Base.repo 到/etc/yum.repos.d/</strong><br>  <em>CentOS 7</em><br>  <em>wget -O /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-7.repo" target="_blank" rel="noopener">http://mirrors.aliyun.com/repo/Centos-7.repo</a></em><br>  或者<br>  <em>curl -o /etc/yum.repos.d/CentOS-Base.repo <a href="http://mirrors.aliyun.com/repo/Centos-7.repo" target="_blank" rel="noopener">http://mirrors.aliyun.com/repo/Centos-7.repo</a></em><br>  <strong>3、之后运行yum makecache生成缓存</strong><br>  具体可参考<a href="https://opsx.alibaba.com" title="阿里巴巴镜像站" target="_blank" rel="noopener">阿里巴巴镜像站</a></li>
-<li>更换主机名<br>  <em>进入主机名配置文件,并修改主机名(在安装RabbitMQ后RabbitMQ会使用主机名,建议配置)</em><br>  *vim /etc/hostname *
-  本机修改为Jiavg</li>
-</ul>
-<h2 id="RabbitMQ安装步骤"><a href="#RabbitMQ安装步骤" class="headerlink" title="RabbitMQ安装步骤"></a>RabbitMQ安装步骤</h2><h3 id="1-创建下载文件所需的文件夹"><a href="#1-创建下载文件所需的文件夹" class="headerlink" title="1.创建下载文件所需的文件夹"></a>1.创建下载文件所需的文件夹</h3><p>  [root@Jiavg /]# mkdir -p /usr/local/software/<br>  [root@Jiavg /]# cd /usr/local/software/<br>  [root@Jiavg software]#</p>
-<h3 id="2-下载所需文件"><a href="#2-下载所需文件" class="headerlink" title="2.下载所需文件"></a>2.下载所需文件</h3><p>  <strong>下载erlang和rabbitmq-server的rpm:</strong></p>
-<p>  [root@Jiavg software]#wget <a href="http://www.rabbitmq.com/releases/erlang/erlang-19.0.4-1.el7.centos.x86_64.rpm" target="_blank" rel="noopener">http://www.rabbitmq.com/releases/erlang/erlang-19.0.4-1.el7.centos.x86_64.rpm</a></p>
-<p>  [root@Jiavg software]#wget <a href="http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm" target="_blank" rel="noopener">http://www.rabbitmq.com/releases/rabbitmq-server/v3.6.6/rabbitmq-server-3.6.6-1.el7.noarch.rpm</a></p>
-<p>  <strong>验证文件是否下载成功</strong><br>  [root@Jiavg software]# ls<br>  erlang-19.0.4-1.el7.centos.x86_64.rpm  rabbitmq-server-3.6.6-1.el7.noarch.rpm</p>
-<h3 id="3-安装Erlang"><a href="#3-安装Erlang" class="headerlink" title="3.安装Erlang"></a>3.安装Erlang</h3><p>  <strong>安装erlang</strong><br>  [root@Jiavg software]#rpm -ivh erlang-19.0.4-1.el7.centos.x86_64.rpm    </p>
-<p>  <strong>验证erlang是否安装成功</strong><br>  [root@Jiavg software]# erl<br>  Erlang/OTP 19 [erts-8.0.3] [source] [64-bit] [smp:2:2] [async-threads:10] [hipe] [kernel-poll:false]</p>
-<p>  Eshell V8.0.3  (abort with ^G)<br>  1&gt; </p>
-<h3 id="4-安装RabbitMQ"><a href="#4-安装RabbitMQ" class="headerlink" title="4.安装RabbitMQ"></a>4.安装RabbitMQ</h3><p>  <strong>安装socat(安装RabbitMQ需要此命令进行密匙校验)</strong><br>  [root@Jiavg software]# yum install socat</p>
-<p>  如果不安装socat,则会出现以下情况:<br>  [root@Jiavg software]# rpm -ivh rabbitmq-server-3.6.6-1.el7.noarch.rpm<br>  警告：rabbitmq-server-3.6.6-1.el7.noarch.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID 6026dfca:  NOKEY<br>  错误：依赖检测失败：<br>        socat 被 rabbitmq-server-3.6.6-1.el7.noarch 需要</p>
-<p>  <strong>安装RabbitMQ</strong><br>  [root@Jiavg software]# rpm -ivh rabbitmq-server-3.6.6-1.el7.noarch.rpm<br>  警告：rabbitmq-server-3.6.6-1.el7.noarch.rpm: 头V4 RSA/SHA1 Signature, 密钥 ID 6026dfca: NOKEY<br>  准备中…                          ################################# [100%]<br>  正在升级/安装…<br>  1:rabbitmq-server-3.6.6-1.el7      ################################# [100%]</p>
-<h3 id="5-修改基本配置文件"><a href="#5-修改基本配置文件" class="headerlink" title="5.修改基本配置文件"></a>5.修改基本配置文件</h3><p>  <strong>进入RabbitMQ配置文件目录</strong><br>  [root@Jiavg ebin]# cd /usr/lib/rabbitmq/lib/rabbitmq_server-3.6.6/ebin/</p>
-<p>  <strong>修改rabbit.app文件</strong><br>  [root@Jiavg ebin]#vim rabbit.app</p>
-<p>  <strong>在vim中使用/loopback定位需要修改的文件位置</strong><br>  /loopback</p>
-<p>  文件被定位到<br>  {loopback_users, [&lt;&lt;”guest”&gt;&gt;]},<br>  修改为<br>  {loopback_users, [guest]},<br>  即:删除&lt;&lt;”和”&gt;&gt;</p>
-<p>  保存并退出</p>
-<h3 id="6-安装RabbitMQ的rabbitmq-management插件"><a href="#6-安装RabbitMQ的rabbitmq-management插件" class="headerlink" title="6.安装RabbitMQ的rabbitmq_management插件"></a>6.安装RabbitMQ的rabbitmq_management插件</h3><p>  RabbitMQ的rabbitmq_management插件可以通过浏览器的可视化界面来管理RabbitMQ</p>
-<p>  <strong>启动RabbitMQ</strong></p>
-<pre><code>[root@Jiavg ebin]# rabbitmq-server start &amp;
-[1] 9843
-[root@Jiavg ebin]# 
-              RabbitMQ 3.6.6. Copyright (C) 2007-2016 Pivotal Software, Inc.
-  ##  ##      Licensed under the MPL.  See http://www.rabbitmq.com/
-  ##  ##
-  ##########  Logs: /var/log/rabbitmq/rabbit@Jiavg.log
-  ######  ##        /var/log/rabbitmq/rabbit@Jiavg-sasl.log
-  ##########
-              Starting broker...</code></pre><p>  <strong>查看本地可用插件</strong></p>
-<pre><code>[root@Jiavg ebin]# rabbitmq-plugins list
- Configured: E = explicitly enabled; e = implicitly enabled
- | Status:   [failed to contact rabbit@Jiavg - status not shown]
- |/
-[  ] amqp_client                       3.6.6
-[  ] cowboy                            1.0.3
-[  ] cowlib                            1.0.1
-[  ] mochiweb                          2.13.1
-[  ] rabbitmq_amqp1_0                  3.6.6
-[  ] rabbitmq_auth_backend_ldap        3.6.6
-[  ] rabbitmq_auth_mechanism_ssl       3.6.6
-[  ] rabbitmq_consistent_hash_exchange 3.6.6
-[  ] rabbitmq_event_exchange           3.6.6
-[  ] rabbitmq_federation               3.6.6
-[  ] rabbitmq_federation_management    3.6.6
-[  ] rabbitmq_jms_topic_exchange       3.6.6
-[  ] rabbitmq_management               3.6.6
-[  ] rabbitmq_management_agent         3.6.6
-[  ] rabbitmq_management_visualiser    3.6.6
-[  ] rabbitmq_mqtt                     3.6.6
-[  ] rabbitmq_recent_history_exchange  1.2.1
-[  ] rabbitmq_sharding                 0.1.0
-[  ] rabbitmq_shovel                   3.6.6
-[  ] rabbitmq_shovel_management        3.6.6
-[  ] rabbitmq_stomp                    3.6.6
-[  ] rabbitmq_top                      3.6.6
-[  ] rabbitmq_tracing                  3.6.6
-[  ] rabbitmq_trust_store              3.6.6
-[  ] rabbitmq_web_dispatch             3.6.6
-[  ] rabbitmq_web_stomp                3.6.6
-[  ] rabbitmq_web_stomp_examples       3.6.6
-[  ] sockjs                            0.3.4
-[  ] webmachine                        1.10.3</code></pre><p>  <strong>安装rabbitmq_management插件</strong><br>  [root@Jiavg ebin]# rabbitmq-plugins enable rabbitmq_management</p>
-<h3 id="7-测试RabbitMQ的rabbitmq-management插件"><a href="#7-测试RabbitMQ的rabbitmq-management插件" class="headerlink" title="7.测试RabbitMQ的rabbitmq_management插件"></a>7.测试RabbitMQ的rabbitmq_management插件</h3><p>  <strong>使用浏览器访问 IP地址:15672</strong><br>  把<strong>IP地址</strong>替换为你的RabbitMQ安装的主机IP</p>
-<p>  注意:如果不能正常访问,可能是防火墙问题<br>   此时需要开启15672端口的访问权限</p>
-<p>  <strong>如以上步骤都正确,则浏览器会显示以下页面</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-01_114644.jpg" alt></p>
-<p>  <strong>在对应的输入框输入如下</strong><br>  Username:guest<br>  Password:guest<br>  <em>即:用户名和密码都是guest,这是RabbitMQ默认的账号和密码</em></p>
-<p>  <strong>在成功输入账户和密码后会进入如下界面</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-01_115023.jpg" alt></p>
-<p>  <strong>此时,RabbitMQ已经安装完成.</strong></p>
+                <h2 id="设计模式的目的"><a href="#设计模式的目的" class="headerlink" title="设计模式的目的"></a>设计模式的目的</h2><p>  在编写软件的过程中,程序员面临着来自耦合性,内聚性以及可维护性,可扩展性,重用性,灵活性等多方面的挑战,设计模式<br>是为了让程序(软件),具有更好</p>
+<ol>
+<li>代码重用性 (即:相同功能的代码,不用多次编写)</li>
+<li>可读性 (即:编程规范性,便于其他程序员的阅读和理解)</li>
+<li>可扩展性 (即:当需要添加新功能时,非常的方便,也称为可维护性)</li>
+<li>可靠性 (即:当我们添加新的功能时,对原来的功能没有影响)</li>
+<li>使程序呈现高内聚,低耦合的特性</li>
+</ol>
+<p><strong>分享金句</strong><br>  设计模式包含了面向对象的精髓,”懂得了设计模式,你就懂得了面向对象分析和设计(OOA/D)的精要”</p>
+<h2 id="设计模式七大原则"><a href="#设计模式七大原则" class="headerlink" title="设计模式七大原则"></a>设计模式七大原则</h2><p>  设计模式原则,其实就是程序员在编写程序时,应当遵守的原则,也是各种设计模式的基础(即:设计模式为什么这样设计的<br>依据).</p>
+<p>  <strong>设计模式常用的七大原则有</strong></p>
+<ol>
+<li>单一职责原则</li>
+<li>接口隔离原则</li>
+<li>依赖倒置原则</li>
+<li>里氏替换原则</li>
+<li>开闭原则</li>
+<li>迪米特法则</li>
+<li>合成复用原则</li>
+</ol>
+<h3 id="单一职责原则-SRP-Single-Responsibility-Principle"><a href="#单一职责原则-SRP-Single-Responsibility-Principle" class="headerlink" title="单一职责原则(SRP:Single Responsibility Principle)"></a>单一职责原则(SRP:Single Responsibility Principle)</h3><p>  <strong>基本介绍</strong><br>  对类来说,即一个类应该只负责一项职责.<br>  <em>如类A负责两个不同的职责:职责1,职责2.当职责1需求变更而改变A时,可能造成职责2执行错误,所以需要将类A的粒度分解<br>为A1,A2.</em></p>
+<p>  <strong>注意事项及细节</strong></p>
+<ol>
+<li>降低类的复杂度,一个类只负责一项职责.</li>
+<li>提高类的可读性,可维护性.</li>
+<li>降低变更引起的风险.</li>
+<li>通常情况下,我们应该严格遵守单一职责原则,只有逻辑足够简单,才可以在代码级违反单一职责原则;<br>只有类中方法数量足够少,可以在方法级别保持单一职责原则.</li>
+</ol>
+<h3 id="接口隔离原则-ISP-Interface-Segregation-Principle"><a href="#接口隔离原则-ISP-Interface-Segregation-Principle" class="headerlink" title="接口隔离原则(ISP:Interface Segregation Principle)"></a>接口隔离原则(ISP:Interface Segregation Principle)</h3><p>  <strong>基本介绍</strong><br>  客户端不应该依赖他不需要的接口,即一个类对另一个类的依赖应该建立在最小的接口上.</p>
 
             </div>
             <hr/>
@@ -666,9 +621,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RabbitMQ安装及基本设置》
+                    《设计模式概要》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/01/RabbitMQ安装01/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/02/设计模式01/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -734,24 +689,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/09/02/RabbitMQ02/">
+                <a href="/2019/09/03/RabbitMQ04/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="RabbitMQ命令行与管控台操作">
+                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="RabbitMQ-Exchange">
                         
-                        <span class="card-title">RabbitMQ命令行与管控台操作</span>
+                        <span class="card-title">RabbitMQ-Exchange</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ命令行与管控台操作
+                            RabbitMQ之交换机
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-03
                         </span>
                         <span class="publish-author">
                             
@@ -787,24 +742,24 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/01/RabbitMQ/">
+                <a href="/2019/09/02/RabbitMQ03/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="RabbitMQ特点">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="RabbitMQ快速入门">
                         
-                        <span class="card-title">RabbitMQ特点</span>
+                        <span class="card-title">RabbitMQ快速入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ特点
+                            RabbitMQ快速入门
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-01
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
                             </span>
                         <span class="publish-author">
                             

@@ -738,15 +738,15 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="RabbitMQ命令行与管控台操作">
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="RabbitMQ命令行与管控台">
                         
-                        <span class="card-title">RabbitMQ命令行与管控台操作</span>
+                        <span class="card-title">RabbitMQ命令行与管控台</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ命令行与管控台操作
+                            RabbitMQ命令行与管控台
                         
                     </div>
                     <div class="publish-info">
@@ -903,7 +903,7 @@
             contentSelector: '#articleContent',
             headingsOffset: -($(window).height() * 0.4 - 45),
             // headingsOffset: -205,
-            headingSelector: 'h2, h3, h4'
+            headingSelector: 'h1, h2, h3, h4'
         });
 
         // modify the toc link href to support Chinese.
@@ -915,7 +915,7 @@
 
         // modify the heading title id to support Chinese.
         i = 0;
-        $('#articleContent').children('h2, h3, h4').each(function () {
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
             $(this).attr('id', tocHeading + (++i));
         });
 

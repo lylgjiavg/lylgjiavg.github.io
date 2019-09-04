@@ -5,8 +5,11 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="RabbitMQ-基本概念, Jiavg">
-    <meta name="description" content="AAA
-">
+    <meta name="description" content="RabbitMQ的基本概念Binding-绑定
+Exchange和Exchange、Queue之间的连接关系
+
+Binding中可以包含Routing Key或则参数
+注意:default Exchange 不能进行Binding，也不需要">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -413,14 +416,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1
+                        1,360
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        1 分
+                        5 分
                     </div>
                     
                 
@@ -436,7 +439,93 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>AAA</p>
+                <h1 id="RabbitMQ的基本概念"><a href="#RabbitMQ的基本概念" class="headerlink" title="RabbitMQ的基本概念"></a>RabbitMQ的基本概念</h1><h2 id="Binding-绑定"><a href="#Binding-绑定" class="headerlink" title="Binding-绑定"></a>Binding-绑定</h2><ul>
+<li><p>Exchange和Exchange、Queue之间的连接关系</p>
+</li>
+<li><p>Binding中可以包含Routing Key或则参数</p>
+<p><strong>注意:</strong><br>default Exchange 不能进行Binding，也不需要进行绑定<br>除default Exchange之外，其他任何Exchange都需要和Queue进行Binding，否则无法进行消息路由（转发）<br>Binding的时候，可以设置一个或多个参数，其中参数要特别注意参数类型<br>Direct Exchange、Topic Exchange进行Binding的时候，需要指定Routing key<br>Fanout Exchange、Headers Exchange进行Binding的时候，不需要指定Routing key</p>
+</li>
+</ul>
+<h2 id="Queue-消息队列"><a href="#Queue-消息队列" class="headerlink" title="Queue-消息队列"></a>Queue-消息队列</h2><ul>
+<li><p>消息队列，实际存储消息数据</p>
+</li>
+<li><p>Durability：是否持久化，Durable：是，Transient：否</p>
+</li>
+<li><p>Auto delete：如选yes，代表当最后一个监听被移走之后，该Queue会自动删除</p>
+<p><strong>注意:</strong></p>
+</li>
+</ul>
+<ul>
+<li>关于Queue名称最长？<br>RabbitMQ规定，队列的名字最长不超过UTF-8编码的255字节。不过一般没人无聊到声明名字那么长的队列<br>吧。。。</li>
+</ul>
+<ul>
+<li>关于Queue名称雷区？<br>由于RabbitMQ内部的Queue命名规则采用 “amq.”形式，所以当我们声明自己的Queue时，注意不要与此规则<br>冲突，否则会报异常。</li>
+</ul>
+<ul>
+<li>关于队列属性？<br>Durable ：代表该队列是否持久化至硬盘（若要使队列中消息不丢失，同时也需要将消息声明为持久化）；<br>Exclusive :是否声明该队列是否为连接独占，若为独占，连接关闭后队列即被删除；<br>Auto-delete：若没有消费者订阅该队列，队列将被删除；<br>Arguments：可选map类型参数，可以指定队列长度，消息生存时间，镜相设置等</li>
+</ul>
+<ul>
+<li>声明了一个已经存在的队列？<br>如果队列已经存在，再次声明将不会起作用。若原始队列参数和该次声明时不同则会报异常。</li>
+</ul>
+<ul>
+<li>队列中消息顺序？<br>默认情况下是FIFO，即先进先出，同时也支持发送消息时指定消息的优先级。</li>
+</ul>
+<ul>
+<li>队列消息存放位置？<br>对于临时消息，RabbitMQ尽量将其存放在内存，当出现内存告警时，MQ会将消息持久化至硬盘。对于持久化<br>消息与Lazy-queues，MQ会先将消息存入硬盘，消费时再取出。</li>
+</ul>
+<ul>
+<li>队列中消息的消费？<br>默认情况下，MQ会设置消费者的消费确认模式为自动。对于一些重要消息的处理，推荐确认模式改为手动。<br>（nack和reject区别？nack可以一次拒绝多条消息）</li>
+</ul>
+<ul>
+<li>队列中消息的消费速度？<br>通过Prefetch（通道上最大未确认投递数量）设置消费者每次消费的条数，一般将该值设为1，但他会降低吞<br>吐量。RabbitMQ官网建议的是100-300.（更建议反复试验得到一个表现符合期望的值）</li>
+</ul>
+<ul>
+<li>队列中消息状态？<br>队列中的消息共有俩种状态，一是准备投递，二是已投递但未确认。</li>
+</ul>
+<ul>
+<li>队列最大长度？<br>声明队列时可以指定最大长度，需要注意的是只限制状态为准备投递的数量，未确认的消息不计算在内。当队<br>列长度超过限制，MQ会根据策略选择丢弃（默认）或者将消息投递进死信队列。</li>
+</ul>
+<ul>
+<li>关于死信队列？<br>其实更准确的说法是死信交换机，提前声明一个交换机，在声明队列时使用“x-dead-letter-exchange”参<br>数（可指定routKey）将队列绑定到该死信交换机。消息有以下情况之一会成为死信：被reject或者nack，消<br>息超过生存时间，队列长度超过限制。</li>
+</ul>
+<ul>
+<li>关于不能路由到队列的消息？<br>这个和上面一样，其实不算Queue系列而是Exchange。针对消息无法路由到队列的情况MQ提供了Alternate<br>Exchange处理。声明Exchange时添加args.put(“alternate-exchange”,”my-ae”)参数。即当该交换机存<br>在无法路由的消息时，它将消息发布到AE上，AE把消息路由到绑定在他上面的消息。</li>
+</ul>
+<h2 id="Message-消息"><a href="#Message-消息" class="headerlink" title="Message-消息"></a>Message-消息</h2><ul>
+<li><p>服务器和应用程序之间传送的数据</p>
+</li>
+<li><p>本质上就是一段数据，由Properties和Payload（Body）组成</p>
+</li>
+<li><p>发送消息可以为消息指定一些参数<br>Delivery mode: 是否持久化，1 - Non-persistent，2 - Persistent<br>Headers：Headers can have any name. Only long string headers can be set here.<br>Properties: You can set other message properties here (delivery mode and headers are<br>pulled out as the most common cases). Invalid properties will be ignored.<br>Valid properties are: </p>
+<ol>
+<li>content_type ： 消息内容的类型</li>
+<li>content_encoding： 消息内容的编码格式</li>
+<li>priority： 消息的优先级</li>
+<li>correlation_id：关联id</li>
+<li>reply_to: 用于指定回复的队列的名称</li>
+<li>expiration： 消息的失效时间</li>
+<li>message_id： 消息id</li>
+<li>timestamp：消息的时间戳</li>
+<li>type： 类型</li>
+<li>user_id: 用户id</li>
+<li>app_id： 应用程序id</li>
+<li>cluster_id: 集群id</li>
+<li>Payload: 消息内容<br>————————————————<br>版权声明：本文为CSDN博主「gmHappy」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/ctwy291314/article/details/83183633" target="_blank" rel="noopener">https://blog.csdn.net/ctwy291314/article/details/83183633</a></li>
+</ol>
+<p><strong>注意:</strong></p>
+<p><strong>如何保证消息不丢失</strong></p>
+<ol>
+<li>Exchange需要持久化</li>
+<li>Queue需要持久化</li>
+<li>Message需要持久化</li>
+</ol>
+</li>
+</ul>
+<h2 id="Virtual-host-虚拟主机"><a href="#Virtual-host-虚拟主机" class="headerlink" title="Virtual host-虚拟主机"></a>Virtual host-虚拟主机</h2><ul>
+<li>虚拟地址，用于进行逻辑隔离，最上层的消息路由</li>
+<li>一个Virtual Host里面可以有若干个Exchange和Queue</li>
+<li>同一个Virtual Host里面不能有相同名称的Exchange和Queue</li>
+</ul>
 
             </div>
             <hr/>
@@ -915,7 +1004,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">13.8k</span>
+                <span class="white-color">15.1k</span>
             
 
             

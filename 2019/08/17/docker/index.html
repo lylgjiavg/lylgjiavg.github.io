@@ -5,7 +5,8 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="Docker基本使用, Jiavg">
-    <meta name="description" content="Docker描述    Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到任何流行的 Linux或Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何">
+    <meta name="description" content="Docker描述    Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到
+任何流行的 Linux或Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -435,15 +436,99 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Docker描述"><a href="#Docker描述" class="headerlink" title="Docker描述"></a>Docker描述</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">    Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到</span><br><span class="line">任何流行的 Linux或Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</span><br></pre></td></tr></table></figure>
+                <h1 id="Docker描述"><a href="#Docker描述" class="headerlink" title="Docker描述"></a>Docker描述</h1><pre><code>    Docker 是一个开源的应用容器引擎，让开发者可以打包他们的应用以及依赖包到一个可移植的镜像中，然后发布到
+任何流行的 Linux或Windows 机器上，也可以实现虚拟化。容器是完全使用沙箱机制，相互之间不会有任何接口。</code></pre><h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><pre><code class="java">进入yum目录
+[root@bogon yum.repos.d]cd /etc/yum.repos.d/
 
-<h1 id="Docker安装"><a href="#Docker安装" class="headerlink" title="Docker安装"></a>Docker安装</h1><figure class="highlight java"><table><tr><td class="code"><pre><span class="line">进入yum目录</span><br><span class="line">[root<span class="meta">@bogon</span> yum.repos.d]cd /etc/yum.repos.d/</span><br><span class="line"></span><br><span class="line">下载repo</span><br><span class="line">[root@bogon yum.repos.d]# wget https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">--<span class="number">2019</span>-<span class="number">08</span>-<span class="number">17</span> <span class="number">21</span>:<span class="number">23</span>:<span class="number">14</span>--  https:<span class="comment">//mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo</span></span><br><span class="line">正在解析主机 mirrors.tuna.tsinghua.edu.cn (mirrors.tuna.tsinghua.edu.cn)... <span class="number">101.6</span>.8.193, <span class="number">2402</span>:f000:<span class="number">1</span>:<span class="number">408</span>:<span class="number">8100</span>::<span class="number">1</span></span><br><span class="line">正在连接 mirrors.tuna.tsinghua.edu.cn (mirrors.tuna.tsinghua.edu.cn)|<span class="number">101.6</span>.8.193|:<span class="number">443</span>... 已连接。</span><br><span class="line">已发出 HTTP 请求，正在等待回应... <span class="number">200</span> OK</span><br><span class="line">长度：<span class="number">2424</span> (<span class="number">2.4</span>K) [application/octet-stream]</span><br><span class="line">正在保存至: “docker-ce.repo”</span><br><span class="line"><span class="number">100</span>%[==========================================================================================================&gt;] <span class="number">2</span>,<span class="number">424</span>       --.-K/s 用时 <span class="number">0</span>s      </span><br><span class="line"><span class="number">2019</span>-<span class="number">08</span>-<span class="number">17</span> <span class="number">21</span>:<span class="number">23</span>:<span class="number">14</span> (<span class="number">262</span> MB/s) - 已保存 “docker-ce.repo” [<span class="number">2424</span>/<span class="number">2424</span>])</span><br><span class="line"></span><br><span class="line">验证docker-ce是否安装成功</span><br><span class="line">[root@bogon yum.repos.d]# ls</span><br><span class="line">CentOS-Base.repo  CentOS-Debuginfo.repo  CentOS-Media.repo    CentOS-Vault.repo</span><br><span class="line">CentOS-CR.repo    CentOS-fasttrack.repo  CentOS-Sources.repo  docker-ce.repo</span><br><span class="line">[root@bogon yum.repos.d]# yum repolist</span><br><span class="line">已加载插件：fastestmirror, langpacks</span><br><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line"> * base: mirrors.njupt.edu.cn</span><br><span class="line"> * extras: mirrors.cn99.com</span><br><span class="line"> * updates: mirrors.cn99.com</span><br><span class="line">源标识                                                                源名称                                                                  状态</span><br><span class="line">base/<span class="number">7</span>/x86_64                                                         CentOS-<span class="number">7</span> - Base                                                         <span class="number">10</span>,<span class="number">019</span></span><br><span class="line">docker-ce-stable/x86_64                                               Docker CE Stable - x86_64                                                   <span class="number">52</span></span><br><span class="line">extras/<span class="number">7</span>/x86_64                                                       CentOS-<span class="number">7</span> - Extras                                                          <span class="number">435</span></span><br><span class="line">updates/<span class="number">7</span>/x86_64                                                      CentOS-<span class="number">7</span> - Updates                                                       <span class="number">2</span>,<span class="number">500</span></span><br><span class="line">repolist: <span class="number">13</span>,<span class="number">006</span></span><br><span class="line"></span><br><span class="line">[root@bogon yum.repos.d]# docker --version</span><br><span class="line">Docker version <span class="number">19.03</span>.1, build <span class="number">74</span>b1e89</span><br></pre></td></tr></table></figure>
+下载repo
+[root@bogon yum.repos.d]# wget https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+--2019-08-17 21:23:14--  https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/centos/docker-ce.repo
+正在解析主机 mirrors.tuna.tsinghua.edu.cn (mirrors.tuna.tsinghua.edu.cn)... 101.6.8.193, 2402:f000:1:408:8100::1
+正在连接 mirrors.tuna.tsinghua.edu.cn (mirrors.tuna.tsinghua.edu.cn)|101.6.8.193|:443... 已连接。
+已发出 HTTP 请求，正在等待回应... 200 OK
+长度：2424 (2.4K) [application/octet-stream]
+正在保存至: “docker-ce.repo”
+100%[==========================================================================================================&gt;] 2,424       --.-K/s 用时 0s      
+2019-08-17 21:23:14 (262 MB/s) - 已保存 “docker-ce.repo” [2424/2424])
 
-<h1 id="配置Docker加速器Json"><a href="#配置Docker加速器Json" class="headerlink" title="配置Docker加速器Json"></a>配置Docker加速器Json</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[root@bogon yum.repos.d]# mkdir /etc/docker/</span><br><span class="line">[root@bogon yum.repos.d]# vi /etc/docker/daemon.json </span><br><span class="line"></span><br><span class="line">在daemon.json 中添加</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+验证docker-ce是否安装成功
+[root@bogon yum.repos.d]# ls
+CentOS-Base.repo  CentOS-Debuginfo.repo  CentOS-Media.repo    CentOS-Vault.repo
+CentOS-CR.repo    CentOS-fasttrack.repo  CentOS-Sources.repo  docker-ce.repo
+[root@bogon yum.repos.d]# yum repolist
+已加载插件：fastestmirror, langpacks
+Loading mirror speeds from cached hostfile
+ * base: mirrors.njupt.edu.cn
+ * extras: mirrors.cn99.com
+ * updates: mirrors.cn99.com
+源标识                                                                源名称                                                                  状态
+base/7/x86_64                                                         CentOS-7 - Base                                                         10,019
+docker-ce-stable/x86_64                                               Docker CE Stable - x86_64                                                   52
+extras/7/x86_64                                                       CentOS-7 - Extras                                                          435
+updates/7/x86_64                                                      CentOS-7 - Updates                                                       2,500
+repolist: 13,006
 
-<h1 id="测试Docker"><a href="#测试Docker" class="headerlink" title="测试Docker"></a>测试Docker</h1><h3 id="创建一个httpd服务"><a href="#创建一个httpd服务" class="headerlink" title="创建一个httpd服务"></a>创建一个httpd服务</h3><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">获得busybox镜像</span><br><span class="line">[root@bogon yum.repos.d]# docker image pull busybox</span><br><span class="line"></span><br><span class="line">利用busybox创建一个容器</span><br><span class="line">[root@bogon yum.repos.d]# docker container run --name myhttpd -it busybox</span><br><span class="line"></span><br><span class="line">创建httpd工作目录及index.html</span><br><span class="line">/ # mkdir /data/html -p</span><br><span class="line">/ # vi /data/html/index.html</span><br><span class="line"></span><br><span class="line">在index.html添加&quot;Hello Docker!&quot;</span><br><span class="line"></span><br><span class="line">此时此进程处于阻塞状态,然后再启动另一个Shell进程</span><br><span class="line">使用docker inspect myhttpd命令查看myhttpd容器的状态信息</span><br><span class="line">[root@bogon ~]# docker inspect myhttpd</span><br><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        ...,</span><br><span class="line">        ...,</span><br><span class="line">        &quot;NetworkSettings&quot;: &#123;</span><br><span class="line">            ...,</span><br><span class="line">			...</span><br><span class="line">            &quot;Networks&quot;: &#123;</span><br><span class="line">                &quot;bridge&quot;: &#123;</span><br><span class="line">                    &quot;IPAMConfig&quot;: null,</span><br><span class="line">                    &quot;Links&quot;: null,</span><br><span class="line">                    &quot;Aliases&quot;: null,</span><br><span class="line">                    &quot;NetworkID&quot;: &quot;c28b3cad37536a90abf27043b6b2caa931bcd31ec79b0785d92ee00236a8f575&quot;,</span><br><span class="line">                    &quot;EndpointID&quot;: &quot;7dedddc84a36d48c4d6d78773cb571179bd455704cb5c341e6fa43764a2dac0d&quot;,</span><br><span class="line">                    &quot;Gateway&quot;: &quot;172.17.0.1&quot;,</span><br><span class="line">                    &quot;IPAddress&quot;: &quot;172.17.0.4&quot;,</span><br><span class="line">                    &quot;IPPrefixLen&quot;: 16,</span><br><span class="line">                    &quot;IPv6Gateway&quot;: &quot;&quot;,</span><br><span class="line">                    &quot;GlobalIPv6Address&quot;: &quot;&quot;,</span><br><span class="line">                    &quot;GlobalIPv6PrefixLen&quot;: 0,</span><br><span class="line">                    &quot;MacAddress&quot;: &quot;02:42:ac:11:00:04&quot;,</span><br><span class="line">                    &quot;DriverOpts&quot;: null</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line">在NetworkSettings下的IPAddress可以获得myhttpd的容器虚拟地址为172.17.0.4</span><br><span class="line"></span><br><span class="line">此时使用curl命令来验证httpd服务是否进行</span><br><span class="line">[root@bogon ~]# curl 172.17.0.4</span><br><span class="line">Hello Docker!</span><br><span class="line"></span><br><span class="line">可以观察到myhttpd容器内的httpd服务正常运行</span><br></pre></td></tr></table></figure>
+[root@bogon yum.repos.d]# docker --version
+Docker version 19.03.1, build 74b1e89
+</code></pre>
+<h1 id="配置Docker加速器Json"><a href="#配置Docker加速器Json" class="headerlink" title="配置Docker加速器Json"></a>配置Docker加速器Json</h1><pre><code>[root@bogon yum.repos.d]# mkdir /etc/docker/
+[root@bogon yum.repos.d]# vi /etc/docker/daemon.json 
 
-<h1 id="附-Docker生命周期"><a href="#附-Docker生命周期" class="headerlink" title="附:Docker生命周期"></a>附:Docker生命周期</h1><p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/20190817-140949.png" alt="docker生命周期"></p>
+在daemon.json 中添加
+{
+  &quot;registry-mirrors&quot;: [&quot;https://registry.docker-cn.com&quot;]
+}
+
+
+</code></pre><h1 id="测试Docker"><a href="#测试Docker" class="headerlink" title="测试Docker"></a>测试Docker</h1><h3 id="创建一个httpd服务"><a href="#创建一个httpd服务" class="headerlink" title="创建一个httpd服务"></a>创建一个httpd服务</h3><pre><code>获得busybox镜像
+[root@bogon yum.repos.d]# docker image pull busybox
+
+利用busybox创建一个容器
+[root@bogon yum.repos.d]# docker container run --name myhttpd -it busybox
+
+创建httpd工作目录及index.html
+/ # mkdir /data/html -p
+/ # vi /data/html/index.html
+
+在index.html添加&quot;Hello Docker!&quot;
+
+此时此进程处于阻塞状态,然后再启动另一个Shell进程
+使用docker inspect myhttpd命令查看myhttpd容器的状态信息
+[root@bogon ~]# docker inspect myhttpd
+[
+    {
+        ...,
+        ...,
+        &quot;NetworkSettings&quot;: {
+            ...,
+            ...
+            &quot;Networks&quot;: {
+                &quot;bridge&quot;: {
+                    &quot;IPAMConfig&quot;: null,
+                    &quot;Links&quot;: null,
+                    &quot;Aliases&quot;: null,
+                    &quot;NetworkID&quot;: &quot;c28b3cad37536a90abf27043b6b2caa931bcd31ec79b0785d92ee00236a8f575&quot;,
+                    &quot;EndpointID&quot;: &quot;7dedddc84a36d48c4d6d78773cb571179bd455704cb5c341e6fa43764a2dac0d&quot;,
+                    &quot;Gateway&quot;: &quot;172.17.0.1&quot;,
+                    &quot;IPAddress&quot;: &quot;172.17.0.4&quot;,
+                    &quot;IPPrefixLen&quot;: 16,
+                    &quot;IPv6Gateway&quot;: &quot;&quot;,
+                    &quot;GlobalIPv6Address&quot;: &quot;&quot;,
+                    &quot;GlobalIPv6PrefixLen&quot;: 0,
+                    &quot;MacAddress&quot;: &quot;02:42:ac:11:00:04&quot;,
+                    &quot;DriverOpts&quot;: null
+                }
+            }
+        }
+    }
+]
+在NetworkSettings下的IPAddress可以获得myhttpd的容器虚拟地址为172.17.0.4
+
+此时使用curl命令来验证httpd服务是否进行
+[root@bogon ~]# curl 172.17.0.4
+Hello Docker!
+
+可以观察到myhttpd容器内的httpd服务正常运行</code></pre><h1 id="附-Docker生命周期"><a href="#附-Docker生命周期" class="headerlink" title="附:Docker生命周期"></a>附:Docker生命周期</h1><p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/20190817-140949.png" alt="docker生命周期"></p>
 
             </div>
             <hr/>
@@ -912,7 +997,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">13.8k</span>
+                <span class="white-color">15.1k</span>
             
 
             

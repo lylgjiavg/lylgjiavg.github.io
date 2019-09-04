@@ -5,12 +5,7 @@
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     <meta name="keywords" content="插入排序, Jiavg">
-    <meta name="description" content="题目：leetcode(912):
-    给定一个整数数组 nums，将该数组升序排列。
-        示例 1：   
-            输入：[5,2,3,1]
-            输出：[1,2,3,5]
-       ">
+    <meta name="description" content="题目：1234567891011121314leetcode(912):	给定一个整数数组 nums，将该数组升序排列。		示例 1：   			输入：[5,2,3,1]			输出：[1,2,3,5]		示例 2：			输入：[5,1,1,">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -417,7 +412,7 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        659
+                        761
                     </div>
                     
 
@@ -440,108 +435,16 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h1><pre><code class="java">leetcode(912):
-    给定一个整数数组 nums，将该数组升序排列。
-        示例 1：   
-            输入：[5,2,3,1]
-            输出：[1,2,3,5]
-        示例 2：
-            输入：[5,1,1,2,0,0]
-            输出：[0,0,1,1,2,5]
-    提示：
-        1 &lt;= A.length &lt;= 10000
-        -50000 &lt;= A[i] &lt;= 50000
-    来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/sort-an-array
-    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</code></pre>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h1><pre><code class="java">    (稍后总结)</code></pre>
-<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码:"></a>具体代码:</h1><pre><code class="java">class Solution {
-    public int[] sortArray(int[] nums) {
-        if(nums == null || nums.length == 1){
-            return nums;
-        }
+                <h1 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">leetcode(<span class="number">912</span>):</span><br><span class="line">	给定一个整数数组 nums，将该数组升序排列。</span><br><span class="line">		示例 <span class="number">1</span>：   </span><br><span class="line">			输入：[<span class="number">5</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">			输出：[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>]</span><br><span class="line">		示例 <span class="number">2</span>：</span><br><span class="line">			输入：[<span class="number">5</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">			输出：[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">5</span>]</span><br><span class="line">	提示：</span><br><span class="line">		<span class="number">1</span> &lt;= A.length &lt;= <span class="number">10000</span></span><br><span class="line">		-<span class="number">50000</span> &lt;= A[i] &lt;= <span class="number">50000</span></span><br><span class="line">	来源：力扣（LeetCode）</span><br><span class="line">	链接：https:<span class="comment">//leetcode-cn.com/problems/sort-an-array</span></span><br><span class="line">	著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
 
-        for(int currentInsetIndex = 1; currentInsetIndex &lt; nums.length; currentInsetIndex++){
-            // currentInset:当前进行插入的数字
-            int currentInset = nums[currentInsetIndex];
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(稍后总结)</span><br></pre></td></tr></table></figure>
 
-            // 当前进行比较的下标
-            int currentCompareIndex = currentInsetIndex - 1;
+<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码:"></a>具体代码:</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">int</span>[] sortArray(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        <span class="keyword">if</span>(nums == <span class="keyword">null</span> || nums.length == <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> nums;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> currentInsetIndex = <span class="number">1</span>; currentInsetIndex &lt; nums.length; currentInsetIndex++)&#123;</span><br><span class="line">            <span class="comment">// currentInset:当前进行插入的数字</span></span><br><span class="line">            <span class="keyword">int</span> currentInset = nums[currentInsetIndex];</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 当前进行比较的下标</span></span><br><span class="line">            <span class="keyword">int</span> currentCompareIndex = currentInsetIndex - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 二分查找到正确位置</span></span><br><span class="line">            <span class="keyword">int</span> index = Solution.binarySearch(nums, <span class="number">0</span>, currentCompareIndex, currentInset);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 在正确位置进行插入</span></span><br><span class="line">            Solution.insertNum(nums, <span class="number">0</span>, currentInsetIndex, index);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> nums;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 二分查找数值在已排序数组中正确的下标</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> array 进行查找的数组</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lower 查找下界</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> up 查找上界</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> num 查找数字</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 下标</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> lower, <span class="keyword">int</span> up, <span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> lowerSearch = lower;</span><br><span class="line">        <span class="keyword">int</span> upSearch = up;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> middle = (upSearch - lowerSearch)/<span class="number">2</span> + lowerSearch;</span><br><span class="line">        <span class="keyword">while</span>(lowerSearch &lt;= upSearch)&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(array[middle] &gt; num)&#123;</span><br><span class="line">                upSearch = middle - <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                lowerSearch = middle + <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            middle = (upSearch - lowerSearch)/<span class="number">2</span> + lowerSearch;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> middle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入值到数组中(数组范围内的一个数插入到本数组的另一个位置)</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> array 进行插入的数组</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lower 插入范围下界</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> up 插入范围上界(也是要进行插入的值)</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> index 插入下标</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span>  <span class="title">insertNum</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> lower, <span class="keyword">int</span> up, <span class="keyword">int</span> index)</span></span>&#123;</span><br><span class="line">        <span class="comment">// unlawfulness</span></span><br><span class="line">        <span class="keyword">if</span>(up &lt;= index &amp;&amp; index &lt; lower)&#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// save a value of insert</span></span><br><span class="line">        <span class="keyword">int</span> num = array[up];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// move inserted value of last to last</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = up; i &gt; index &amp;&amp; i &gt; lower; i--)&#123;</span><br><span class="line">            array[i] = array[i-<span class="number">1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// insert value</span></span><br><span class="line">        array[index] = num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-            // 二分查找到正确位置
-            int index = Solution.binarySearch(nums, 0, currentCompareIndex, currentInset);
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果:"></a>运行结果:</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">执行结果：</span><br><span class="line">	通过 显示详情</span><br><span class="line">	执行用时 :</span><br><span class="line">		<span class="number">314</span> ms, 在所有 Java 提交中击败了<span class="number">8.58</span>%的用户</span><br><span class="line">	内存消耗 :</span><br><span class="line">		<span class="number">52.1</span> MB, 在所有 Java 提交中击败了<span class="number">100.00</span>%的用户</span><br></pre></td></tr></table></figure>
 
-            // 在正确位置进行插入
-            Solution.insertNum(nums, 0, currentInsetIndex, index);
-        }
+<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析:"></a>结果分析:</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">本来对这个算法寄予了很大期望:</span><br><span class="line">	<span class="number">1</span>.利用二分查找法解决了进行线性查找而需要的线性时间,进而把查找时间压缩到了lg(n).</span><br><span class="line">	<span class="number">2</span>.利用迭代替换掉递归,进而解决了在数组长度过大时出现的java.lang.StackOverflowError</span><br><span class="line">对于第一次用算法结合的方式进行排序冷静分析后:</span><br><span class="line">	<span class="number">1</span>.对于内存消耗还是很好理解,原址排序.</span><br><span class="line">	<span class="number">2</span>.对于执行用时,虽然用二分查找法代替掉了线性查找,但还是改变不了算法本身是插入排序,而对于插入排序最忌惮的就是数组长度.</span><br></pre></td></tr></table></figure>
 
-        return nums;
-    }
-
-    /**
-     * 二分查找数值在已排序数组中正确的下标
-     * @param array 进行查找的数组
-     * @param lower 查找下界
-     * @param up 查找上界
-     * @param num 查找数字
-     * @return 下标
-     */
-    public static int binarySearch(int[] array, int lower, int up, int num){
-
-        int lowerSearch = lower;
-        int upSearch = up;
-
-        int middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        while(lowerSearch &lt;= upSearch){
-
-            if(array[middle] &gt; num){
-                upSearch = middle - 1;
-            }else{
-                lowerSearch = middle + 1;
-            }
-            middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        }
-
-        return middle;
-    }
-
-    /**
-     * 插入值到数组中(数组范围内的一个数插入到本数组的另一个位置)
-     * @param array 进行插入的数组
-     * @param lower 插入范围下界
-     * @param up 插入范围上界(也是要进行插入的值)
-     * @param index 插入下标
-     */
-    public static void  insertNum(int[] array, int lower, int up, int index){
-        // unlawfulness
-        if(up &lt;= index &amp;&amp; index &lt; lower){
-            return;
-        }
-
-        // save a value of insert
-        int num = array[up];
-
-        // move inserted value of last to last
-        for (int i = up; i &gt; index &amp;&amp; i &gt; lower; i--){
-            array[i] = array[i-1];
-        }
-
-        // insert value
-        array[index] = num;
-    }
-}</code></pre>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果:"></a>运行结果:</h1><pre><code class="java">执行结果：
-    通过 显示详情
-    执行用时 :
-        314 ms, 在所有 Java 提交中击败了8.58%的用户
-    内存消耗 :
-        52.1 MB, 在所有 Java 提交中击败了100.00%的用户</code></pre>
-<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析:"></a>结果分析:</h1><pre><code class="java">    本来对这个算法寄予了很大期望:
-        1.利用二分查找法解决了进行线性查找而需要的线性时间,进而把查找时间压缩到了lg(n).
-        2.利用迭代替换掉递归,进而解决了在数组长度过大时出现的java.lang.StackOverflowError
-    对于第一次用算法结合的方式进行排序冷静分析后:
-        1.对于内存消耗还是很好理解,原址排序.
-        2.对于执行用时,虽然用二分查找法代替掉了线性查找,但还是改变不了算法本身是插入排序,而对于插入排序最忌惮的就是数组长度.</code></pre>
 
             </div>
             <hr/>
@@ -1014,7 +917,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">13.8k</span>
+                <span class="white-color">14.9k</span>
             
 
             

@@ -413,14 +413,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1,448
+                        1,548
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        6 分
+                        7 分
                     </div>
                     
                 
@@ -446,66 +446,10 @@
 <p>信道在 AMQP 中是一个很重要的概念，大多数操作都是在信道这个层面展开的。<br>比如 channel.exchangeDeclare、channel.queueDeclare、channel.basicPublish、channel.basicConsume 等方法。<br>RabbitMQ 相关的 API 与 AMQP 紧密相连，比如 channel.basicPublish 对应 AMQP 的 Basic.Publish 命令。</p>
 <p><strong>名词解释：</strong><br>NIO，也称非阻塞 I/O，包含三大核心部分：Channel（信道）、Buffer（缓冲区）和 Selector（选择器）。<br>NIO 基于 Channel 和 Buffer 进行操作，数据总是从信道读取数据到缓冲区中，或者从缓冲区写入到信道中。<br>Selector 用于监听多个信道的时间（比如连接打开，数据到达等）。因此，单线程可以监听多个数据的信道。</p>
 <h3 id="创建Java项目"><a href="#创建Java项目" class="headerlink" title="创建Java项目"></a>创建Java项目</h3><p>在pom文件中引入RabbitMQ依赖项:</p>
-<pre><code class="java">&lt;!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;com.rabbitmq&lt;/groupId&gt;
-    &lt;artifactId&gt;amqp-client&lt;/artifactId&gt;
-    &lt;version&gt;3.6.5&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-<h3 id="创建消费者"><a href="#创建消费者" class="headerlink" title="创建消费者"></a>创建消费者</h3><pre><code class="java">import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.QueueingConsumer;
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- https:<span class="comment">//mvnrepository.com/artifact/com.rabbitmq/amqp-client --&gt;</span></span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.rabbitmq&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;amqp-client&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.6.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
 
-/**
- * @Classname Consumer
- * @Description RabbitMQ消费者
- * @Date 2019/9/2 11:02
- * @Created by Jiavg
- */
-public class Consumer {
+<h3 id="创建消费者"><a href="#创建消费者" class="headerlink" title="创建消费者"></a>创建消费者</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.QueueingConsumer;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Classname</span> Consumer</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> RabbitMQ消费者</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2019/9/2 11:02</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Created</span> by Jiavg</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">// 1.创建一个ConnectionFactory,并进行配置</span></span><br><span class="line">        ConnectionFactory connectionFactory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line">        connectionFactory.setHost(<span class="string">"127.0.0.1"</span>);</span><br><span class="line">        connectionFactory.setUsername(<span class="string">"guest"</span>);</span><br><span class="line">        connectionFactory.setPassword(<span class="string">"guest"</span>);</span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">"/"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2.通过连接工厂创建连接</span></span><br><span class="line">        Connection connection = connectionFactory.newConnection();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3.通过connection创建一个Channel</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 4.声明(创建)一个队列</span></span><br><span class="line">        String queueName = <span class="string">"test001"</span>;</span><br><span class="line">        <span class="comment">// queueDeclare(String queue, boolean durable, boolean exclusive, boolean autoDelete,Map&lt;String, Object&gt; arguments)</span></span><br><span class="line">        <span class="comment">// param queue the name of the queue</span></span><br><span class="line">        <span class="comment">//  @param durable true if we are declaring a durable queue (the queue will survive a server restart)</span></span><br><span class="line">        <span class="comment">//  @param exclusive true if we are declaring an exclusive queue (restricted to this connection)</span></span><br><span class="line">        <span class="comment">//  @param autoDelete true if we are declaring an autodelete queue (server will delete it when no longer in use)</span></span><br><span class="line">        <span class="comment">//  @param arguments other properties (construction arguments) for the queue</span></span><br><span class="line">        channel.queueDeclare(queueName, <span class="keyword">true</span>, <span class="keyword">false</span>,<span class="keyword">false</span>,<span class="keyword">null</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 5.创建消费者</span></span><br><span class="line">        QueueingConsumer queueingConsumer = <span class="keyword">new</span> QueueingConsumer(channel);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 6.设置Channel</span></span><br><span class="line">        channel.basicConsume(queueName, <span class="keyword">true</span>, queueingConsumer);</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 7.获取消息</span></span><br><span class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>)&#123;</span><br><span class="line">            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">byte</span>[] body = delivery.getBody();</span><br><span class="line">            String msg = <span class="keyword">new</span> String(body);</span><br><span class="line">            System.out.println(<span class="string">"消费者:"</span> + msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-    public static void main(String[] args) throws Exception {
-        // 1.创建一个ConnectionFactory,并进行配置
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(&quot;127.0.0.1&quot;);
-        connectionFactory.setUsername(&quot;guest&quot;);
-        connectionFactory.setPassword(&quot;guest&quot;);
-        connectionFactory.setVirtualHost(&quot;/&quot;);
-
-        // 2.通过连接工厂创建连接
-        Connection connection = connectionFactory.newConnection();
-
-        // 3.通过connection创建一个Channel
-        Channel channel = connection.createChannel();
-
-        // 4.声明(创建)一个队列
-        String queueName = &quot;test001&quot;;
-        // queueDeclare(String queue, boolean durable, boolean exclusive, boolean autoDelete,Map&lt;String, Object&gt; arguments)
-        // param queue the name of the queue
-        //  @param durable true if we are declaring a durable queue (the queue will survive a server restart)
-        //  @param exclusive true if we are declaring an exclusive queue (restricted to this connection)
-        //  @param autoDelete true if we are declaring an autodelete queue (server will delete it when no longer in use)
-        //  @param arguments other properties (construction arguments) for the queue
-        channel.queueDeclare(queueName, true, false,false,null);
-
-        // 5.创建消费者
-        QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
-
-        // 6.设置Channel
-        channel.basicConsume(queueName, true, queueingConsumer);
-
-        // 7.获取消息
-        while (true){
-            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
-
-            byte[] body = delivery.getBody();
-            String msg = new String(body);
-            System.out.println(&quot;消费者:&quot; + msg);
-        }
-    }
-}</code></pre>
 <h3 id="运行消费者类"><a href="#运行消费者类" class="headerlink" title="运行消费者类"></a>运行消费者类</h3><p>  <strong>在运行消费者类</strong>Consumer<strong>后,RabbitMQ的浏览器管控台信息状况如下图所示:</strong></p>
 <p>  <strong>运行消费者类之前:</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_123852.jpg" alt></p>
 <p>  由上图可以看到:</p>
@@ -523,48 +467,8 @@ public class Consumer {
 <li><p>QueueingConsumer queueingConsumer = new QueueingConsumer(channel);channel.basicConsume(queueName, true, queueingConsumer);<br>这两行代码创建一个消费者,并把消费者绑定到已创建的队列上.</p>
 </li>
 </ul>
-<h3 id="创建生产者类"><a href="#创建生产者类" class="headerlink" title="创建生产者类"></a>创建生产者类</h3><pre><code class="java">import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+<h3 id="创建生产者类"><a href="#创建生产者类" class="headerlink" title="创建生产者类"></a>创建生产者类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Channel;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.Connection;</span><br><span class="line"><span class="keyword">import</span> com.rabbitmq.client.ConnectionFactory;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Classname</span> Producter</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Description</span> RabbitMQ生产者</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Date</span> 2019/9/2 10:54</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@Created</span> by Jiavg</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123; </span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1.创建一个ConnectionFactory,并进行配置</span></span><br><span class="line">        ConnectionFactory connectionFactory = <span class="keyword">new</span> ConnectionFactory();</span><br><span class="line">        connectionFactory.setHost(<span class="string">"127.0.0.1"</span>);</span><br><span class="line">        connectionFactory.setUsername(<span class="string">"guest"</span>);</span><br><span class="line">        connectionFactory.setPassword(<span class="string">"guest"</span>);</span><br><span class="line">        connectionFactory.setVirtualHost(<span class="string">"/"</span>);</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// 2.通过连接工厂创建连接</span></span><br><span class="line">        Connection connection = connectionFactory.newConnection();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3.通过connection创建一个Channel</span></span><br><span class="line">        Channel channel = connection.createChannel();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">            String message = <span class="string">"Hello RabbitMQ!"</span>;</span><br><span class="line">            <span class="comment">// 4.通过Channel发送数据</span></span><br><span class="line">            <span class="comment">// basicPublish(String exchange, String routingKey, BasicProperties props, byte[] body)</span></span><br><span class="line">            channel.basicPublish(<span class="string">""</span>, <span class="string">"test001"</span>, <span class="keyword">null</span>, message.getBytes());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5.关闭相关连接</span></span><br><span class="line">        channel.close();</span><br><span class="line">        connection.close();;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-/**
- * @Classname Producter
- * @Description RabbitMQ生产者
- * @Date 2019/9/2 10:54
- * @Created by Jiavg
- */
-public class Producter {
-
-    public static void main(String[] args) throws Exception { 
-
-        // 1.创建一个ConnectionFactory,并进行配置
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(&quot;127.0.0.1&quot;);
-        connectionFactory.setUsername(&quot;guest&quot;);
-        connectionFactory.setPassword(&quot;guest&quot;);
-        connectionFactory.setVirtualHost(&quot;/&quot;);
-
-        // 2.通过连接工厂创建连接
-        Connection connection = connectionFactory.newConnection();
-
-        // 3.通过connection创建一个Channel
-        Channel channel = connection.createChannel();
-
-        for (int i = 0; i &lt; 5; i++){
-            String message = &quot;Hello RabbitMQ!&quot;;
-            // 4.通过Channel发送数据
-            // basicPublish(String exchange, String routingKey, BasicProperties props, byte[] body)
-            channel.basicPublish(&quot;&quot;, &quot;test001&quot;, null, message.getBytes());
-        }
-
-        // 5.关闭相关连接
-        channel.close();
-        connection.close();;
-
-    }
-
-}
-</code></pre>
 <h3 id="运行生产者类"><a href="#运行生产者类" class="headerlink" title="运行生产者类"></a>运行生产者类</h3><p>  <strong>在运行生产者类</strong>Producter<strong>后,RabbitMQ的浏览器管控台信息状况如下图所示:</strong></p>
 <p><strong>运行生产者类之前:</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_124813.jpg" alt><br>  由上图可以看到:</p>
 <ul>
@@ -1051,7 +955,7 @@ public class Producter {
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">13.8k</span>
+                <span class="white-color">14.9k</span>
             
 
             

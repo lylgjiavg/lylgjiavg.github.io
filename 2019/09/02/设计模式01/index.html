@@ -411,14 +411,14 @@
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        596
+                        2,396
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        2 分
+                        9 分
                     </div>
                     
                 
@@ -454,7 +454,7 @@
 <li>迪米特法则</li>
 <li>合成复用原则</li>
 </ol>
-<h3 id="单一职责原则-SRP-Single-Responsibility-Principle"><a href="#单一职责原则-SRP-Single-Responsibility-Principle" class="headerlink" title="单一职责原则(SRP:Single Responsibility Principle)"></a>单一职责原则(SRP:Single Responsibility Principle)</h3><p>  <strong>基本介绍</strong><br>  对类来说,即一个类应该只负责一项职责.<br>  <em>如类A负责两个不同的职责:职责1,职责2.当职责1需求变更而改变A时,可能造成职责2执行错误,所以需要将类A的粒度分解<br>为A1,A2.</em></p>
+<h3 id="单一职责原则-SRP-Single-Responsibility-Principle"><a href="#单一职责原则-SRP-Single-Responsibility-Principle" class="headerlink" title="单一职责原则(SRP:Single Responsibility Principle)"></a>单一职责原则(SRP:Single Responsibility Principle)</h3><p>  <strong>基本介绍</strong><br>  对类来说,即一个类应该只负责一项职责.<br>  <em>如类A负责两个不同的职责:职责1,职责2.当职责1需求变更而改变A时,可能造成职责2执行错误,所以需要将<br>类A的粒度分解为A1,A2.</em></p>
 <p>  <strong>注意事项及细节</strong></p>
 <ol>
 <li>降低类的复杂度,一个类只负责一项职责.</li>
@@ -462,7 +462,130 @@
 <li>降低变更引起的风险.</li>
 <li>通常情况下,我们应该严格遵守单一职责原则,只有逻辑足够简单,才可以在代码级违反单一职责原则;<br>只有类中方法数量足够少,可以在方法级别保持单一职责原则.</li>
 </ol>
-<h3 id="接口隔离原则-ISP-Interface-Segregation-Principle"><a href="#接口隔离原则-ISP-Interface-Segregation-Principle" class="headerlink" title="接口隔离原则(ISP:Interface Segregation Principle)"></a>接口隔离原则(ISP:Interface Segregation Principle)</h3><p>  <strong>基本介绍</strong><br>  客户端不应该依赖他不需要的接口,即一个类对另一个类的依赖应该建立在最小的接口上.</p>
+<h3 id="接口隔离原则-ISP-Interface-Segregation-Principle"><a href="#接口隔离原则-ISP-Interface-Segregation-Principle" class="headerlink" title="接口隔离原则(ISP:Interface Segregation Principle)"></a>接口隔离原则(ISP:Interface Segregation Principle)</h3><p>  <strong>基本介绍</strong><br>  客户端不应该依赖他不需要的接口,即一个类对另一个类的依赖应该建立在最小的接口上.接口隔离原则<br>（Interface Segregation Principle，ISP）要求程序员尽量将臃肿庞大的接口拆分成更小的和更具体的接<br>口，让接口中只包含客户感兴趣的方法。</p>
+<ul>
+<li>接口隔离原则和单一职责都是为了提高类的内聚性、降低它们之间的耦合性，体现了封装的思想，但两者是不同的：<ol>
+<li>单一职责原则注重的是职责，而接口隔离原则注重的是对接口依赖的隔离。</li>
+<li>单一职责原则主要是约束类，它针对的是程序中的实现和细节；接口隔离原则主要约束接口，主要针对抽象和程序整体框架的构建。</li>
+</ol>
+</li>
+</ul>
+<p>  <strong>接口隔离原则的优点</strong><br>  接口隔离原则是为了约束接口、降低类对接口的依赖性，遵循接口隔离原则有以下 5 个优点。</p>
+<ol>
+<li>将臃肿庞大的接口分解为多个粒度小的接口，可以预防外来变更的扩散，提高系统的灵活性和可维护性。</li>
+<li>接口隔离提高了系统的内聚性，减少了对外交互，降低了系统的耦合性。</li>
+<li>如果接口的粒度大小定义合理，能够保证系统的稳定性；但是，如果定义过小，则会造成接口数量过多，<br>使设计复杂化；如果定义太大，灵活性降低，无法提供定制服务，给整体项目带来无法预料的风险。</li>
+<li>使用多个专门的接口还能够体现对象的层次，因为可以通过接口的继承，实现对总接口的定义。</li>
+<li>能减少项目工程中的代码冗余。过大的大接口里面通常放置许多不用的方法，当实现这个接口的时候，被<br>迫设计冗余的代码。</li>
+</ol>
+<p>  <strong>接口隔离原则的实现方法</strong><br>  在具体应用接口隔离原则时，应该根据以下几个规则来衡量。</p>
+<ol>
+<li>接口尽量小，但是要有限度。一个接口只服务于一个子模块或业务逻辑。</li>
+<li>为依赖接口的类定制服务。只提供调用者需要的方法，屏蔽不需要的方法。</li>
+<li>了解环境，拒绝盲从。每个项目或产品都有选定的环境因素，环境不同，接口拆分的标准就不同深入了解业务逻辑。</li>
+<li>提高内聚，减少对外交互。使接口用最少的方法去完成最多的事情。</li>
+</ol>
+<h3 id="依赖倒置原则-DIP-Dependence-Inversion-Principle"><a href="#依赖倒置原则-DIP-Dependence-Inversion-Principle" class="headerlink" title="依赖倒置原则(DIP:Dependence Inversion Principle)"></a>依赖倒置原则(DIP:Dependence Inversion Principle)</h3><p>  <strong>基本介绍</strong></p>
+<ol>
+<li>高层模块不应该依赖低层模块,二者都应该依赖其抽象</li>
+<li>抽象不应该依赖细节,细节应该依赖抽象</li>
+<li>依赖倒置的中心思想是面向接口编程</li>
+<li>依赖倒置原则是基于这样的设计理念:相对于细节的多变性,抽象的东西要稳定的多.以抽象为基础搭建的架构<br>比以细节为基础的架构要稳定的多.在java中,抽象指的是接口或抽象类,细节就是具体的实现.</li>
+<li>使用接口或抽象类的目的是制定好规范,而不涉及任何具体的操作,把展现细节的任务交给他们的实现类去完<br>成.</li>
+</ol>
+<p>  <strong>依赖关系传递的三种方式</strong></p>
+<ol>
+<li><p>接口传递<br>例:</p>
+<pre><code>// 方式1:通过接口传递实现依赖
+interface IOpenAndClose {
+   public void open(ITV itv);
+}
+
+interface ITV {
+   public void play();
+}
+
+class OpenAndClose implements IOpenAndClose {
+   public void open(ITV itv) {
+       itv.play();
+   }
+}</code></pre></li>
+<li><p>构造方法传递<br>例:</p>
+<pre><code>// 方式2:通过构造方法依赖传递
+interface IOpenAndClose {
+   public void open();
+}
+
+interface ITV {
+   public void play();
+}
+
+class OpenAndClose implements IOpenAndClose {
+   public ITV tv;
+   public OpenAndClose(ITV tv) {
+       this.tv = tv;
+   }
+   public void open() {
+       this.tv.play();
+   }
+}</code></pre></li>
+<li><p>Setter方式传递<br>例:</p>
+<pre><code>// 方式3:通过setter方法传递
+interface IOpenAndClose {
+   public void open();
+}
+
+interface ITV {
+   public void play();
+}
+
+class OpenAndClose implements IOpenAndClose {
+   private ITV tv;
+   public void setTv(ITV tv) {
+       this.tv = tv;
+   }
+   public void open() {
+       this.tv.play();
+   }
+}</code></pre></li>
+</ol>
+<p>  <strong>注意事项及细节</strong></p>
+<ol>
+<li><p>低层模块尽量都要有抽象类或接口,或者两者都有,程序稳定性更好.</p>
+</li>
+<li><p>变量的声明类型尽量是抽象类或接口,这样我们的变量引用和实际对象间,就存在一个缓冲层,利于程序扩展<br>和优化.</p>
+</li>
+<li><p>继承时遵循里氏替换原则.</p>
+</li>
+</ol>
+<h3 id="里氏替换原则-LSP-Liskov-Substitution-Principle"><a href="#里氏替换原则-LSP-Liskov-Substitution-Principle" class="headerlink" title="里氏替换原则(LSP:Liskov Substitution Principle)"></a>里氏替换原则(LSP:Liskov Substitution Principle)</h3><p>  <strong>OO中的继承性的思考和说明</strong></p>
+<ul>
+<li><p>继承包含这样一层定义:父类中凡是已经实现好的方法,实际上是在设定规范和契约,虽然它不强制要求所有的子类必须遵守这些契约,但是如果子类对这些已经实现的方法任意修改,就会对整个继承体系造成破坏.</p>
+</li>
+<li><p>继承在给程序设计带来便利的同时,也带来了弊端.比如使用继承会给程序带来侵入性,程序的可移植性降低,增加对象间的耦合性,如果一个类被其他类所继承,则当这个类需要修改时,必须考虑所有的子类,并且父类修改后,所有涉及到的子类的功能都可能产生故障.</p>
+</li>
+<li><p>问题提出:在编程中,如何正确的使用继承? ==&gt; 里氏替换原则</p>
+</li>
+</ul>
+<p>  <strong>基本介绍</strong></p>
+<ul>
+<li>里氏替换原则（Liskov Substitution Principle，LSP）由麻省理工学院计算机科学实验室的里斯科夫<br>（Liskov）女士在 1987 年的“面向对象技术的高峰会议”（OOPSLA）上发表的一篇文章《数据抽象和层次》<br>（Data Abstraction and Hierarchy）里提出来的，她提出：继承必须确保超类所拥有的性质在子类中仍然<br>成立（Inheritance should ensure that any property proved about supertype objects also<br>holds for subtype objects）。</li>
+</ul>
+<ul>
+<li>里氏替换原则通俗来讲就是：子类可以扩展父类的功能，但不能改变父类原有的功能。也就是说：所有引用<br>基类的地方必须能透明的使用其子类的对象.子类继承父类时，除添加新的方法完成新增功能外，尽量不要重写<br>父类的方法。</li>
+</ul>
+<ul>
+<li><p>如果通过重写父类的方法来完成新的功能，这样写起来虽然简单，但是整个继承体系的可复用性会比较差，<br>特别是运用多态比较频繁时，程序运行出错的概率会非常大。</p>
+</li>
+<li><p>里氏替换原则告诉我们,继承实际上让两个类耦合性增强了,在适当情况下,原来的父类和子类都继承一个更通<br>俗的基类,原有的继承关系去掉,可以通过聚合,组合,依赖来解决问题.</p>
+</li>
+</ul>
+<p>  <strong>里氏替换原则的作用</strong></p>
+<ol>
+<li>里氏替换原则是实现开闭原则的重要方式之一。</li>
+<li>它克服了继承中重写父类造成的可复用性变差的缺点。</li>
+<li>它是动作正确性的保证。即类的扩展不会给已有的系统引入新的错误，降低了代码出错的可能性。</li>
+</ol>
 
             </div>
             <hr/>
@@ -939,7 +1062,7 @@
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">19.1k</span>
+                <span class="white-color">20.9k</span>
             
 
             

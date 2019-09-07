@@ -38,7 +38,7 @@ D.抽象方法
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -441,42 +441,42 @@ D.抽象方法
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre><code class="java">1.若在某一个类定义中定义有如下的方法： abstract void performDial( ); 该方法属于（）
+                <pre class=" language-java"><code class="language-java"><span class="token number">1</span><span class="token punctuation">.</span>若在某一个类定义中定义有如下的方法： <span class="token keyword">abstract</span> <span class="token keyword">void</span> <span class="token function">performDial</span><span class="token punctuation">(</span> <span class="token punctuation">)</span><span class="token punctuation">;</span> 该方法属于（）
 
-A.本地方法
-B.最终方法
-C.解态方法
-D.抽象方法
+A<span class="token punctuation">.</span>本地方法
+B<span class="token punctuation">.</span>最终方法
+C<span class="token punctuation">.</span>解态方法
+D<span class="token punctuation">.</span>抽象方法
 
-正确答案: D
+正确答案<span class="token operator">:</span> D
 
-解析:
-本地方法：简单地讲，一个native Method就是一个java调用非java代码的接口；native方法表示该方法要用另外一种依赖平台的编程语言实现。
-最终方法：final void B(){},这样定义的方法就是最终方法，最终方法在子类中不可以被重写，也就是说，如果有个子类继承了这个最终方法所在的类，那么这个子类中不能出现void B(){}这样的方法。
-最终类：final class A {},这样定义的类就是最终类，最终类不能被继承。
-abstract修饰抽象类
+解析<span class="token operator">:</span>
+本地方法：简单地讲，一个<span class="token keyword">native</span> Method就是一个java调用非java代码的接口；<span class="token keyword">native</span>方法表示该方法要用另外一种依赖平台的编程语言实现。
+最终方法：<span class="token keyword">final</span> <span class="token keyword">void</span> <span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>这样定义的方法就是最终方法，最终方法在子类中不可以被重写，也就是说，如果有个子类继承了这个最终方法所在的类，那么这个子类中不能出现<span class="token keyword">void</span> <span class="token function">B</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">}</span>这样的方法。
+最终类：<span class="token keyword">final</span> <span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>这样定义的类就是最终类，最终类不能被继承。
+<span class="token keyword">abstract</span>修饰抽象类
 </code></pre>
-<pre><code class="java">2.当使包含 applet 程序的页面从最小化恢复时，以下选项中的哪个方法将被执行？（ ）
-A.paint()
-B.start()
-C.destroy()
-D.stop()
+<pre class=" language-java"><code class="language-java"><span class="token number">2</span><span class="token punctuation">.</span>当使包含 applet 程序的页面从最小化恢复时，以下选项中的哪个方法将被执行？（ ）
+A<span class="token punctuation">.</span><span class="token function">paint</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+B<span class="token punctuation">.</span><span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+C<span class="token punctuation">.</span><span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+D<span class="token punctuation">.</span><span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 
-正确答案: A
+正确答案<span class="token operator">:</span> A
 
-解析:
-applet页面刚打开时,程序调用init(),然后调用start(),再然后paint();
-用户离开applet页面,程序自动调用stop(),用户关闭浏览器,程序触发destroy();
-并且paint()在每一次浏览器显示页面时被调用;
-最小化点开--&gt;页面重新显示，之前进程没丢，只有paint()。
+解析<span class="token operator">:</span>
+applet页面刚打开时<span class="token punctuation">,</span>程序调用<span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>然后调用<span class="token function">start</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>再然后<span class="token function">paint</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+用户离开applet页面<span class="token punctuation">,</span>程序自动调用<span class="token function">stop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>用户关闭浏览器<span class="token punctuation">,</span>程序触发<span class="token function">destroy</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+并且<span class="token function">paint</span><span class="token punctuation">(</span><span class="token punctuation">)</span>在每一次浏览器显示页面时被调用<span class="token punctuation">;</span>
+最小化点开<span class="token operator">--</span><span class="token operator">></span>页面重新显示，之前进程没丢，只有<span class="token function">paint</span><span class="token punctuation">(</span><span class="token punctuation">)</span>。
 </code></pre>
-<pre><code class="java">
-3.下列关于修饰符混用的说法，错误的是( )
+<pre class=" language-java"><code class="language-java">
+<span class="token number">3</span><span class="token punctuation">.</span>下列关于修饰符混用的说法，错误的是<span class="token punctuation">(</span> <span class="token punctuation">)</span>
 
-A.abstract不能与final并列修饰同一个类
-B.abstract类中不应该有private的成员
-C.abstract方法必须在abstract类或接口中
-D.static方法中能直接调用类里的非static的属性
+A<span class="token punctuation">.</span><span class="token keyword">abstract</span>不能与<span class="token keyword">final</span>并列修饰同一个类
+B<span class="token punctuation">.</span><span class="token keyword">abstract</span>类中不应该有<span class="token keyword">private</span>的成员
+C<span class="token punctuation">.</span><span class="token keyword">abstract</span>方法必须在<span class="token keyword">abstract</span>类或接口中
+D<span class="token punctuation">.</span><span class="token keyword">static</span>方法中能直接调用类里的非<span class="token keyword">static</span>的属性
 </code></pre>
 
             </div>

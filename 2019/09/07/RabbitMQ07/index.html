@@ -32,7 +32,7 @@ Confir">
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -448,54 +448,54 @@ Confir">
 <li>Step1:在channel上开启确认模式:channel.confirmSelect();</li>
 <li>Step2:在Channel上添加监听:addConfirmListener,监听成功和失败的返回结果,根据具体的结果对消息进<br>行重新发送、或记录日志等后续处理。</li>
 </ul>
-<h2 id="Confirm确认消息代码演示"><a href="#Confirm确认消息代码演示" class="headerlink" title="Confirm确认消息代码演示"></a>Confirm确认消息代码演示</h2><h3 id="消费者实现"><a href="#消费者实现" class="headerlink" title="消费者实现"></a>消费者实现</h3><h4 id="消费者代码"><a href="#消费者代码" class="headerlink" title="消费者代码"></a>消费者代码</h4><pre><code class="java">
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.QueueingConsumer;
+<h2 id="Confirm确认消息代码演示"><a href="#Confirm确认消息代码演示" class="headerlink" title="Confirm确认消息代码演示"></a>Confirm确认消息代码演示</h2><h3 id="消费者实现"><a href="#消费者实现" class="headerlink" title="消费者实现"></a>消费者实现</h3><h4 id="消费者代码"><a href="#消费者代码" class="headerlink" title="消费者代码"></a>消费者代码</h4><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>QueueingConsumer<span class="token punctuation">;</span>
 
-/**
+<span class="token comment" spellcheck="true">/**
  * @Classname Consumer
  * @Description Confirm确认机制：消费者
  * @Date 2019/9/7 10:48
  * @Created by Jiavg
- */
-public class Consumer {
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token punctuation">{</span>
 
-    public static void main(String[] args) throws Exception{
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(&quot;127.0.0.1&quot;);
-        connectionFactory.setPort(5672);
-        connectionFactory.setVirtualHost(&quot;/&quot;);
-        connectionFactory.setUsername(&quot;guest&quot;);
-        connectionFactory.setPassword(&quot;guest&quot;);
+        ConnectionFactory connectionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConnectionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPort</span><span class="token punctuation">(</span><span class="token number">5672</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setVirtualHost</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        Connection connection = connectionFactory.newConnection();
+        Connection connection <span class="token operator">=</span> connectionFactory<span class="token punctuation">.</span><span class="token function">newConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        Channel channel = connection.createChannel();
+        Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        String exchangeName = &quot;test_Confirm_Exchange&quot;;
-        String routingKey = &quot;confirm.#&quot;;
-        String queueName = &quot;test_Confirm_Queue&quot;;
+        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Confirm_Exchange"</span><span class="token punctuation">;</span>
+        String routingKey <span class="token operator">=</span> <span class="token string">"confirm.#"</span><span class="token punctuation">;</span>
+        String queueName <span class="token operator">=</span> <span class="token string">"test_Confirm_Queue"</span><span class="token punctuation">;</span>
 
-        // 声明交换机、声明队列、绑定队列到交换机
-        channel.exchangeDeclare(exchangeName, &quot;topic&quot;, true, false, null);
-        channel.queueDeclare(queueName, true, false, false, null);
-        channel.queueBind(queueName, exchangeName, routingKey);
+        <span class="token comment" spellcheck="true">// 声明交换机、声明队列、绑定队列到交换机</span>
+        channel<span class="token punctuation">.</span><span class="token function">exchangeDeclare</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> <span class="token string">"topic"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">queueBind</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        // 创建消费者、消费队列
-        QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
-        channel.basicConsume(queueName, true, queueingConsumer);
+        <span class="token comment" spellcheck="true">// 创建消费者、消费队列</span>
+        QueueingConsumer queueingConsumer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">QueueingConsumer</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">basicConsume</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> queueingConsumer<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        while (true) {
-            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
-            byte[] body = delivery.getBody();
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            QueueingConsumer<span class="token punctuation">.</span>Delivery delivery <span class="token operator">=</span> queueingConsumer<span class="token punctuation">.</span><span class="token function">nextDelivery</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> body <span class="token operator">=</span> delivery<span class="token punctuation">.</span><span class="token function">getBody</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            System.out.printf(&quot;消费端:&quot; + new String(body));
-        }        
-    }    
-}
+            System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"消费端:"</span> <span class="token operator">+</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>        
+    <span class="token punctuation">}</span>    
+<span class="token punctuation">}</span>
 </code></pre>
 <h4 id="消费者运行-管控台变化"><a href="#消费者运行-管控台变化" class="headerlink" title="消费者运行-管控台变化"></a>消费者运行-管控台变化</h4><ul>
 <li><p>新增对应交换机<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_111602.jpg" alt></p>
@@ -505,59 +505,59 @@ public class Consumer {
 <li><p>队列绑定关系<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_111818.jpg" alt></p>
 </li>
 </ul>
-<h3 id="生产者实现"><a href="#生产者实现" class="headerlink" title="生产者实现"></a>生产者实现</h3><h4 id="生产者代码"><a href="#生产者代码" class="headerlink" title="生产者代码"></a>生产者代码</h4><pre><code class="java">
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.ConfirmListener;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
+<h3 id="生产者实现"><a href="#生产者实现" class="headerlink" title="生产者实现"></a>生产者实现</h3><h4 id="生产者代码"><a href="#生产者代码" class="headerlink" title="生产者代码"></a>生产者代码</h4><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConfirmListener<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
 
-import java.io.IOException;
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
 
-/**
+<span class="token comment" spellcheck="true">/**
  * @Classname Producer
  * @Description Confirm确认机制：生产者
  * @Date 2019/9/7 10:42
  * @Created by Jiavg
- */
-public class Producer {
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Producer</span> <span class="token punctuation">{</span>
 
-    public static void main(String[] args) throws Exception{
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
 
-        ConnectionFactory connectionFactory = new ConnectionFactory();
-        connectionFactory.setHost(&quot;127.0.0.1&quot;);
-        connectionFactory.setPort(5672);
-        connectionFactory.setVirtualHost(&quot;/&quot;);
-        connectionFactory.setUsername(&quot;guest&quot;);
-        connectionFactory.setPassword(&quot;guest&quot;);
+        ConnectionFactory connectionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConnectionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPort</span><span class="token punctuation">(</span><span class="token number">5672</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setVirtualHost</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        Connection connection = connectionFactory.newConnection();
+        Connection connection <span class="token operator">=</span> connectionFactory<span class="token punctuation">.</span><span class="token function">newConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        Channel channel = connection.createChannel();
+        Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        // 指定消息投递模式:消息的确认模式
-        channel.confirmSelect();
+        <span class="token comment" spellcheck="true">// 指定消息投递模式:消息的确认模式</span>
+        channel<span class="token punctuation">.</span><span class="token function">confirmSelect</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        String exchangeName = &quot;test_Confirm_Exchange&quot;;
-        String routingKey = &quot;confirm.save&quot;;
-        String msg = &quot;Hello World send Confirm Message&quot;;
+        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Confirm_Exchange"</span><span class="token punctuation">;</span>
+        String routingKey <span class="token operator">=</span> <span class="token string">"confirm.save"</span><span class="token punctuation">;</span>
+        String msg <span class="token operator">=</span> <span class="token string">"Hello World send Confirm Message"</span><span class="token punctuation">;</span>
 
-        // 发送消息
-        channel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
+        <span class="token comment" spellcheck="true">// 发送消息</span>
+        channel<span class="token punctuation">.</span><span class="token function">basicPublish</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">,</span> null<span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        // 添加一个确认监听
-        channel.addConfirmListener(new ConfirmListener() {
-            @Override
-            public void handleAck(long deliveryTag, boolean multiple) throws IOException {
-                System.out.printf(&quot;-------Ack-------&quot;);
-            }
+        <span class="token comment" spellcheck="true">// 添加一个确认监听</span>
+        channel<span class="token punctuation">.</span><span class="token function">addConfirmListener</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">ConfirmListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleAck</span><span class="token punctuation">(</span><span class="token keyword">long</span> deliveryTag<span class="token punctuation">,</span> <span class="token keyword">boolean</span> multiple<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"-------Ack-------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
 
-            @Override
-            public void handleNack(long deliveryTag, boolean multiple) throws IOException {
-                System.out.printf(&quot;------No Ack-----&quot;);
-            }
-        });        
-    }    
-}
+            <span class="token annotation punctuation">@Override</span>
+            <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleNack</span><span class="token punctuation">(</span><span class="token keyword">long</span> deliveryTag<span class="token punctuation">,</span> <span class="token keyword">boolean</span> multiple<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+                System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"------No Ack-----"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
+    <span class="token punctuation">}</span>    
+<span class="token punctuation">}</span>
 
 </code></pre>
 <h4 id="生产者运行-控制台变化"><a href="#生产者运行-控制台变化" class="headerlink" title="生产者运行-控制台变化"></a>生产者运行-控制台变化</h4><ul>

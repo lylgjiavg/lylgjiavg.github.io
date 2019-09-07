@@ -33,7 +33,7 @@
     </style>
 
     <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
-</head>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
 
 <body>
@@ -440,108 +440,108 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h1><pre><code class="java">leetcode(912):
+                <h1 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h1><pre class=" language-java"><code class="language-java"><span class="token function">leetcode</span><span class="token punctuation">(</span><span class="token number">912</span><span class="token punctuation">)</span><span class="token operator">:</span>
     给定一个整数数组 nums，将该数组升序排列。
-        示例 1：   
-            输入：[5,2,3,1]
-            输出：[1,2,3,5]
-        示例 2：
-            输入：[5,1,1,2,0,0]
-            输出：[0,0,1,1,2,5]
+        示例 <span class="token number">1</span>：   
+            输入：<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span>
+            输出：<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
+        示例 <span class="token number">2</span>：
+            输入：<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">]</span>
+            输出：<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">]</span>
     提示：
-        1 &lt;= A.length &lt;= 10000
-        -50000 &lt;= A[i] &lt;= 50000
+        <span class="token number">1</span> <span class="token operator">&lt;=</span> A<span class="token punctuation">.</span>length <span class="token operator">&lt;=</span> <span class="token number">10000</span>
+        <span class="token operator">-</span><span class="token number">50000</span> <span class="token operator">&lt;=</span> A<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> <span class="token number">50000</span>
     来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/sort-an-array
+    链接：https<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>leetcode<span class="token operator">-</span>cn<span class="token punctuation">.</span>com<span class="token operator">/</span>problems<span class="token operator">/</span>sort<span class="token operator">-</span>an<span class="token operator">-</span>array
     著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</code></pre>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h1><pre><code class="java">    (稍后总结)</code></pre>
-<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码:"></a>具体代码:</h1><pre><code class="java">class Solution {
-    public int[] sortArray(int[] nums) {
-        if(nums == null || nums.length == 1){
-            return nums;
-        }
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h1><pre class=" language-java"><code class="language-java">    <span class="token punctuation">(</span>稍后总结<span class="token punctuation">)</span></code></pre>
+<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码:"></a>具体代码:</h1><pre class=" language-java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Solution</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">sortArray</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> nums<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>nums <span class="token operator">==</span> null <span class="token operator">||</span> nums<span class="token punctuation">.</span>length <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span> nums<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        for(int currentInsetIndex = 1; currentInsetIndex &lt; nums.length; currentInsetIndex++){
-            // currentInset:当前进行插入的数字
-            int currentInset = nums[currentInsetIndex];
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> currentInsetIndex <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> currentInsetIndex <span class="token operator">&lt;</span> nums<span class="token punctuation">.</span>length<span class="token punctuation">;</span> currentInsetIndex<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// currentInset:当前进行插入的数字</span>
+            <span class="token keyword">int</span> currentInset <span class="token operator">=</span> nums<span class="token punctuation">[</span>currentInsetIndex<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-            // 当前进行比较的下标
-            int currentCompareIndex = currentInsetIndex - 1;
+            <span class="token comment" spellcheck="true">// 当前进行比较的下标</span>
+            <span class="token keyword">int</span> currentCompareIndex <span class="token operator">=</span> currentInsetIndex <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
 
-            // 二分查找到正确位置
-            int index = Solution.binarySearch(nums, 0, currentCompareIndex, currentInset);
+            <span class="token comment" spellcheck="true">// 二分查找到正确位置</span>
+            <span class="token keyword">int</span> index <span class="token operator">=</span> Solution<span class="token punctuation">.</span><span class="token function">binarySearch</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> currentCompareIndex<span class="token punctuation">,</span> currentInset<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-            // 在正确位置进行插入
-            Solution.insertNum(nums, 0, currentInsetIndex, index);
-        }
+            <span class="token comment" spellcheck="true">// 在正确位置进行插入</span>
+            Solution<span class="token punctuation">.</span><span class="token function">insertNum</span><span class="token punctuation">(</span>nums<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> currentInsetIndex<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        return nums;
-    }
+        <span class="token keyword">return</span> nums<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 二分查找数值在已排序数组中正确的下标
      * @param array 进行查找的数组
      * @param lower 查找下界
      * @param up 查找上界
      * @param num 查找数字
      * @return 下标
-     */
-    public static int binarySearch(int[] array, int lower, int up, int num){
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">binarySearch</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">,</span> <span class="token keyword">int</span> lower<span class="token punctuation">,</span> <span class="token keyword">int</span> up<span class="token punctuation">,</span> <span class="token keyword">int</span> num<span class="token punctuation">)</span><span class="token punctuation">{</span>
 
-        int lowerSearch = lower;
-        int upSearch = up;
+        <span class="token keyword">int</span> lowerSearch <span class="token operator">=</span> lower<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> upSearch <span class="token operator">=</span> up<span class="token punctuation">;</span>
 
-        int middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        while(lowerSearch &lt;= upSearch){
+        <span class="token keyword">int</span> middle <span class="token operator">=</span> <span class="token punctuation">(</span>upSearch <span class="token operator">-</span> lowerSearch<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">+</span> lowerSearch<span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>lowerSearch <span class="token operator">&lt;=</span> upSearch<span class="token punctuation">)</span><span class="token punctuation">{</span>
 
-            if(array[middle] &gt; num){
-                upSearch = middle - 1;
-            }else{
-                lowerSearch = middle + 1;
-            }
-            middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        }
+            <span class="token keyword">if</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>middle<span class="token punctuation">]</span> <span class="token operator">></span> num<span class="token punctuation">)</span><span class="token punctuation">{</span>
+                upSearch <span class="token operator">=</span> middle <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span><span class="token keyword">else</span><span class="token punctuation">{</span>
+                lowerSearch <span class="token operator">=</span> middle <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            middle <span class="token operator">=</span> <span class="token punctuation">(</span>upSearch <span class="token operator">-</span> lowerSearch<span class="token punctuation">)</span><span class="token operator">/</span><span class="token number">2</span> <span class="token operator">+</span> lowerSearch<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        return middle;
-    }
+        <span class="token keyword">return</span> middle<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-    /**
+    <span class="token comment" spellcheck="true">/**
      * 插入值到数组中(数组范围内的一个数插入到本数组的另一个位置)
      * @param array 进行插入的数组
      * @param lower 插入范围下界
      * @param up 插入范围上界(也是要进行插入的值)
      * @param index 插入下标
-     */
-    public static void  insertNum(int[] array, int lower, int up, int index){
-        // unlawfulness
-        if(up &lt;= index &amp;&amp; index &lt; lower){
-            return;
-        }
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span>  <span class="token function">insertNum</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">,</span> <span class="token keyword">int</span> lower<span class="token punctuation">,</span> <span class="token keyword">int</span> up<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// unlawfulness</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>up <span class="token operator">&lt;=</span> index <span class="token operator">&amp;&amp;</span> index <span class="token operator">&lt;</span> lower<span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        // save a value of insert
-        int num = array[up];
+        <span class="token comment" spellcheck="true">// save a value of insert</span>
+        <span class="token keyword">int</span> num <span class="token operator">=</span> array<span class="token punctuation">[</span>up<span class="token punctuation">]</span><span class="token punctuation">;</span>
 
-        // move inserted value of last to last
-        for (int i = up; i &gt; index &amp;&amp; i &gt; lower; i--){
-            array[i] = array[i-1];
-        }
+        <span class="token comment" spellcheck="true">// move inserted value of last to last</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> up<span class="token punctuation">;</span> i <span class="token operator">></span> index <span class="token operator">&amp;&amp;</span> i <span class="token operator">></span> lower<span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> array<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
 
-        // insert value
-        array[index] = num;
-    }
-}</code></pre>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果:"></a>运行结果:</h1><pre><code class="java">执行结果：
+        <span class="token comment" spellcheck="true">// insert value</span>
+        array<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> num<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span></code></pre>
+<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果:"></a>运行结果:</h1><pre class=" language-java"><code class="language-java">执行结果：
     通过 显示详情
-    执行用时 :
-        314 ms, 在所有 Java 提交中击败了8.58%的用户
-    内存消耗 :
-        52.1 MB, 在所有 Java 提交中击败了100.00%的用户</code></pre>
-<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析:"></a>结果分析:</h1><pre><code class="java">    本来对这个算法寄予了很大期望:
-        1.利用二分查找法解决了进行线性查找而需要的线性时间,进而把查找时间压缩到了lg(n).
-        2.利用迭代替换掉递归,进而解决了在数组长度过大时出现的java.lang.StackOverflowError
-    对于第一次用算法结合的方式进行排序冷静分析后:
-        1.对于内存消耗还是很好理解,原址排序.
-        2.对于执行用时,虽然用二分查找法代替掉了线性查找,但还是改变不了算法本身是插入排序,而对于插入排序最忌惮的就是数组长度.</code></pre>
+    执行用时 <span class="token operator">:</span>
+        <span class="token number">314</span> ms<span class="token punctuation">,</span> 在所有 Java 提交中击败了<span class="token number">8.58</span><span class="token operator">%</span>的用户
+    内存消耗 <span class="token operator">:</span>
+        <span class="token number">52.1</span> MB<span class="token punctuation">,</span> 在所有 Java 提交中击败了<span class="token number">100.00</span><span class="token operator">%</span>的用户</code></pre>
+<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析:"></a>结果分析:</h1><pre class=" language-java"><code class="language-java">    本来对这个算法寄予了很大期望<span class="token operator">:</span>
+        <span class="token number">1</span><span class="token punctuation">.</span>利用二分查找法解决了进行线性查找而需要的线性时间<span class="token punctuation">,</span>进而把查找时间压缩到了<span class="token function">lg</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">.</span>
+        <span class="token number">2</span><span class="token punctuation">.</span>利用迭代替换掉递归<span class="token punctuation">,</span>进而解决了在数组长度过大时出现的java<span class="token punctuation">.</span>lang<span class="token punctuation">.</span>StackOverflowError
+    对于第一次用算法结合的方式进行排序冷静分析后<span class="token operator">:</span>
+        <span class="token number">1</span><span class="token punctuation">.</span>对于内存消耗还是很好理解<span class="token punctuation">,</span>原址排序<span class="token punctuation">.</span>
+        <span class="token number">2</span><span class="token punctuation">.</span>对于执行用时<span class="token punctuation">,</span>虽然用二分查找法代替掉了线性查找<span class="token punctuation">,</span>但还是改变不了算法本身是插入排序<span class="token punctuation">,</span>而对于插入排序最忌惮的就是数组长度<span class="token punctuation">.</span></code></pre>
 
             </div>
             <hr/>

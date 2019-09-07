@@ -4,13 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="插入排序, Jiavg">
-    <meta name="description" content="题目：leetcode(912):
-    给定一个整数数组 nums，将该数组升序排列。
-        示例 1：   
-            输入：[5,2,3,1]
-            输出：[1,2,3,5]
-       ">
+    <meta name="keywords" content="RabbitMQ-Confirm确认消息, Jiavg">
+    <meta name="description" content="Confirm消息确认机制
+消息的确认,是指生产者投递消息后,如果Broker接收到消息,则会给我们生产者一个应答.
+生产者进行接收应答,用来确认这条消息是否正常的发送到Broker,这种方式也是消息的可靠性投递的核心保障.
+
+Confir">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>插入排序 | Jiavg</title>
+    <title>RabbitMQ-Confirm确认消息 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -265,13 +264,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        插入排序
+                        RabbitMQ-Confirm确认消息
                     </div>
                 </div>
             </div>
@@ -382,12 +381,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/LeetCode/" target="_blank">
-                                <span class="chip bg-color">LeetCode</span>
+                            <a href="/tags/RabbitMQ/" target="_blank">
+                                <span class="chip bg-color">RabbitMQ</span>
                             </a>
                         
-                            <a href="/tags/算法导论/" target="_blank">
-                                <span class="chip bg-color">算法导论</span>
+                            <a href="/tags/消息中间件/" target="_blank">
+                                <span class="chip bg-color">消息中间件</span>
                             </a>
                         
                     </div>
@@ -398,8 +397,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/数据结构和算法/" class="post-category" target="_blank">
-                                数据结构和算法
+                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
+                                消息中间件
                             </a>
                         
                     </div>
@@ -410,21 +409,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-07-21
+                    2019-09-07
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        659
+                        1,200
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        5 分
                     </div>
                     
                 
@@ -440,108 +439,153 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h1><pre><code class="java">leetcode(912):
-    给定一个整数数组 nums，将该数组升序排列。
-        示例 1：   
-            输入：[5,2,3,1]
-            输出：[1,2,3,5]
-        示例 2：
-            输入：[5,1,1,2,0,0]
-            输出：[0,0,1,1,2,5]
-    提示：
-        1 &lt;= A.length &lt;= 10000
-        -50000 &lt;= A[i] &lt;= 50000
-    来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/sort-an-array
-    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</code></pre>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路:"></a>解题思路:</h1><pre><code class="java">    (稍后总结)</code></pre>
-<h1 id="具体代码"><a href="#具体代码" class="headerlink" title="具体代码:"></a>具体代码:</h1><pre><code class="java">class Solution {
-    public int[] sortArray(int[] nums) {
-        if(nums == null || nums.length == 1){
-            return nums;
-        }
+                <h2 id="Confirm消息确认机制"><a href="#Confirm消息确认机制" class="headerlink" title="Confirm消息确认机制"></a>Confirm消息确认机制</h2><ul>
+<li>消息的确认,是指生产者投递消息后,如果Broker接收到消息,则会给我们生产者一个应答.</li>
+<li>生产者进行接收应答,用来确认这条消息是否正常的发送到Broker,这种方式也是消息的可靠性投递的核心保<br>障.</li>
+</ul>
+<h2 id="Confirm确认消息流程解析"><a href="#Confirm确认消息流程解析" class="headerlink" title="Confirm确认消息流程解析"></a>Confirm确认消息流程解析</h2><p>  <strong>确认机制流程图</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_102132.jpg" alt></p>
+<h2 id="如何实现Confirm确认消息"><a href="#如何实现Confirm确认消息" class="headerlink" title="如何实现Confirm确认消息?"></a>如何实现Confirm确认消息?</h2><ul>
+<li>Step1:在channel上开启确认模式:channel.confirmSelect();</li>
+<li>Step2:在Channel上添加监听:addConfirmListener,监听成功和失败的返回结果,根据具体的结果对消息进<br>行重新发送、或记录日志等后续处理。</li>
+</ul>
+<h2 id="Confirm确认消息代码演示"><a href="#Confirm确认消息代码演示" class="headerlink" title="Confirm确认消息代码演示"></a>Confirm确认消息代码演示</h2><h3 id="消费者实现"><a href="#消费者实现" class="headerlink" title="消费者实现"></a>消费者实现</h3><h4 id="消费者代码"><a href="#消费者代码" class="headerlink" title="消费者代码"></a>消费者代码</h4><pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.QueueingConsumer;
 
-        for(int currentInsetIndex = 1; currentInsetIndex &lt; nums.length; currentInsetIndex++){
-            // currentInset:当前进行插入的数字
-            int currentInset = nums[currentInsetIndex];
+/**
+ * @Classname Consumer
+ * @Description Confirm确认机制：消费者
+ * @Date 2019/9/7 10:48
+ * @Created by Jiavg
+ */
+public class Consumer {
 
-            // 当前进行比较的下标
-            int currentCompareIndex = currentInsetIndex - 1;
+    public static void main(String[] args) throws Exception{
 
-            // 二分查找到正确位置
-            int index = Solution.binarySearch(nums, 0, currentCompareIndex, currentInset);
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
 
-            // 在正确位置进行插入
-            Solution.insertNum(nums, 0, currentInsetIndex, index);
-        }
+        Connection connection = connectionFactory.newConnection();
 
-        return nums;
-    }
+        Channel channel = connection.createChannel();
 
-    /**
-     * 二分查找数值在已排序数组中正确的下标
-     * @param array 进行查找的数组
-     * @param lower 查找下界
-     * @param up 查找上界
-     * @param num 查找数字
-     * @return 下标
-     */
-    public static int binarySearch(int[] array, int lower, int up, int num){
+        String exchangeName = &quot;test_Confirm_Exchange&quot;;
+        String routingKey = &quot;confirm.#&quot;;
+        String queueName = &quot;test_Confirm_Queue&quot;;
 
-        int lowerSearch = lower;
-        int upSearch = up;
+        // 声明交换机、声明队列、绑定队列到交换机
+        channel.exchangeDeclare(exchangeName, &quot;topic&quot;, true, false, null);
+        channel.queueDeclare(queueName, true, false, false, null);
+        channel.queueBind(queueName, exchangeName, routingKey);
 
-        int middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        while(lowerSearch &lt;= upSearch){
+        // 创建消费者、消费队列
+        QueueingConsumer queueingConsumer = new QueueingConsumer(channel);
+        channel.basicConsume(queueName, true, queueingConsumer);
 
-            if(array[middle] &gt; num){
-                upSearch = middle - 1;
-            }else{
-                lowerSearch = middle + 1;
+        while (true) {
+            QueueingConsumer.Delivery delivery = queueingConsumer.nextDelivery();
+            byte[] body = delivery.getBody();
+
+            System.out.printf(&quot;消费端:&quot; + new String(body));
+        }        
+    }    
+}
+</code></pre>
+<h4 id="消费者运行-管控台变化"><a href="#消费者运行-管控台变化" class="headerlink" title="消费者运行-管控台变化"></a>消费者运行-管控台变化</h4><ul>
+<li><p>新增对应交换机<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_111602.jpg" alt></p>
+</li>
+<li><p>新增对应队列<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_111703.jpg" alt></p>
+</li>
+<li><p>队列绑定关系<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_111818.jpg" alt></p>
+</li>
+</ul>
+<h3 id="生产者实现"><a href="#生产者实现" class="headerlink" title="生产者实现"></a>生产者实现</h3><h4 id="生产者代码"><a href="#生产者代码" class="headerlink" title="生产者代码"></a>生产者代码</h4><pre><code class="java">
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.ConfirmListener;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+import java.io.IOException;
+
+/**
+ * @Classname Producer
+ * @Description Confirm确认机制：生产者
+ * @Date 2019/9/7 10:42
+ * @Created by Jiavg
+ */
+public class Producer {
+
+    public static void main(String[] args) throws Exception{
+
+        ConnectionFactory connectionFactory = new ConnectionFactory();
+        connectionFactory.setHost(&quot;127.0.0.1&quot;);
+        connectionFactory.setPort(5672);
+        connectionFactory.setVirtualHost(&quot;/&quot;);
+        connectionFactory.setUsername(&quot;guest&quot;);
+        connectionFactory.setPassword(&quot;guest&quot;);
+
+        Connection connection = connectionFactory.newConnection();
+
+        Channel channel = connection.createChannel();
+
+        // 指定消息投递模式:消息的确认模式
+        channel.confirmSelect();
+
+        String exchangeName = &quot;test_Confirm_Exchange&quot;;
+        String routingKey = &quot;confirm.save&quot;;
+        String msg = &quot;Hello World send Confirm Message&quot;;
+
+        // 发送消息
+        channel.basicPublish(exchangeName, routingKey, null, msg.getBytes());
+
+        // 添加一个确认监听
+        channel.addConfirmListener(new ConfirmListener() {
+            @Override
+            public void handleAck(long deliveryTag, boolean multiple) throws IOException {
+                System.out.printf(&quot;-------Ack-------&quot;);
             }
-            middle = (upSearch - lowerSearch)/2 + lowerSearch;
-        }
 
-        return middle;
-    }
+            @Override
+            public void handleNack(long deliveryTag, boolean multiple) throws IOException {
+                System.out.printf(&quot;------No Ack-----&quot;);
+            }
+        });        
+    }    
+}
 
-    /**
-     * 插入值到数组中(数组范围内的一个数插入到本数组的另一个位置)
-     * @param array 进行插入的数组
-     * @param lower 插入范围下界
-     * @param up 插入范围上界(也是要进行插入的值)
-     * @param index 插入下标
-     */
-    public static void  insertNum(int[] array, int lower, int up, int index){
-        // unlawfulness
-        if(up &lt;= index &amp;&amp; index &lt; lower){
-            return;
-        }
-
-        // save a value of insert
-        int num = array[up];
-
-        // move inserted value of last to last
-        for (int i = up; i &gt; index &amp;&amp; i &gt; lower; i--){
-            array[i] = array[i-1];
-        }
-
-        // insert value
-        array[index] = num;
-    }
-}</code></pre>
-<h1 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果:"></a>运行结果:</h1><pre><code class="java">执行结果：
-    通过 显示详情
-    执行用时 :
-        314 ms, 在所有 Java 提交中击败了8.58%的用户
-    内存消耗 :
-        52.1 MB, 在所有 Java 提交中击败了100.00%的用户</code></pre>
-<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析:"></a>结果分析:</h1><pre><code class="java">    本来对这个算法寄予了很大期望:
-        1.利用二分查找法解决了进行线性查找而需要的线性时间,进而把查找时间压缩到了lg(n).
-        2.利用迭代替换掉递归,进而解决了在数组长度过大时出现的java.lang.StackOverflowError
-    对于第一次用算法结合的方式进行排序冷静分析后:
-        1.对于内存消耗还是很好理解,原址排序.
-        2.对于执行用时,虽然用二分查找法代替掉了线性查找,但还是改变不了算法本身是插入排序,而对于插入排序最忌惮的就是数组长度.</code></pre>
+</code></pre>
+<h4 id="生产者运行-控制台变化"><a href="#生产者运行-控制台变化" class="headerlink" title="生产者运行-控制台变化"></a>生产者运行-控制台变化</h4><ul>
+<li><p>消费端接收到监听队列的消息.<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_112301.jpg" alt></p>
+</li>
+<li><p>生产端的确认监听方法打印出相应信息.<br><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_112335.jpg" alt></p>
+</li>
+</ul>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><h3 id="Point1"><a href="#Point1" class="headerlink" title="Point1"></a>Point1</h3><blockquote>
+<p>  Confirm确认机制是生产者和Broker(RabbitMQ)之间的确认机制,不涉及到消费者是否消费了此条消息.<br>为了更好的理解,我们进行了如下实验:<br>  紧接着上面的实验:我们关闭消费者端,并重新运行生产者端:<br>  <strong>管控台变化</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_113305.jpg" alt><br>  通过上图我们可以看出由于关闭了消费者端,该条信息并未被消费,故存留在RabbitMQ的队列中.</p>
+</blockquote>
+<blockquote>
+<p> <strong>生产者控制台变化</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_113612.jpg" alt><br>  通过上图可以看出,Broker给生产者发送了Ack消息确认.由此可见,只要是Broker正确的接收到消息就会给<br>生产端发送Ack确认,而不管消费端是否正常消费了此条消息.</p>
+</blockquote>
+<h3 id="Point2"><a href="#Point2" class="headerlink" title="Point2"></a>Point2</h3><blockquote>
+<p>  Confirm确认机制是生产者和Broker(RabbitMQ)之间的确认机制,甚至Broker没有将此消息正确路由到对<br>应的队列时,还是会给生产者端发送Ack确认.<br>为了更好的理解,我们进行了如下实验:<br>  紧接着上面的实验,我们修改生产者的发送消息的路由键为”unConfirm.save”(此时RabbitMQ中并没有对应<br>的队列),此时我们运行生产端.<br>  <strong>管控台变化</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_113940.jpg" alt><br>  通过上图我们可以看出由于修改了生产者的消息的路由键,此时虽然Message Rates虽然发生改变(Broker接<br>收到消息),但是并没有将此条消息正确的路由到对应的队列中(Queued Messages的总消息数量没有发生改<br>变).</p>
+</blockquote>
+<blockquote>
+<p> <strong>生产者控制台变化</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-7/2019-09-07_114018.jpg" alt><br>  通过上图可以看出,Broker给生产者发送了Ack消息确认.由此可见,虽然消息并未正确的路由到队列中,但是<br>Broker接收到了消息就会给生产者端发送Ack确认.</p>
+</blockquote>
+<h2 id="Confirm确认监听情况说明"><a href="#Confirm确认监听情况说明" class="headerlink" title="Confirm确认监听情况说明"></a>Confirm确认监听情况说明</h2><ul>
+<li><p>什么时候会走 handleNack 方法呢，比如磁盘写满了，MQ出现了一些异常，或者Queue容量到达上限了等等</p>
+</li>
+<li><p>也有可能两个方法都不走，比如生产端发送消息就失败了，或者Broker端收到消息在返回ack时中途出现了<br>网络闪断。</p>
+</li>
+<li><p>这种情况就需要定时任务去抓取中间状态的消息进行最大努力尝试次数的补偿重发，从而保障消息投递的可<br>靠性。</p>
+</li>
+</ul>
 
             </div>
             <hr/>
@@ -700,9 +744,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《插入排序》
+                    《RabbitMQ-Confirm确认消息》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/07/21/插入排序-递归+二分查找/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/07/RabbitMQ07/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -764,46 +808,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/08/14/ArrayList/">
+                <a href="/2019/09/07/RabbitMQ07/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="ArrayList">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="RabbitMQ-Confirm确认消息">
                         
-                        <span class="card-title">ArrayList</span>
+                        <span class="card-title">RabbitMQ-Confirm确认消息</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            ArrayList(线性表-顺序存储)
+                            理解Confirm消息确认机制
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-08-14
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/数据结构和算法/" class="post-category" target="_blank">
-                                    数据结构和算法
+                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
+                                    消息中间件
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/数据结构/" target="_blank">
-                        <span class="chip bg-color">数据结构</span>
+                    <a href="/tags/RabbitMQ/" target="_blank">
+                        <span class="chip bg-color">RabbitMQ</span>
+                    </a>
+                    
+                    <a href="/tags/消息中间件/" target="_blank">
+                        <span class="chip bg-color">消息中间件</span>
                     </a>
                     
                 </div>
@@ -817,31 +867,31 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/07/20/插入排序-递归实现/">
+                <a href="/2019/09/04/RabbitMQ06/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="插入排序(递归实现)">
+                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="生产端的可靠性投递">
                         
-                        <span class="card-title">插入排序(递归实现)</span>
+                        <span class="card-title">生产端的可靠性投递</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            插入排序-递归实现(Insertion-Sort)
+                            消息如何保证100%的投递成功?
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-07-20
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-04
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/数据结构和算法/" class="post-category" target="_blank">
-                                    数据结构和算法
+                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
+                                    消息中间件
                                 </a>
                             
                             
@@ -851,12 +901,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/LeetCode/" target="_blank">
-                        <span class="chip bg-color">LeetCode</span>
+                    <a href="/tags/RabbitMQ/" target="_blank">
+                        <span class="chip bg-color">RabbitMQ</span>
                     </a>
                     
-                    <a href="/tags/算法导论/" target="_blank">
-                        <span class="chip bg-color">算法导论</span>
+                    <a href="/tags/消息中间件/" target="_blank">
+                        <span class="chip bg-color">消息中间件</span>
                     </a>
                     
                 </div>

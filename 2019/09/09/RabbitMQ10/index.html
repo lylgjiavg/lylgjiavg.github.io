@@ -4,11 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="设计模式概要, Jiavg">
-    <meta name="description" content="设计模式的目的  在编写软件的过程中,程序员面临着来自耦合性,内聚性以及可维护性,可扩展性,重用性,灵活性等多方面的挑战,设计模式是为了让程序(软件),具有更好
+    <meta name="keywords" content="RabbitMQ-消费端ACK与重回队列, Jiavg">
+    <meta name="description" content="RabbitMQ的消费端ACK与重回队列消费端的手工ACK和NACK
+消费端进行消费的时候,如果由于业务异常我们可以进行日志的记录,然后进行补偿.
 
-代码重用性 (即:相同功能的代码,不用多次编写)
-可读性 (即:编程规范性,">
+如果由于服务器宕机等严重问题,那么我们就需要手工进行ACK保障消费端消费成功.
+
+
+消费端">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -16,7 +19,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>设计模式概要 | Jiavg</title>
+    <title>RabbitMQ-消费端ACK与重回队列 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -263,13 +266,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        设计模式概要
+                        RabbitMQ-消费端ACK与重回队列
                     </div>
                 </div>
             </div>
@@ -380,8 +383,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/设计模式/" target="_blank">
-                                <span class="chip bg-color">设计模式</span>
+                            <a href="/tags/RabbitMQ/" target="_blank">
+                                <span class="chip bg-color">RabbitMQ</span>
+                            </a>
+                        
+                            <a href="/tags/消息中间件/" target="_blank">
+                                <span class="chip bg-color">消息中间件</span>
                             </a>
                         
                     </div>
@@ -392,8 +399,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/设计模式/" class="post-category" target="_blank">
-                                设计模式
+                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
+                                消息中间件
                             </a>
                         
                     </div>
@@ -404,21 +411,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-02
+                    2019-09-09
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        4,265
+                        913
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        15 分
+                        4 分
                     </div>
                     
                 
@@ -434,244 +441,166 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="设计模式的目的"><a href="#设计模式的目的" class="headerlink" title="设计模式的目的"></a>设计模式的目的</h2><p>  在编写软件的过程中,程序员面临着来自耦合性,内聚性以及可维护性,可扩展性,重用性,灵活性等多方面的挑战,设计模式<br>是为了让程序(软件),具有更好</p>
-<ol>
-<li>代码重用性 (即:相同功能的代码,不用多次编写)</li>
-<li>可读性 (即:编程规范性,便于其他程序员的阅读和理解)</li>
-<li>可扩展性 (即:当需要添加新功能时,非常的方便,也称为可维护性)</li>
-<li>可靠性 (即:当我们添加新的功能时,对原来的功能没有影响)</li>
-<li>使程序呈现高内聚,低耦合的特性</li>
-</ol>
-<p><strong>分享金句</strong><br>  设计模式包含了面向对象的精髓,”懂得了设计模式,你就懂得了面向对象分析和设计(OOA/D)的精要”</p>
-<h2 id="设计模式七大原则"><a href="#设计模式七大原则" class="headerlink" title="设计模式七大原则"></a>设计模式七大原则</h2><p>  设计模式原则,其实就是程序员在编写程序时,应当遵守的原则,也是各种设计模式的基础(即:设计模式为什么这样设计的<br>依据).</p>
-<p>  <strong>设计模式常用的七大原则有</strong></p>
-<ol>
-<li>单一职责原则</li>
-<li>接口隔离原则</li>
-<li>依赖倒置原则</li>
-<li>里氏替换原则</li>
-<li>开闭原则</li>
-<li>迪米特法则</li>
-<li>合成复用原则</li>
-</ol>
-<h3 id="单一职责原则-SRP-Single-Responsibility-Principle"><a href="#单一职责原则-SRP-Single-Responsibility-Principle" class="headerlink" title="单一职责原则(SRP:Single Responsibility Principle)"></a>单一职责原则(SRP:Single Responsibility Principle)</h3><p>  <strong>基本介绍</strong><br>  对类来说,即一个类应该只负责一项职责.<br>  <em>如类A负责两个不同的职责:职责1,职责2.当职责1需求变更而改变A时,可能造成职责2执行错误,所以需要将<br>类A的粒度分解为A1,A2.</em></p>
-<p>  <strong>注意事项及细节</strong></p>
-<ol>
-<li>降低类的复杂度,一个类只负责一项职责.</li>
-<li>提高类的可读性,可维护性.</li>
-<li>降低变更引起的风险.</li>
-<li>通常情况下,我们应该严格遵守单一职责原则,只有逻辑足够简单,才可以在代码级违反单一职责原则;<br>只有类中方法数量足够少,可以在方法级别保持单一职责原则.</li>
-</ol>
-<h3 id="接口隔离原则-ISP-Interface-Segregation-Principle"><a href="#接口隔离原则-ISP-Interface-Segregation-Principle" class="headerlink" title="接口隔离原则(ISP:Interface Segregation Principle)"></a>接口隔离原则(ISP:Interface Segregation Principle)</h3><p>  <strong>基本介绍</strong><br>  客户端不应该依赖他不需要的接口,即一个类对另一个类的依赖应该建立在最小的接口上.接口隔离原则<br>（Interface Segregation Principle，ISP）要求程序员尽量将臃肿庞大的接口拆分成更小的和更具体的接<br>口，让接口中只包含客户感兴趣的方法。</p>
-<ul>
-<li>接口隔离原则和单一职责都是为了提高类的内聚性、降低它们之间的耦合性，体现了封装的思想，但两者是不同的：<ol>
-<li>单一职责原则注重的是职责，而接口隔离原则注重的是对接口依赖的隔离。</li>
-<li>单一职责原则主要是约束类，它针对的是程序中的实现和细节；接口隔离原则主要约束接口，主要针对抽象和程序整体框架的构建。</li>
-</ol>
+                <h1 id="RabbitMQ的消费端ACK与重回队列"><a href="#RabbitMQ的消费端ACK与重回队列" class="headerlink" title="RabbitMQ的消费端ACK与重回队列"></a>RabbitMQ的消费端ACK与重回队列</h1><h2 id="消费端的手工ACK和NACK"><a href="#消费端的手工ACK和NACK" class="headerlink" title="消费端的手工ACK和NACK"></a>消费端的手工ACK和NACK</h2><ul>
+<li><p>消费端进行消费的时候,如果由于业务异常我们可以进行日志的记录,然后进行补偿.</p>
+</li>
+<li><p>如果由于服务器宕机等严重问题,那么我们就需要手工进行ACK保障消费端消费成功.</p>
 </li>
 </ul>
-<p>  <strong>接口隔离原则的优点</strong><br>  接口隔离原则是为了约束接口、降低类对接口的依赖性，遵循接口隔离原则有以下 5 个优点。</p>
-<ol>
-<li>将臃肿庞大的接口分解为多个粒度小的接口，可以预防外来变更的扩散，提高系统的灵活性和可维护性。</li>
-<li>接口隔离提高了系统的内聚性，减少了对外交互，降低了系统的耦合性。</li>
-<li>如果接口的粒度大小定义合理，能够保证系统的稳定性；但是，如果定义过小，则会造成接口数量过多，<br>使设计复杂化；如果定义太大，灵活性降低，无法提供定制服务，给整体项目带来无法预料的风险。</li>
-<li>使用多个专门的接口还能够体现对象的层次，因为可以通过接口的继承，实现对总接口的定义。</li>
-<li>能减少项目工程中的代码冗余。过大的大接口里面通常放置许多不用的方法，当实现这个接口的时候，被<br>迫设计冗余的代码。</li>
-</ol>
-<p>  <strong>接口隔离原则的实现方法</strong><br>  在具体应用接口隔离原则时，应该根据以下几个规则来衡量。</p>
-<ol>
-<li>接口尽量小，但是要有限度。一个接口只服务于一个子模块或业务逻辑。</li>
-<li>为依赖接口的类定制服务。只提供调用者需要的方法，屏蔽不需要的方法。</li>
-<li>了解环境，拒绝盲从。每个项目或产品都有选定的环境因素，环境不同，接口拆分的标准就不同深入了解业务逻辑。</li>
-<li>提高内聚，减少对外交互。使接口用最少的方法去完成最多的事情。</li>
-</ol>
-<h3 id="依赖倒置原则-DIP-Dependence-Inversion-Principle"><a href="#依赖倒置原则-DIP-Dependence-Inversion-Principle" class="headerlink" title="依赖倒置原则(DIP:Dependence Inversion Principle)"></a>依赖倒置原则(DIP:Dependence Inversion Principle)</h3><p>  <strong>基本介绍</strong></p>
-<ol>
-<li>高层模块不应该依赖低层模块,二者都应该依赖其抽象</li>
-<li>抽象不应该依赖细节,细节应该依赖抽象</li>
-<li>依赖倒置的中心思想是面向接口编程</li>
-<li>依赖倒置原则是基于这样的设计理念:相对于细节的多变性,抽象的东西要稳定的多.以抽象为基础搭建的架构<br>比以细节为基础的架构要稳定的多.在java中,抽象指的是接口或抽象类,细节就是具体的实现.</li>
-<li>使用接口或抽象类的目的是制定好规范,而不涉及任何具体的操作,把展现细节的任务交给他们的实现类去完<br>成.</li>
-</ol>
-<p>  <strong>依赖关系传递的三种方式</strong></p>
-<ol>
-<li><p>接口传递<br>例:</p>
-<pre><code>// 方式1:通过接口传递实现依赖
-interface IOpenAndClose {
-   public void open(ITV itv);
-}
+<h2 id="消费端的重回队列"><a href="#消费端的重回队列" class="headerlink" title="消费端的重回队列"></a>消费端的重回队列</h2><ul>
+<li><p>消费端重回队列是为了对没有处理成功的消息,把消息重新传递给Broker.</p>
+</li>
+<li><p>一般我们在实际应用中,都会关闭重回队列,也就是设置为false.</p>
+</li>
+</ul>
+<h2 id="消费端ACK与重回队列代码演示"><a href="#消费端ACK与重回队列代码演示" class="headerlink" title="消费端ACK与重回队列代码演示"></a>消费端ACK与重回队列代码演示</h2><h3 id="消费端自定义监听"><a href="#消费端自定义监听" class="headerlink" title="消费端自定义监听"></a>消费端自定义监听</h3><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>AMQP<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>DefaultConsumer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Envelope<span class="token punctuation">;</span>
 
-interface ITV {
-   public void play();
-}
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
 
-class OpenAndClose implements IOpenAndClose {
-   public void open(ITV itv) {
-       itv.play();
-   }
-}</code></pre></li>
-<li><p>构造方法传递<br>例:</p>
-<pre><code>// 方式2:通过构造方法依赖传递
-interface IOpenAndClose {
-   public void open();
-}
+<span class="token comment" spellcheck="true">/**
+ * @Classname MyConsumer
+ * @Description 消费端ACK:自定义客户端监听
+ * @Date 2019/9/8 13:15
+ * @Created by Jiavg
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyConsumer</span> <span class="token keyword">extends</span> <span class="token class-name">DefaultConsumer</span> <span class="token punctuation">{</span>
 
-interface ITV {
-   public void play();
-}
+    <span class="token keyword">private</span> Channel channel<span class="token punctuation">;</span>
 
-class OpenAndClose implements IOpenAndClose {
-   public ITV tv;
-   public OpenAndClose(ITV tv) {
-       this.tv = tv;
-   }
-   public void open() {
-       this.tv.play();
-   }
-}</code></pre></li>
-<li><p>Setter方式传递<br>例:</p>
-<pre><code>// 方式3:通过setter方法传递
-interface IOpenAndClose {
-   public void open();
-}
+    <span class="token comment" spellcheck="true">/**
+     * Constructs a new instance and records its association to the passed-in channel.
+     * @param channel the channel to which this consumer is attached
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">MyConsumer</span><span class="token punctuation">(</span>Channel channel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>channel <span class="token operator">=</span> channel<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
 
-interface ITV {
-   public void play();
-}
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleDelivery</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">,</span> Envelope envelope<span class="token punctuation">,</span> AMQP<span class="token punctuation">.</span>BasicProperties properties<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> body<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"body:"</span> <span class="token operator">+</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 延时ack</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Integer<span class="token punctuation">)</span>properties<span class="token punctuation">.</span><span class="token function">getHeaders</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"num"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// basicNack(long deliveryTag, boolean multiple, boolean requeue);</span>
+            channel<span class="token punctuation">.</span><span class="token function">basicNack</span><span class="token punctuation">(</span>envelope<span class="token punctuation">.</span><span class="token function">getDeliveryTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// basicAck(long deliveryTag, boolean multiple) throws IOException;</span>
+            channel<span class="token punctuation">.</span><span class="token function">basicAck</span><span class="token punctuation">(</span>envelope<span class="token punctuation">.</span><span class="token function">getDeliveryTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
 
-class OpenAndClose implements IOpenAndClose {
-   private ITV tv;
-   public void setTv(ITV tv) {
-       this.tv = tv;
-   }
-   public void open() {
-       this.tv.play();
-   }
-}</code></pre></li>
-</ol>
-<p>  <strong>注意事项及细节</strong></p>
-<ol>
-<li><p>低层模块尽量都要有抽象类或接口,或者两者都有,程序稳定性更好.</p>
-</li>
-<li><p>变量的声明类型尽量是抽象类或接口,这样我们的变量引用和实际对象间,就存在一个缓冲层,利于程序扩展<br>和优化.</p>
-</li>
-<li><p>继承时遵循里氏替换原则.</p>
-</li>
-</ol>
-<h3 id="里氏替换原则-LSP-Liskov-Substitution-Principle"><a href="#里氏替换原则-LSP-Liskov-Substitution-Principle" class="headerlink" title="里氏替换原则(LSP:Liskov Substitution Principle)"></a>里氏替换原则(LSP:Liskov Substitution Principle)</h3><p>  <strong>OO中的继承性的思考和说明</strong></p>
+</code></pre>
+<p>注意:</p>
 <ul>
-<li><p>继承包含这样一层定义:父类中凡是已经实现好的方法,实际上是在设定规范和契约,虽然它不强制要求所有的子类必须遵守这些契约,但是如果子类对这些已经实现的方法任意修改,就会对整个继承体系造成破坏.</p>
-</li>
-<li><p>继承在给程序设计带来便利的同时,也带来了弊端.比如使用继承会给程序带来侵入性,程序的可移植性降低,增加对象间的耦合性,如果一个类被其他类所继承,则当这个类需要修改时,必须考虑所有的子类,并且父类修改后,所有涉及到的子类的功能都可能产生故障.</p>
-</li>
-<li><p>问题提出:在编程中,如何正确的使用继承? ==&gt; 里氏替换原则</p>
-</li>
+<li>在自定义消费端监听处理消息的handleDelivery()方法中,我们使用Thread.sleep(10000);延时10以<br>方便我们能够详细的看到消息的消费状况.</li>
+<li>在处理消息中,我们通过判断消息的properties中的headers配置参数中的num来决定此条消息是进行Ack确<br>认还是进行NAck进行重回队列(requeue设置为true).</li>
 </ul>
-<p>  <strong>基本介绍</strong></p>
-<ul>
-<li>里氏替换原则（Liskov Substitution Principle，LSP）由麻省理工学院计算机科学实验室的里斯科夫<br>（Liskov）女士在 1987 年的“面向对象技术的高峰会议”（OOPSLA）上发表的一篇文章《数据抽象和层次》<br>（Data Abstraction and Hierarchy）里提出来的，她提出：继承必须确保超类所拥有的性质在子类中仍然<br>成立（Inheritance should ensure that any property proved about supertype objects also<br>holds for subtype objects）。</li>
-</ul>
-<ul>
-<li>里氏替换原则通俗来讲就是：子类可以扩展父类的功能，但不能改变父类原有的功能。也就是说：所有引用<br>基类的地方必须能透明的使用其子类的对象.子类继承父类时，除添加新的方法完成新增功能外，尽量不要重写<br>父类的方法。</li>
-</ul>
-<ul>
-<li><p>如果通过重写父类的方法来完成新的功能，这样写起来虽然简单，但是整个继承体系的可复用性会比较差，<br>特别是运用多态比较频繁时，程序运行出错的概率会非常大。</p>
-</li>
-<li><p>里氏替换原则告诉我们,继承实际上让两个类耦合性增强了,在适当情况下,原来的父类和子类都继承一个更通<br>俗的基类,原有的继承关系去掉,可以通过聚合,组合,依赖来解决问题.</p>
-</li>
-</ul>
-<p>  <strong>里氏替换原则的作用</strong></p>
-<ol>
-<li>里氏替换原则是实现开闭原则的重要方式之一。</li>
-<li>它克服了继承中重写父类造成的可复用性变差的缺点。</li>
-<li>它是动作正确性的保证。即类的扩展不会给已有的系统引入新的错误，降低了代码出错的可能性。</li>
-</ol>
-<h3 id="开闭原则-OCP-Open-Closed-Principle"><a href="#开闭原则-OCP-Open-Closed-Principle" class="headerlink" title="开闭原则(OCP:Open Closed Principle)"></a>开闭原则(OCP:Open Closed Principle)</h3><p>  <strong>基本介绍</strong></p>
-<ul>
-<li>开闭原则是编程中最基础,最重要的原则.</li>
-<li>一个软件实体如类、模块和函数应该对扩展开放(对提供方),对修改关闭（对使用方）。用抽象构建框架，用<br>实现扩展细节。</li>
-<li>当软件需要变化时，尽量通过扩展软件实体的行为来发生变化，而不是通过修改已有的代码来实现变化。</li>
-<li>编程中遵循其他原则，以及使用设计模式的目的就是遵循开闭原则。</li>
-</ul>
-<p>  <strong>开闭原则的作用</strong></p>
-<p>  开闭原则是面向对象程序设计的终极目标，它使软件实体拥有一定的适应性和灵活性的同时具备稳定性和延<br>续性。具体来说，其作用如下。</p>
-<ul>
-<li><p>对软件测试的影响<br>软件遵守开闭原则的话，软件测试时只需要对扩展的代码进行测试就可以了，因为原有的测试代码仍然能够<br>正常运行。</p>
-</li>
-<li><p>可以提高代码的可复用性<br>粒度越小，被复用的可能性就越大；在面向对象的程序设计中，根据原子和抽象编程可以提高代码的可复用<br>性。</p>
-</li>
-<li><p>可以提高软件的可维护性<br>遵守开闭原则的软件，其稳定性高和延续性强，从而易于扩展和维护。</p>
-</li>
-</ul>
-<p>  <strong>开闭原则的实现方法</strong></p>
-<p>  可以通过“抽象约束、封装变化”来实现开闭原则，即通过接口或者抽象类为软件实体定义一个相对稳定的抽<br>象层，而将相同的可变因素封装在相同的具体实现类中。</p>
-<p>  因为抽象灵活性好，适应性广，只要抽象的合理，可以基本保持软件架构的稳定。而软件中易变的细节可以<br>从抽象派生来的实现类来进行扩展，当软件需要发生变化时，只需要根据需求重新派生一个实现类来扩展就可<br>以了。</p>
-<h3 id="迪米特法则（LoD：Law-of-Demeter）"><a href="#迪米特法则（LoD：Law-of-Demeter）" class="headerlink" title="迪米特法则（LoD：Law of Demeter）"></a>迪米特法则（LoD：Law of Demeter）</h3><p>  <strong>基本介绍</strong></p>
-<ul>
-<li>一个对象应该对其他对象保持最少的了解。</li>
-<li>类与类关系越密切，耦合度越大。</li>
-<li>迪米特法则又叫最少知道原则，即一个类对自己依赖的类知道的越少越好。也就是说，对于被依赖的类不管<br>多么复杂，都尽量将逻辑分装在类的内部。对外除了提供public方法，不对外泄露任何信息。</li>
-<li>迪米特法则还有一个简单的定义:只与直接的朋友通信</li>
-<li>直接的朋友:每个对象都会与其他对象有耦合关系,只要两个对象之间有耦合关系,我们就说这两个对象之间<br>是朋友关系.耦合的方式有很多,依赖,关联,组合,聚合等.其中,我们称出现成员变量,方法参数,方法返回值中<br>的类为直接的朋友,而出现在局部变量中的类不是直接朋友关系.也就是说,陌生的类最好不要以局部变量的形<br>式出现在类的内部.</li>
-</ul>
-<p>  <strong>迪米特法则的优点</strong><br>  迪米特法则要求限制软件实体之间通信的宽度和深度，正确使用迪米特法则将有以下两个优点。</p>
-<ul>
-<li><p>降低了类之间的耦合度，提高了模块的相对独立性。</p>
-</li>
-<li><p>由于亲合度降低，从而提高了类的可复用率和系统的扩展性。</p>
-<p>但是，过度使用迪米特法则会使系统产生大量的中介类，从而增加系统的复杂性，使模块之间的通信效率降<br>低。所以，在釆用迪米特法则时需要反复权衡，确保高内聚和低耦合的同时，保证系统的结构清晰。</p>
-</li>
-</ul>
-<p>  <strong>迪米特法则的实现方法</strong><br>  从迪米特法则的定义和特点可知，它强调以下两点：</p>
-<ol>
-<li><p>从依赖者的角度来说，只依赖应该依赖的对象。</p>
-</li>
-<li><p>从被依赖者的角度说，只暴露应该暴露的方法。</p>
-<p>所以，在运用迪米特法则时要注意以下 6 点。</p>
-</li>
-<li><p>在类的划分上，应该创建弱耦合的类。类与类之间的耦合越弱，就越有利于实现可复用的目标。</p>
-</li>
-<li><p>在类的结构设计上，尽量降低类成员的访问权限。</p>
-</li>
-<li><p>在类的设计上，优先考虑将一个类设置成不变类。</p>
-</li>
-<li><p>在对其他类的引用上，将引用其他对象的次数降到最低。</p>
-</li>
-<li><p>不暴露类的属性成员，而应该提供相应的访问器（set 和 get 方法）。</p>
-</li>
-<li><p>谨慎使用序列化（Serializable）功能。</p>
-</li>
-</ol>
-<p>  <strong>迪米特法则注意事项和细节</strong></p>
-<ol>
-<li>迪米特法则的核心是降低类之间的耦合</li>
-<li>但是注意:由于每个类都减少了不必要的依赖,因此迪米特法则只是要求降低类间(对象间)耦合关系,并不是<br>要求完全没有依赖关系.</li>
-</ol>
-<h3 id="合成复用原则-CRP-Composite-Reuse-Principle"><a href="#合成复用原则-CRP-Composite-Reuse-Principle" class="headerlink" title="合成复用原则(CRP:Composite Reuse Principle)"></a>合成复用原则(CRP:Composite Reuse Principle)</h3><p>  <strong>基本介绍</strong><br>  原则是尽量使用合成/聚合的方式,而不是使用继承.</p>
-<p>  <strong>设计核心思想</strong></p>
-<ol>
-<li>找出应用中可能需要的变化之处,把他们独立出来,不要和那些不需要变化的代码混在一起.</li>
-<li>针对接口编程,而不是针对实现编程.</li>
-<li>为了交互对象之间的松耦合设计而努力.</li>
-</ol>
-<p>  <strong>合成复用原则的重要性</strong></p>
-<p>  通常类的复用分为继承复用和合成复用两种，继承复用虽然有简单和易实现的优点，但它也存在以下缺点。</p>
-<ul>
-<li><p>继承复用破坏了类的封装性。因为继承会将父类的实现细节暴露给子类，父类对子类是透明的，所以这种复<br>用又称为“白箱”复用。</p>
-</li>
-<li><p>子类与父类的耦合度高。父类的实现的任何改变都会导致子类的实现发生变化，这不利于类的扩展与维护。<br>它限制了复用的灵活性。从父类继承而来的实现是静态的，在编译时已经定义，所以在运行时不可能发生变<br>化。</p>
-</li>
-</ul>
-<p>  采用组合或聚合复用时，可以将已有对象纳入新对象中，使之成为新对象的一部分，新对象可以调用已有对<br>象的功能，它有以下优点。</p>
-<ul>
-<li><p>它维持了类的封装性。因为成分对象的内部细节是新对象看不见的，所以这种复用又称为“黑箱”复用。</p>
-</li>
-<li><p>新旧类之间的耦合度低。这种复用所需的依赖较少，新对象存取成分对象的唯一方法是通过成分对象的接<br>口。</p>
-</li>
-<li><p>复用的灵活性高。这种复用可以在运行时动态进行，新对象可以动态地引用与成分对象类型相同的对象。</p>
-</li>
-</ul>
-<p>  <strong>合成复用原则的实现方法</strong><br>  合成复用原则是通过将已有的对象纳入新对象中，作为新对象的成员对象来实现的，新对象可以调用已有对<br>象的功能，从而达到复用。</p>
+<h3 id="消费端实现"><a href="#消费端实现" class="headerlink" title="消费端实现"></a>消费端实现</h3><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Classname Consumer
+ * @Description 消费端ACK：消费端
+ * @Date 2019/9/8 10:48
+ * @Created by Jiavg
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
+
+        ConnectionFactory connectionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConnectionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPort</span><span class="token punctuation">(</span><span class="token number">5672</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setVirtualHost</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Connection connection <span class="token operator">=</span> connectionFactory<span class="token punctuation">.</span><span class="token function">newConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Ack_Exchange"</span><span class="token punctuation">;</span>
+        String routingKey <span class="token operator">=</span> <span class="token string">"Ack.#"</span><span class="token punctuation">;</span>
+        String queueName <span class="token operator">=</span> <span class="token string">"test_Ack_Queue"</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// 声明交换机、声明队列、绑定队列到交换机</span>
+        channel<span class="token punctuation">.</span><span class="token function">exchangeDeclare</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> <span class="token string">"topic"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">queueBind</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment" spellcheck="true">// autoAck设置为false</span>
+        channel<span class="token punctuation">.</span><span class="token function">basicConsume</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">MyConsumer</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
+    <span class="token punctuation">}</span>   
+<span class="token punctuation">}</span>
+</code></pre>
+<h4 id="消费端运行-管控台变化"><a href="#消费端运行-管控台变化" class="headerlink" title="消费端运行-管控台变化"></a>消费端运行-管控台变化</h4><h5 id="交换机变化"><a href="#交换机变化" class="headerlink" title="交换机变化"></a>交换机变化</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_211547.jpg" alt></p>
+<h5 id="交换机绑定情况"><a href="#交换机绑定情况" class="headerlink" title="交换机绑定情况"></a>交换机绑定情况</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_211747.jpg" alt></p>
+<h3 id="生产端实现"><a href="#生产端实现" class="headerlink" title="生产端实现"></a>生产端实现</h3><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>AMQP<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HashMap<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * @Classname Producer
+ * @Description 消费端ACK：生产者
+ * @Date 2019/9/8 10:50
+ * @Created by Jiavg
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Producer</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
+
+        ConnectionFactory connectionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConnectionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPort</span><span class="token punctuation">(</span><span class="token number">5672</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setVirtualHost</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        connectionFactory<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Connection connection <span class="token operator">=</span> connectionFactory<span class="token punctuation">.</span><span class="token function">newConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Ack_Exchange"</span><span class="token punctuation">;</span>
+        String routingKey <span class="token operator">=</span> <span class="token string">"Ack.save"</span><span class="token punctuation">;</span>
+
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            String msg <span class="token operator">=</span> <span class="token string">"Hello World send Ack Message:"</span> <span class="token operator">+</span> i<span class="token punctuation">;</span>
+
+            Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> headers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            headers<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"num"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            AMQP<span class="token punctuation">.</span>BasicProperties properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AMQP<span class="token punctuation">.</span>BasicProperties<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">deliveryMode</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">contentEncoding</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">headers</span><span class="token punctuation">(</span>headers<span class="token punctuation">)</span>
+                    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            channel<span class="token punctuation">.</span><span class="token function">basicPublish</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">,</span> properties<span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>注意:投递模式deliveryMode设置为2,为就是将消息设置为持久化的，此时rabbitmq就会将消息持久化到磁盘<br>上去(要使此模式生效,相应队列也应设置为持久化).</p>
+<h4 id="生产端运行-管控台和控制台变化"><a href="#生产端运行-管控台和控制台变化" class="headerlink" title="生产端运行-管控台和控制台变化"></a>生产端运行-管控台和控制台变化</h4><h5 id="管控台变化"><a href="#管控台变化" class="headerlink" title="管控台变化"></a>管控台变化</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_213626.jpg" alt></p>
+<h5 id="控制台变化"><a href="#控制台变化" class="headerlink" title="控制台变化"></a>控制台变化</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_214936.jpg" alt></p>
+<p>  由图结合自定义消费端监听可知,在发送的四条消息中,有一条消息被消费端NAck,故在队列中一直有一条消<br>息未被ack.并且此条消息由于requeue设置为true,故此条消息被反复重回给队列并被此队列反复投递给此消费<br>端(由于此队列只绑定了一个消费端).</p>
 
             </div>
             <hr/>
@@ -830,9 +759,9 @@ class OpenAndClose implements IOpenAndClose {
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《设计模式概要》
+                    《RabbitMQ-消费端ACK与重回队列》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/02/设计模式01/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/09/RabbitMQ10/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -894,29 +823,30 @@ class OpenAndClose implements IOpenAndClose {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/09/03/RabbitMQ04/">
+                <a href="/2019/09/09/RabbitMQ10/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="RabbitMQ-Exchange">
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="RabbitMQ-消费端ACK与重回队列">
                         
-                        <span class="card-title">RabbitMQ-Exchange</span>
+                        <span class="card-title">RabbitMQ-消费端ACK与重回队列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ的交换机
+                            RabbitMQ的消费端ACK与重回队列
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-03
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -929,6 +859,7 @@ class OpenAndClose implements IOpenAndClose {
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -951,24 +882,24 @@ class OpenAndClose implements IOpenAndClose {
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/02/RabbitMQ03/">
+                <a href="/2019/09/09/RabbitMQ08-1/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="RabbitMQ快速入门">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="RabbitMQ-消费端自定义监听">
                         
-                        <span class="card-title">RabbitMQ快速入门</span>
+                        <span class="card-title">RabbitMQ-消费端自定义监听</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ快速入门
+                            RabbitMQ之消费端自定义监听
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-09
                             </span>
                         <span class="publish-author">
                             

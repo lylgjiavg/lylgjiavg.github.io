@@ -4,9 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ-消费端限流, Jiavg">
-    <meta name="description" content="消费端限流什么是消费端限流  假设一个场景,首先,我们RabbitMQ服务器上有上万条为处理的消息,我们随便打开一个消费者客户端,会出现下面的情况:
-  巨量的消息瞬间全部推送过来,但是我们的单个客户端无法同时处理这么多数据,造成客户端宕机">
+    <meta name="keywords" content="RabbitMQ08_1, Jiavg">
+    <meta name="description" content="消费端自定义监听
+我们一般就是在代码中编写while循环,进行consumer.nextDelivery()方法进行获取下一条消息,然后进行消费处理.
+
+但是我们使用自定义的Consumer更加的方便,解耦性更加的强,也是在实际工作中最常用">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -14,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RabbitMQ-消费端限流 | Jiavg</title>
+    <title>RabbitMQ08_1 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -261,13 +263,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RabbitMQ-消费端限流
+                        RabbitMQ08_1
                     </div>
                 </div>
             </div>
@@ -406,21 +408,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-08
+                    2019-09-09
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        841
+                        1,175
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        4 分
+                        7 分
                     </div>
                     
                 
@@ -436,39 +438,191 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="消费端限流"><a href="#消费端限流" class="headerlink" title="消费端限流"></a>消费端限流</h1><h2 id="什么是消费端限流"><a href="#什么是消费端限流" class="headerlink" title="什么是消费端限流"></a>什么是消费端限流</h2><p>  假设一个场景,首先,我们RabbitMQ服务器上有上万条为处理的消息,我们随便打开一个消费者客户端,会出现<br>下面的情况:</p>
-<p>  巨量的消息瞬间全部推送过来,但是我们的单个客户端无法同时处理这么多数据,造成客户端宕机!</p>
-<h2 id="RabbitMQ消费端限流机制"><a href="#RabbitMQ消费端限流机制" class="headerlink" title="RabbitMQ消费端限流机制"></a>RabbitMQ消费端限流机制</h2><ul>
-<li><p>RabbitMQ提供了一种QoS(服务质量保证)功能,即在<strong>非自动确认消息的前提下</strong>,如果一定数目的消息(通<br>过基于Consume或者Channel设置的QoS值)未被确认前,不进行消费新的消息.</p>
+                <h1 id="消费端自定义监听"><a href="#消费端自定义监听" class="headerlink" title="消费端自定义监听"></a>消费端自定义监听</h1><ul>
+<li><p>我们一般就是在代码中编写while循环,进行consumer.nextDelivery()方法进行获取下一条消息,然后进行<br>消费处理.</p>
 </li>
-<li><p>void basicQos(int prefetchSize, int prefetchCount, boolean global) throws IOException;</p>
-<ul>
-<li><p>prefetchSize: 服务器将交付的最大内容量(以八进制为单位度量)，如果没有限制，则设置为0</p>
-</li>
-<li><p>prefetchCount: 会告诉RabbitMQ不要同时给一个消费者推送多于prefetchCount个消息,即一旦有<br>prefetchCount个消息未ack,则该Consumer将block掉,直到有消息ack.</p>
-</li>
-<li><p>global:true/false是否将上面的设置应用于Channel;简单点说,就是上面限制是Channel级别还是<br>Consumer级别.</p>
-</li>
-<li><p>prefetchSize和global这两项,RabbitMQ没有实现,暂且不研究prefetchCount在no_ack=false的情况<br>下生效,即在自动应答的情况下这两个值是不生效的.</p>
+<li><p>但是我们使用自定义的Consumer更加的方便,解耦性更加的强,也是在实际工作中最常用的使用方式!</p>
 </li>
 </ul>
-</li>
-</ul>
-<h2 id="RabbitMQ消费端限流代码演示"><a href="#RabbitMQ消费端限流代码演示" class="headerlink" title="RabbitMQ消费端限流代码演示"></a>RabbitMQ消费端限流代码演示</h2><h3 id="自定义消费者"><a href="#自定义消费者" class="headerlink" title="自定义消费者"></a>自定义消费者</h3><pre class=" language-java"><code class="language-java">
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>AMQP<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>DefaultConsumer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Envelope<span class="token punctuation">;</span>
+<h1 id="实现消费端自定义监听的两种方式"><a href="#实现消费端自定义监听的两种方式" class="headerlink" title="实现消费端自定义监听的两种方式"></a>实现消费端自定义监听的两种方式</h1><h2 id="实现com-rabbitmq-client-Consumer接口"><a href="#实现com-rabbitmq-client-Consumer接口" class="headerlink" title="实现com.rabbitmq.client.Consumer接口"></a>实现com.rabbitmq.client.Consumer接口</h2><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
 
+<span class="token comment" spellcheck="true">/**
+ * Interface for application callback objects to receive notifications and messages from
+ * a queue by subscription.
+ * Most implementations will subclass {@link DefaultConsumer}.
+ * &lt;p/>
+ * The methods of this interface are invoked in a dispatch
+ * thread which is separate from the {@link Connection}'s thread. This
+ * allows {@link Consumer}s to call {@link Channel} or {@link
+ * Connection} methods without causing a deadlock.
+ * &lt;p/>
+ * The {@link Consumer}s on a particular {@link Channel} are invoked serially on one or more
+ * dispatch threads. {@link Consumer}s should avoid executing long-running code
+ * because this will delay dispatch of messages to other {@link Consumer}s on the same
+ * {@link Channel}.
+ *
+ * @see Channel#basicConsume(String, boolean, String, boolean, boolean, java.util.Map, Consumer)
+ * @see Channel#basicCancel
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Consumer</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/**
+     * Called when the consumer is registered by a call to any of the
+     * {@link Channel#basicConsume} methods.
+     * @param consumerTag the &lt;i>consumer tag&lt;/i> associated with the consumer
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">handleConsumeOk</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Called when the consumer is cancelled by a call to {@link Channel#basicCancel}.
+     * @param consumerTag the &lt;i>consumer tag&lt;/i> associated with the consumer
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">handleCancelOk</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Called when the consumer is cancelled for reasons &lt;i>other than&lt;/i> by a call to
+     * {@link Channel#basicCancel}. For example, the queue has been deleted.
+     * See {@link #handleCancelOk} for notification of consumer
+     * cancellation due to {@link Channel#basicCancel}.
+     * @param consumerTag the &lt;i>consumer tag&lt;/i> associated with the consumer
+     * @throws IOException
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">handleCancel</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Called when either the channel or the underlying connection has been shut down.
+     * @param consumerTag the &lt;i>consumer tag&lt;/i> associated with the consumer
+     * @param sig a {@link ShutdownSignalException} indicating the reason for the shut down
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">handleShutdownSignal</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">,</span> ShutdownSignalException sig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Called when a &lt;code>&lt;b>basic.recover-ok&lt;/b>&lt;/code> is received
+     * in reply to a &lt;code>&lt;b>basic.recover&lt;/b>&lt;/code>. All messages
+     * received before this is invoked that haven't been &lt;i>ack&lt;/i>'ed will be
+     * re-delivered. All messages received afterwards won't be.
+     * @param consumerTag the &lt;i>consumer tag&lt;/i> associated with the consumer
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">handleRecoverOk</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Called when a &lt;code>&lt;b>basic.deliver&lt;/b>&lt;/code> is received for this consumer.
+     * @param consumerTag the &lt;i>consumer tag&lt;/i> associated with the consumer
+     * @param envelope packaging data for the message
+     * @param properties content header data for the message
+     * @param body the message body (opaque, client-specific byte array)
+     * @throws IOException if the consumer encounters an I/O error while processing the message
+     * @see Envelope
+     */</span>
+    <span class="token keyword">void</span> <span class="token function">handleDelivery</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">,</span>
+                        Envelope envelope<span class="token punctuation">,</span>
+                        AMQP<span class="token punctuation">.</span>BasicProperties properties<span class="token punctuation">,</span>
+                        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> body<span class="token punctuation">)</span>
+        <span class="token keyword">throws</span> IOException<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="继承com-rabbitmq-client-DefaultConsumer类"><a href="#继承com-rabbitmq-client-DefaultConsumer类" class="headerlink" title="继承com.rabbitmq.client.DefaultConsumer类"></a>继承com.rabbitmq.client.DefaultConsumer类</h2><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * Convenience class providing a default implementation of {@link Consumer}.
+ * We anticipate that most Consumer implementations will subclass this class.
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultConsumer</span> <span class="token keyword">implements</span> <span class="token class-name">Consumer</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">/** Channel that this consumer is associated with. */</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> Channel _channel<span class="token punctuation">;</span>
+    <span class="token comment" spellcheck="true">/** Consumer tag for this consumer. */</span>
+    <span class="token keyword">private</span> <span class="token keyword">volatile</span> String _consumerTag<span class="token punctuation">;</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Constructs a new instance and records its association to the passed-in channel.
+     * @param channel the channel to which this consumer is attached
+     */</span>
+    <span class="token keyword">public</span> <span class="token function">DefaultConsumer</span><span class="token punctuation">(</span>Channel channel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        _channel <span class="token operator">=</span> channel<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * Stores the most recently passed-in consumerTag - semantically, there should be only one.
+     * @see Consumer#handleConsumeOk
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleConsumeOk</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>_consumerTag <span class="token operator">=</span> consumerTag<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * No-op implementation of {@link Consumer#handleCancelOk}.
+     * @param consumerTag the defined consumer tag (client- or server-generated)
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleCancelOk</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// no work to do</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * No-op implementation of {@link Consumer#handleCancel(String)}
+     * @param consumerTag the defined consumer tag (client- or server-generated)
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleCancel</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// no work to do</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * No-op implementation of {@link Consumer#handleShutdownSignal}.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleShutdownSignal</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">,</span> ShutdownSignalException sig<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// no work to do</span>
+    <span class="token punctuation">}</span>
+
+     <span class="token comment" spellcheck="true">/**
+     * No-op implementation of {@link Consumer#handleRecoverOk}.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleRecoverOk</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment" spellcheck="true">// no work to do</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+     * No-op implementation of {@link Consumer#handleDelivery}.
+     */</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleDelivery</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">,</span>
+                               Envelope envelope<span class="token punctuation">,</span>
+                               AMQP<span class="token punctuation">.</span>BasicProperties properties<span class="token punctuation">,</span>
+                               <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> body<span class="token punctuation">)</span>
+        <span class="token keyword">throws</span> IOException
+    <span class="token punctuation">{</span>
+            <span class="token comment" spellcheck="true">// no work to do</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+    *  Retrieve the channel.
+     * @return the channel this consumer is attached to.
+     */</span>
+    <span class="token keyword">public</span> Channel <span class="token function">getChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _channel<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment" spellcheck="true">/**
+    *  Retrieve the consumer tag.
+     * @return the most recently notified consumer tag.
+     */</span>
+    <span class="token keyword">public</span> String <span class="token function">getConsumerTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> _consumerTag<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<h2 id="消费端自定义监听代码演示"><a href="#消费端自定义监听代码演示" class="headerlink" title="消费端自定义监听代码演示"></a>消费端自定义监听代码演示</h2><h3 id="消费端自定义监听-1"><a href="#消费端自定义监听-1" class="headerlink" title="消费端自定义监听"></a>消费端自定义监听</h3><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
 <span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**
  * @Classname MyConsumer
- * @Description TODO
- * @Date 2019/9/8 13:15
+ * @Description 自定义消费端
+ * @Date 2019/9/9 16:03
  * @Created by Jiavg
  */</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyConsumer</span> <span class="token keyword">extends</span> <span class="token class-name">DefaultConsumer</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> Channel channel<span class="token punctuation">;</span>
+
     <span class="token comment" spellcheck="true">/**
      * Constructs a new instance and records its association to the passed-in channel.
      * @param channel the channel to which this consumer is attached
@@ -478,35 +632,24 @@
         <span class="token keyword">this</span><span class="token punctuation">.</span>channel <span class="token operator">=</span> channel<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token keyword">private</span> Channel channel<span class="token punctuation">;</span>
-
     <span class="token annotation punctuation">@Override</span>
     <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleDelivery</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">,</span> Envelope envelope<span class="token punctuation">,</span> AMQP<span class="token punctuation">.</span>BasicProperties properties<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> body<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"---------consume message---------"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"consumerTag:"</span> <span class="token operator">+</span> consumerTag<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"envelope:"</span> <span class="token operator">+</span> envelope<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"properties:"</span> <span class="token operator">+</span> properties<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"body:"</span> <span class="token operator">+</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 延时ack,便于演示消费端限流</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
+        <span class="token comment" spellcheck="true">// super.handleDelivery(consumerTag, envelope, properties, body);</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"consumerTag:"</span> <span class="token operator">+</span> consumerTag <span class="token operator">+</span> <span class="token string">"--此条消息已处理"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\t消息内容:"</span> <span class="token operator">+</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
         channel<span class="token punctuation">.</span><span class="token function">basicAck</span><span class="token punctuation">(</span>envelope<span class="token punctuation">.</span><span class="token function">getDeliveryTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre>
-<h3 id="消费端代码"><a href="#消费端代码" class="headerlink" title="消费端代码"></a>消费端代码</h3><pre class=" language-java"><code class="language-java">
+<h3 id="消费端代码实现"><a href="#消费端代码实现" class="headerlink" title="消费端代码实现"></a>消费端代码实现</h3><pre class=" language-java"><code class="language-java">
 <span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
 <span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
 <span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**
  * @Classname Consumer
- * @Description 消费端限流：消费者
+ * @Description 消费端自定义监听：消费端
  * @Date 2019/9/8 10:48
  * @Created by Jiavg
  */</span>
@@ -525,31 +668,29 @@
 
         Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        String exchangeName <span class="token operator">=</span> <span class="token string">"test_QoS_Exchange"</span><span class="token punctuation">;</span>
-        String routingKey <span class="token operator">=</span> <span class="token string">"QoS.#"</span><span class="token punctuation">;</span>
-        String queueName <span class="token operator">=</span> <span class="token string">"test_QoS_Queue"</span><span class="token punctuation">;</span>
+        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Custom_Exchange"</span><span class="token punctuation">;</span>
+        String routingKey <span class="token operator">=</span> <span class="token string">"Custom.#"</span><span class="token punctuation">;</span>
+        String queueName <span class="token operator">=</span> <span class="token string">"test_Custom_Queue"</span><span class="token punctuation">;</span>
 
         <span class="token comment" spellcheck="true">// 声明交换机、声明队列、绑定队列到交换机</span>
         channel<span class="token punctuation">.</span><span class="token function">exchangeDeclare</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> <span class="token string">"topic"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
         channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
         channel<span class="token punctuation">.</span><span class="token function">queueBind</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="token comment" spellcheck="true">// 限流方式</span>
-        channel<span class="token punctuation">.</span><span class="token function">basicQos</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// autoAck设置为false</span>
-        channel<span class="token punctuation">.</span><span class="token function">basicConsume</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">MyConsumer</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
+        MyConsumer myConsumer <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyConsumer</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">basicConsume</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> myConsumer<span class="token punctuation">)</span><span class="token punctuation">;</span>        
     <span class="token punctuation">}</span>   
 <span class="token punctuation">}</span>
+
 </code></pre>
-<h4 id="启动消费端-管控台变化"><a href="#启动消费端-管控台变化" class="headerlink" title="启动消费端-管控台变化"></a>启动消费端-管控台变化</h4><p>  <strong>交换机变化</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-8/2019-09-08_133544.jpg" alt></p>
-<p>  <strong>交换机绑定情况</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-8/2019-09-08_134009.jpg" alt></p>
-<h3 id="生产端代码"><a href="#生产端代码" class="headerlink" title="生产端代码"></a>生产端代码</h3><pre class=" language-java"><code class="language-java">
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>*<span class="token punctuation">;</span>
+<h3 id="生产端代码实现"><a href="#生产端代码实现" class="headerlink" title="生产端代码实现"></a>生产端代码实现</h3><pre class=" language-java"><code class="language-java">
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
+<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**
  * @Classname Producer
- * @Description 消费端限流：生产者
+ * @Description 消费端自定义监听：生产端
  * @Date 2019/9/8 10:50
  * @Created by Jiavg
  */</span>
@@ -568,17 +709,18 @@
 
         Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        String exchangeName <span class="token operator">=</span> <span class="token string">"test_QoS_Exchange"</span><span class="token punctuation">;</span>
-        String routingKey <span class="token operator">=</span> <span class="token string">"QoS.save"</span><span class="token punctuation">;</span>
-        String msg <span class="token operator">=</span> <span class="token string">"Hello World send QoS Message"</span><span class="token punctuation">;</span>
+        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Custom_Exchange"</span><span class="token punctuation">;</span>
+        String routingKey <span class="token operator">=</span> <span class="token string">"Custom.save"</span><span class="token punctuation">;</span>
+        String msg <span class="token operator">=</span> <span class="token string">"Hello World send Custom Message"</span><span class="token punctuation">;</span>
 
         <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
             channel<span class="token punctuation">.</span><span class="token function">basicPublish</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">,</span> null<span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token punctuation">}</span>       
     <span class="token punctuation">}</span>   
 <span class="token punctuation">}</span>
+
 </code></pre>
-<h4 id="生产端运行-管控台变化"><a href="#生产端运行-管控台变化" class="headerlink" title="生产端运行-管控台变化"></a>生产端运行-管控台变化</h4><p>  <strong>Overview页面变化</strong><br>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-8/2019-09-08_141502.jpg" alt><br>  <em>由图可知,由于我们自定义消费者在处理消息的方法中(handleDelivery),使用Thread.sleep(10000);延<br>迟10秒ack,故在Overview页面显示每10秒才会消费一条消息(只有在Broker接收到消费端的ack才会发送下一<br>条消息).</em></p>
+<h3 id="消费端控制台变换"><a href="#消费端控制台变换" class="headerlink" title="消费端控制台变换"></a>消费端控制台变换</h3><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_163238.jpg" alt></p>
 
             </div>
             <hr/>
@@ -737,9 +879,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RabbitMQ-消费端限流》
+                    《RabbitMQ08_1》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/08/RabbitMQ09/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/09/RabbitMQ08-1/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -801,9 +943,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2019/09/09/RabbitMQ08-1/">
                     <div class="card-image">
@@ -824,9 +967,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-09
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-09
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -839,6 +982,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -861,19 +1005,19 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/08/RabbitMQ08/">
+                <a href="/2019/09/08/RabbitMQ09/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.jpg" class="responsive-img" alt="RabbitMQ-Return消息机制">
+                        <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="RabbitMQ-消费端限流">
                         
-                        <span class="card-title">RabbitMQ-Return消息机制</span>
+                        <span class="card-title">RabbitMQ-消费端限流</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            理解RabbitMQ的Return消息机制
+                            RabbitMQ的消费端限流
                         
                     </div>
                     <div class="publish-info">

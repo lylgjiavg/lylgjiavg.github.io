@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jiavg</title>
+  
+  <subtitle>LYLG-JLC</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://lylgjiavg.github.io/"/>
+  <updated>2019-09-10T08:10:31.962Z</updated>
+  <id>https://lylgjiavg.github.io/</id>
+  
+  <author>
+    <name>Jiavg</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>RabbitMQ-死信队列</title>
+    <link href="https://lylgjiavg.github.io/2019/09/10/RabbitMQ12/"/>
+    <id>https://lylgjiavg.github.io/2019/09/10/RabbitMQ12/</id>
+    <published>2019-09-10T07:20:02.000Z</published>
+    <updated>2019-09-10T08:10:31.962Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;死信队列&quot;&gt;&lt;a href=&quot;#死信队列&quot; class=&quot;headerlink&quot; title=&quot;死信队列&quot;&gt;&lt;/a&gt;死信队列&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;利用DLX,当消息在一个队列中变成死信(dead
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-TTL队列/消息</title>
+    <link href="https://lylgjiavg.github.io/2019/09/10/RabbitMQ11/"/>
+    <id>https://lylgjiavg.github.io/2019/09/10/RabbitMQ11/</id>
+    <published>2019-09-10T06:26:07.000Z</published>
+    <updated>2019-09-10T07:21:25.856Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;RabbitMQ之TTL队列-消息&quot;&gt;&lt;a href=&quot;#RabbitMQ之TTL队列-消息&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-消费端ACK与重回队列</title>
+    <link href="https://lylgjiavg.github.io/2019/09/09/RabbitMQ10/"/>
+    <id>https://lylgjiavg.github.io/2019/09/09/RabbitMQ10/</id>
+    <published>2019-09-09T12:27:02.000Z</published>
+    <updated>2019-09-09T13:52:13.645Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;RabbitMQ的消费端ACK与重回队列&quot;&gt;&lt;a href=&quot;#RabbitMQ的消费端ACK与重回队列&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-消费端自定义监听</title>
+    <link href="https://lylgjiavg.github.io/2019/09/09/RabbitMQ08-1/"/>
+    <id>https://lylgjiavg.github.io/2019/09/09/RabbitMQ08-1/</id>
+    <published>2019-09-09T07:54:16.000Z</published>
+    <updated>2019-09-09T08:40:02.826Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;消费端自定义监听&quot;&gt;&lt;a href=&quot;#消费端自定义监听&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-消费端限流</title>
+    <link href="https://lylgjiavg.github.io/2019/09/08/RabbitMQ09/"/>
+    <id>https://lylgjiavg.github.io/2019/09/08/RabbitMQ09/</id>
+    <published>2019-09-08T04:33:11.000Z</published>
+    <updated>2019-09-08T06:22:57.820Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;消费端限流&quot;&gt;&lt;a href=&quot;#消费端限流&quot; class=&quot;headerlink&quot; title=&quot;消费端限流&quot;&gt;&lt;/a&gt;消费端限流&lt;/h1&gt;&lt;h2 id=&quot;什么是消费端限流&quot;&gt;&lt;a href=&quot;#什么是消费端限流&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-Return消息机制</title>
+    <link href="https://lylgjiavg.github.io/2019/09/08/RabbitMQ08/"/>
+    <id>https://lylgjiavg.github.io/2019/09/08/RabbitMQ08/</id>
+    <published>2019-09-08T02:28:53.000Z</published>
+    <updated>2019-09-08T03:42:59.636Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;RabbitMQ的Return消息机制&quot;&gt;&lt;a href=&quot;#RabbitMQ的Return消息机制&quot; class=&quot;headerlink&quot; title=&quot;RabbitMQ的Return消息机制&quot;&gt;&lt;/a&gt;RabbitMQ的Return消息机制&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-Confirm确认消息</title>
+    <link href="https://lylgjiavg.github.io/2019/09/07/RabbitMQ07/"/>
+    <id>https://lylgjiavg.github.io/2019/09/07/RabbitMQ07/</id>
+    <published>2019-09-07T02:10:12.000Z</published>
+    <updated>2019-09-07T03:57:31.620Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Confirm消息确认机制&quot;&gt;&lt;a href=&quot;#Confirm消息确认机制&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>生产端的可靠性投递</title>
+    <link href="https://lylgjiavg.github.io/2019/09/04/RabbitMQ06/"/>
+    <id>https://lylgjiavg.github.io/2019/09/04/RabbitMQ06/</id>
+    <published>2019-09-04T12:59:07.000Z</published>
+    <updated>2019-09-04T14:17:40.851Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;消息如何保证100-的投递成功&quot;&gt;&lt;a href=&quot;#消息如何保证100-的投递成功&quot; class=&quot;headerlink&quot; title=&quot;消息如何保证100%的投递成功?&quot;&gt;&lt;/a&gt;消息如何保证100%的投递成功?&lt;/h1&gt;&lt;h2
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-基本概念</title>
+    <link href="https://lylgjiavg.github.io/2019/09/04/RabbitMQ05/"/>
+    <id>https://lylgjiavg.github.io/2019/09/04/RabbitMQ05/</id>
+    <published>2019-09-04T07:28:00.000Z</published>
+    <updated>2019-09-04T08:52:33.040Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;RabbitMQ的基本概念&quot;&gt;&lt;a href=&quot;#RabbitMQ的基本概念&quot; class=&quot;headerlink&quot; title=&quot;RabbitMQ的基本概念&quot;&gt;&lt;/a&gt;RabbitMQ的基本概念&lt;/h1&gt;&lt;h2 id=&quot;Binding-绑定&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ-Exchange</title>
+    <link href="https://lylgjiavg.github.io/2019/09/03/RabbitMQ04/"/>
+    <id>https://lylgjiavg.github.io/2019/09/03/RabbitMQ04/</id>
+    <published>2019-09-03T04:03:55.000Z</published>
+    <updated>2019-09-07T02:45:43.196Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Exchanges-交换机&quot;&gt;&lt;a href=&quot;#Exchanges-交换机&quot; class=&quot;headerlink&quot; title=&quot;Exchanges(交换机)&quot;&gt;&lt;/a&gt;Exchanges(交换机)&lt;/h1&gt;&lt;p&gt; 
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式概要</title>
+    <link href="https://lylgjiavg.github.io/2019/09/02/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F01/"/>
+    <id>https://lylgjiavg.github.io/2019/09/02/设计模式01/</id>
+    <published>2019-09-02T10:24:51.000Z</published>
+    <updated>2019-09-07T09:44:43.997Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;设计模式的目的&quot;&gt;&lt;a href=&quot;#设计模式的目的&quot; class=&quot;headerlink&quot; title=&quot;设计模式的目的&quot;&gt;&lt;/a&gt;设计模式的目的&lt;/h2&gt;&lt;p&gt; 
+        
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="https://lylgjiavg.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="https://lylgjiavg.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ快速入门</title>
+    <link href="https://lylgjiavg.github.io/2019/09/02/RabbitMQ03/"/>
+    <id>https://lylgjiavg.github.io/2019/09/02/RabbitMQ03/</id>
+    <published>2019-09-02T04:17:03.000Z</published>
+    <updated>2019-09-07T02:44:37.277Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;RabbitMQ入门&quot;&gt;&lt;a href=&quot;#RabbitMQ入门&quot; class=&quot;headerlink&quot; title=&quot;RabbitMQ入门&quot;&gt;&lt;/a&gt;RabbitMQ入门&lt;/h2&gt;&lt;h3
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ命令行与管控台</title>
+    <link href="https://lylgjiavg.github.io/2019/09/02/RabbitMQ02/"/>
+    <id>https://lylgjiavg.github.io/2019/09/02/RabbitMQ02/</id>
+    <published>2019-09-02T00:15:36.000Z</published>
+    <updated>2019-09-04T07:29:46.747Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;命令行与管控台-基础操作&quot;&gt;&lt;a href=&quot;#命令行与管控台-基础操作&quot; class=&quot;headerlink&quot; title=&quot;命令行与管控台-基础操作&quot;&gt;&lt;/a&gt;命令行与管控台-基础操作&lt;/h2&gt;&lt;p&gt;  &lt;strong&gt;启动应用&lt;/strong&gt;&lt;br&gt; 
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ安装及基本设置</title>
+    <link href="https://lylgjiavg.github.io/2019/09/01/RabbitMQ%E5%AE%89%E8%A3%8501/"/>
+    <id>https://lylgjiavg.github.io/2019/09/01/RabbitMQ安装01/</id>
+    <published>2019-09-01T02:27:36.000Z</published>
+    <updated>2019-09-02T02:27:19.317Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;安装环境摘要&quot;&gt;&lt;a href=&quot;#安装环境摘要&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>RabbitMQ特点</title>
+    <link href="https://lylgjiavg.github.io/2019/09/01/RabbitMQ/"/>
+    <id>https://lylgjiavg.github.io/2019/09/01/RabbitMQ/</id>
+    <published>2019-08-31T23:48:15.000Z</published>
+    <updated>2019-09-02T02:29:36.332Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;初识RabbitMQ&quot;&gt;&lt;a href=&quot;#初识RabbitMQ&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+    
+      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
+    
+      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>牛客网刷题01</title>
+    <link href="https://lylgjiavg.github.io/2019/08/20/NewCoder-19-8-20/"/>
+    <id>https://lylgjiavg.github.io/2019/08/20/NewCoder-19-8-20/</id>
+    <published>2019-08-20T12:43:14.000Z</published>
+    <updated>2019-09-02T02:28:01.934Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;pre class=&quot; language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span class=&quot;token number&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;token
+        
+      
+    
+    </summary>
+    
+      <category term="nowcoder" scheme="https://lylgjiavg.github.io/categories/nowcoder/"/>
+    
+    
+      <category term="牛客网" scheme="https://lylgjiavg.github.io/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker基本使用</title>
+    <link href="https://lylgjiavg.github.io/2019/08/17/Docker/"/>
+    <id>https://lylgjiavg.github.io/2019/08/17/Docker/</id>
+    <published>2019-08-17T12:09:32.000Z</published>
+    <updated>2019-08-17T16:04:53.304Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Docker描述&quot;&gt;&lt;a href=&quot;#Docker描述&quot; class=&quot;headerlink&quot; title=&quot;Docker描述&quot;&gt;&lt;/a&gt;Docker描述&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;    Docker
+        
+      
+    
+    </summary>
+    
+      <category term="容器引擎" scheme="https://lylgjiavg.github.io/categories/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/"/>
+    
+    
+      <category term="Docker" scheme="https://lylgjiavg.github.io/tags/Docker/"/>
+    
+      <category term="container" scheme="https://lylgjiavg.github.io/tags/container/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ArrayList</title>
+    <link href="https://lylgjiavg.github.io/2019/08/14/ArrayList/"/>
+    <id>https://lylgjiavg.github.io/2019/08/14/ArrayList/</id>
+    <published>2019-08-14T14:28:50.000Z</published>
+    <updated>2019-08-14T14:57:40.566Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;ArrayList类继承关系&quot;&gt;&lt;a href=&quot;#ArrayList类继承关系&quot; class=&quot;headerlink&quot; title=&quot;ArrayList类继承关系&quot;&gt;&lt;/a&gt;ArrayList类继承关系&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;
+        
+      
+    
+    </summary>
+    
+      <category term="数据结构和算法" scheme="https://lylgjiavg.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="数据结构" scheme="https://lylgjiavg.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>插入排序</title>
+    <link href="https://lylgjiavg.github.io/2019/07/21/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F-%E9%80%92%E5%BD%92+%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/"/>
+    <id>https://lylgjiavg.github.io/2019/07/21/插入排序-递归+二分查找/</id>
+    <published>2019-07-21T01:58:02.000Z</published>
+    <updated>2019-07-21T02:09:53.477Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;题目：&quot;&gt;&lt;a href=&quot;#题目：&quot; class=&quot;headerlink&quot; title=&quot;题目：&quot;&gt;&lt;/a&gt;题目：&lt;/h1&gt;&lt;pre class=&quot; language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+      <category term="数据结构和算法" scheme="https://lylgjiavg.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="LeetCode" scheme="https://lylgjiavg.github.io/tags/LeetCode/"/>
+    
+      <category term="算法导论" scheme="https://lylgjiavg.github.io/tags/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>插入排序(递归实现)</title>
+    <link href="https://lylgjiavg.github.io/2019/07/20/%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F-%E9%80%92%E5%BD%92%E5%AE%9E%E7%8E%B0/"/>
+    <id>https://lylgjiavg.github.io/2019/07/20/插入排序-递归实现/</id>
+    <published>2019-07-20T02:18:26.000Z</published>
+    <updated>2019-07-20T02:47:08.048Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;题目：&quot;&gt;&lt;a href=&quot;#题目：&quot; class=&quot;headerlink&quot; title=&quot;题目：&quot;&gt;&lt;/a&gt;题目：&lt;/h1&gt;&lt;pre class=&quot; language-java&quot;&gt;&lt;code class=&quot;language-java&quot;&gt;&lt;span
+        
+      
+    
+    </summary>
+    
+      <category term="数据结构和算法" scheme="https://lylgjiavg.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%92%8C%E7%AE%97%E6%B3%95/"/>
+    
+    
+      <category term="LeetCode" scheme="https://lylgjiavg.github.io/tags/LeetCode/"/>
+    
+      <category term="算法导论" scheme="https://lylgjiavg.github.io/tags/%E7%AE%97%E6%B3%95%E5%AF%BC%E8%AE%BA/"/>
+    
+  </entry>
+  
+</feed>

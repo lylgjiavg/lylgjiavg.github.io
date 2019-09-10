@@ -4,14 +4,12 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ-消费端ACK与重回队列, Jiavg">
-    <meta name="description" content="RabbitMQ的消费端ACK与重回队列消费端的手工ACK和NACK
-消费端进行消费的时候,如果由于业务异常我们可以进行日志的记录,然后进行补偿.
+    <meta name="keywords" content="RabbitMQ-死信队列, Jiavg">
+    <meta name="description" content="死信队列
+利用DLX,当消息在一个队列中变成死信(dead message)之后,他能够被重新publish到另一个Exchange,这个Exchange就是DLX.
 
-如果由于服务器宕机等严重问题,那么我们就需要手工进行ACK保障消费端消费成功.
-
-
-消费端">
+消息变成死信有以下几种情况
+消息被拒绝(basic.reject/ba">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +17,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RabbitMQ-消费端ACK与重回队列 | Jiavg</title>
+    <title>RabbitMQ-死信队列 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -266,13 +264,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/19.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RabbitMQ-消费端ACK与重回队列
+                        RabbitMQ-死信队列
                     </div>
                 </div>
             </div>
@@ -411,21 +409,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-09
+                    2019-09-10
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        913
+                        505
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        4 分
+                        2 分
                     </div>
                     
                 
@@ -441,79 +439,51 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="RabbitMQ的消费端ACK与重回队列"><a href="#RabbitMQ的消费端ACK与重回队列" class="headerlink" title="RabbitMQ的消费端ACK与重回队列"></a>RabbitMQ的消费端ACK与重回队列</h1><h2 id="消费端的手工ACK和NACK"><a href="#消费端的手工ACK和NACK" class="headerlink" title="消费端的手工ACK和NACK"></a>消费端的手工ACK和NACK</h2><ul>
-<li><p>消费端进行消费的时候,如果由于业务异常我们可以进行日志的记录,然后进行补偿.</p>
+                <h1 id="死信队列"><a href="#死信队列" class="headerlink" title="死信队列"></a>死信队列</h1><ul>
+<li>利用DLX,当消息在一个队列中变成死信(dead message)之后,他能够被重新publish到另一个Exchange,这<br>个Exchange就是DLX.</li>
+</ul>
+<h2 id="消息变成死信有以下几种情况"><a href="#消息变成死信有以下几种情况" class="headerlink" title="消息变成死信有以下几种情况"></a>消息变成死信有以下几种情况</h2><ul>
+<li><p>消息被拒绝(basic.reject/basic.nack)并且requeue=false</p>
 </li>
-<li><p>如果由于服务器宕机等严重问题,那么我们就需要手工进行ACK保障消费端消费成功.</p>
+<li><p>消息TTL过期</p>
+</li>
+<li><p>队列到达最大长度</p>
 </li>
 </ul>
-<h2 id="消费端的重回队列"><a href="#消费端的重回队列" class="headerlink" title="消费端的重回队列"></a>消费端的重回队列</h2><ul>
-<li><p>消费端重回队列是为了对没有处理成功的消息,把消息重新传递给Broker.</p>
+<h2 id="死信队列特点"><a href="#死信队列特点" class="headerlink" title="死信队列特点"></a>死信队列特点</h2><ul>
+<li><p>DLX也是一个正常的Exchange,和一般的Exchange没有区别,它能在任何的队列上被指定,实际上就是设置某个<br>队列的属性.</p>
 </li>
-<li><p>一般我们在实际应用中,都会关闭重回队列,也就是设置为false.</p>
+<li><p>当这个队列中有死信时,RabbitMQ就会自动将这个消息重新发布到设置的这个Exchange上去,进而被路由到另<br>一个队列.</p>
+</li>
+<li><p>可以监听这个队列中消息做相应的处理,这个特性可以弥补RabbitMQ3.0以前支持的immediate参数的功能.</p>
 </li>
 </ul>
-<h2 id="消费端ACK与重回队列代码演示"><a href="#消费端ACK与重回队列代码演示" class="headerlink" title="消费端ACK与重回队列代码演示"></a>消费端ACK与重回队列代码演示</h2><h3 id="消费端自定义监听"><a href="#消费端自定义监听" class="headerlink" title="消费端自定义监听"></a>消费端自定义监听</h3><pre class=" language-java"><code class="language-java">
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>AMQP<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>DefaultConsumer<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Envelope<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Classname MyConsumer
- * @Description 消费端ACK:自定义客户端监听
- * @Date 2019/9/8 13:15
- * @Created by Jiavg
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyConsumer</span> <span class="token keyword">extends</span> <span class="token class-name">DefaultConsumer</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">private</span> Channel channel<span class="token punctuation">;</span>
-
-    <span class="token comment" spellcheck="true">/**
-     * Constructs a new instance and records its association to the passed-in channel.
-     * @param channel the channel to which this consumer is attached
-     */</span>
-    <span class="token keyword">public</span> <span class="token function">MyConsumer</span><span class="token punctuation">(</span>Channel channel<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-        <span class="token keyword">super</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>channel <span class="token operator">=</span> channel<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token annotation punctuation">@Override</span>
-    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">handleDelivery</span><span class="token punctuation">(</span>String consumerTag<span class="token punctuation">,</span> Envelope envelope<span class="token punctuation">,</span> AMQP<span class="token punctuation">.</span>BasicProperties properties<span class="token punctuation">,</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> body<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
-        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"body:"</span> <span class="token operator">+</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>body<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 延时ack</span>
-        <span class="token keyword">try</span> <span class="token punctuation">{</span>
-            Thread<span class="token punctuation">.</span><span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">10000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
-            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-        <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Integer<span class="token punctuation">)</span>properties<span class="token punctuation">.</span><span class="token function">getHeaders</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">"num"</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">// basicNack(long deliveryTag, boolean multiple, boolean requeue);</span>
-            channel<span class="token punctuation">.</span><span class="token function">basicNack</span><span class="token punctuation">(</span>envelope<span class="token punctuation">.</span><span class="token function">getDeliveryTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span><span class="token keyword">else</span> <span class="token punctuation">{</span>
-            <span class="token comment" spellcheck="true">// basicAck(long deliveryTag, boolean multiple) throws IOException;</span>
-            channel<span class="token punctuation">.</span><span class="token function">basicAck</span><span class="token punctuation">(</span>envelope<span class="token punctuation">.</span><span class="token function">getDeliveryTag</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-</code></pre>
-<p>注意:</p>
+<h2 id="死信队列设置"><a href="#死信队列设置" class="headerlink" title="死信队列设置"></a>死信队列设置</h2><ul>
+<li><p>首先需要设置死信队列的exchange和queue,然后进行绑定;例:</p>
 <ul>
-<li>在自定义消费端监听处理消息的handleDelivery()方法中,我们使用Thread.sleep(10000);延时10以<br>方便我们能够详细的看到消息的消费状况.</li>
-<li>在处理消息中,我们通过判断消息的properties中的headers配置参数中的num来决定此条消息是进行Ack确<br>认还是进行NAck进行重回队列(requeue设置为true).</li>
+<li>Exchange:dlx.exchange</li>
+<li>Queue:dlx.queue</li>
+<li>RoutingKey:#</li>
 </ul>
-<h3 id="消费端实现"><a href="#消费端实现" class="headerlink" title="消费端实现"></a>消费端实现</h3><pre class=" language-java"><code class="language-java">
+</li>
+<li><p>然后我们进行正常声明交换机、队列、绑定，只不过我们需要在队列上加一个参数即可:arguments.put<br>(“x-dead-letter-exchange”, “dlx.exchange”);</p>
+</li>
+<li><p>这样消息在过期、requeue、队列在到达最大长度时，消息就可以直接路由到死信队列！</p>
+</li>
+</ul>
+<h2 id="死信队列实现"><a href="#死信队列实现" class="headerlink" title="死信队列实现"></a>死信队列实现</h2><pre class=" language-java"><code class="language-java">
 <span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
 <span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
 <span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
+<span class="token keyword">import</span> lylgjiavg<span class="token punctuation">.</span>step02<span class="token punctuation">.</span>limit<span class="token punctuation">.</span>MyConsumer<span class="token punctuation">;</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HashMap<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
 
 <span class="token comment" spellcheck="true">/**
  * @Classname Consumer
- * @Description 消费端ACK：消费端
- * @Date 2019/9/8 10:48
+ * @Description 死信队列：消费端
+ * @Date 2019/9/10 15:48
  * @Created by Jiavg
  */</span>
 <span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token punctuation">{</span>
@@ -531,76 +501,27 @@
 
         Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Ack_Exchange"</span><span class="token punctuation">;</span>
-        String routingKey <span class="token operator">=</span> <span class="token string">"Ack.#"</span><span class="token punctuation">;</span>
-        String queueName <span class="token operator">=</span> <span class="token string">"test_Ack_Queue"</span><span class="token punctuation">;</span>
+        String exchangeName <span class="token operator">=</span> <span class="token string">"test_DLX_Exchange"</span><span class="token punctuation">;</span>
+        String routingKey <span class="token operator">=</span> <span class="token string">"DLX.save"</span><span class="token punctuation">;</span>
+        String queueName <span class="token operator">=</span> <span class="token string">"test_DLX_Queue"</span><span class="token punctuation">;</span>
 
-        <span class="token comment" spellcheck="true">// 声明交换机、声明队列、绑定队列到交换机</span>
         channel<span class="token punctuation">.</span><span class="token function">exchangeDeclare</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> <span class="token string">"topic"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> arguments <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        arguments<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"x-dead-letter-exchange"</span><span class="token punctuation">,</span> <span class="token string">"dlx.exchange"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment" spellcheck="true">// 这个arguments属性要设置到声明队列上</span>
+        channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
         channel<span class="token punctuation">.</span><span class="token function">queueBind</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="token comment" spellcheck="true">// autoAck设置为false</span>
-        channel<span class="token punctuation">.</span><span class="token function">basicConsume</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">MyConsumer</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
-    <span class="token punctuation">}</span>   
+        <span class="token comment" spellcheck="true">// 要进行死信队列的声明</span>
+        channel<span class="token punctuation">.</span><span class="token function">exchangeDeclare</span><span class="token punctuation">(</span><span class="token string">"dlx.exchange"</span><span class="token punctuation">,</span> <span class="token string">"topic"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span><span class="token string">"dlx.queue"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        channel<span class="token punctuation">.</span><span class="token function">queueBind</span><span class="token punctuation">(</span><span class="token string">"dlx.queue"</span><span class="token punctuation">,</span> <span class="token string">"dlx.exchange"</span><span class="token punctuation">,</span> <span class="token string">"#"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        channel<span class="token punctuation">.</span><span class="token function">basicConsume</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">MyConsumer</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
+    <span class="token punctuation">}</span>    
 <span class="token punctuation">}</span>
 </code></pre>
-<h4 id="消费端运行-管控台变化"><a href="#消费端运行-管控台变化" class="headerlink" title="消费端运行-管控台变化"></a>消费端运行-管控台变化</h4><h5 id="交换机变化"><a href="#交换机变化" class="headerlink" title="交换机变化"></a>交换机变化</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_211547.jpg" alt></p>
-<h5 id="交换机绑定情况"><a href="#交换机绑定情况" class="headerlink" title="交换机绑定情况"></a>交换机绑定情况</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_211747.jpg" alt></p>
-<h3 id="生产端实现"><a href="#生产端实现" class="headerlink" title="生产端实现"></a>生产端实现</h3><pre class=" language-java"><code class="language-java">
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>AMQP<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HashMap<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Classname Producer
- * @Description 消费端ACK：生产者
- * @Date 2019/9/8 10:50
- * @Created by Jiavg
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Producer</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
-
-        ConnectionFactory connectionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConnectionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setPort</span><span class="token punctuation">(</span><span class="token number">5672</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setVirtualHost</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        Connection connection <span class="token operator">=</span> connectionFactory<span class="token punctuation">.</span><span class="token function">newConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        String exchangeName <span class="token operator">=</span> <span class="token string">"test_Ack_Exchange"</span><span class="token punctuation">;</span>
-        String routingKey <span class="token operator">=</span> <span class="token string">"Ack.save"</span><span class="token punctuation">;</span>
-
-        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-            String msg <span class="token operator">=</span> <span class="token string">"Hello World send Ack Message:"</span> <span class="token operator">+</span> i<span class="token punctuation">;</span>
-
-            Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> headers <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-            headers<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"num"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-            AMQP<span class="token punctuation">.</span>BasicProperties properties <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AMQP<span class="token punctuation">.</span>BasicProperties<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">deliveryMode</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">contentEncoding</span><span class="token punctuation">(</span><span class="token string">"UTF-8"</span><span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">headers</span><span class="token punctuation">(</span>headers<span class="token punctuation">)</span>
-                    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-            channel<span class="token punctuation">.</span><span class="token function">basicPublish</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">,</span> properties<span class="token punctuation">,</span> msg<span class="token punctuation">.</span><span class="token function">getBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-</code></pre>
-<p>注意:投递模式deliveryMode设置为2,为就是将消息设置为持久化的，此时rabbitmq就会将消息持久化到磁盘<br>上去(要使此模式生效,相应队列也应设置为持久化).</p>
-<h4 id="生产端运行-管控台和控制台变化"><a href="#生产端运行-管控台和控制台变化" class="headerlink" title="生产端运行-管控台和控制台变化"></a>生产端运行-管控台和控制台变化</h4><h5 id="管控台变化"><a href="#管控台变化" class="headerlink" title="管控台变化"></a>管控台变化</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_213626.jpg" alt></p>
-<h5 id="控制台变化"><a href="#控制台变化" class="headerlink" title="控制台变化"></a>控制台变化</h5><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-9/2019-09-09_214936.jpg" alt></p>
-<p>  由图结合自定义消费端监听可知,在发送的四条消息中,有一条消息被消费端NAck,故在队列中一直有一条消<br>息未被ack.并且此条消息由于requeue设置为true,故此条消息被反复重回给队列并被此队列反复投递给此消费<br>端(由于此队列只绑定了一个消费端).</p>
 
             </div>
             <hr/>
@@ -759,9 +680,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RabbitMQ-消费端ACK与重回队列》
+                    《RabbitMQ-死信队列》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/09/RabbitMQ10/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/10/RabbitMQ12/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -823,29 +744,30 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/09/10/RabbitMQ11/">
+                <a href="/2019/09/10/RabbitMQ12/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="RabbitMQ-TTL队列/消息">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="RabbitMQ-死信队列">
                         
-                        <span class="card-title">RabbitMQ-TTL队列/消息</span>
+                        <span class="card-title">RabbitMQ-死信队列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            TTL(Time To Live:生存时间)
+                            死信队列(DLX:Dead-Letter-eXchange)
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-10
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
@@ -858,6 +780,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -880,24 +803,24 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/09/RabbitMQ08-1/">
+                <a href="/2019/09/10/RabbitMQ11/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="RabbitMQ-消费端自定义监听">
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="RabbitMQ-TTL队列/消息">
                         
-                        <span class="card-title">RabbitMQ-消费端自定义监听</span>
+                        <span class="card-title">RabbitMQ-TTL队列/消息</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ之消费端自定义监听
+                            TTL(Time To Live:生存时间)
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-09
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-10
                             </span>
                         <span class="publish-author">
                             

@@ -4,10 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ命令行与管控台, Jiavg">
-    <meta name="description" content="命令行与管控台-基础操作  启动应用  [root@Jiavg /]# rabbitmqctl start_app  Starting node rabbit@Jiavg …
-  节点状态
-[root@Jiavg /]# rabbitmqc">
+    <meta name="keywords" content="GoF的23种设计模式, Jiavg">
+    <meta name="description" content="前言  关于设计模式,笔者有话说:自大一学习C语言以来,直到大二上学期自学Java至今,虽然中间经历了磕磕绊绊,但也算是走到了今天,在这两年半的学习生涯中(狗头),一直致力于埋头苦敲代码。也认识到了自己学习的一些不足，虽然笔者前期跟随视频能">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RabbitMQ命令行与管控台 | Jiavg</title>
+    <title>GoF的23种设计模式 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -262,13 +260,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/17.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RabbitMQ命令行与管控台
+                        GoF的23种设计模式
                     </div>
                 </div>
             </div>
@@ -379,12 +377,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RabbitMQ/" target="_blank">
-                                <span class="chip bg-color">RabbitMQ</span>
-                            </a>
-                        
-                            <a href="/tags/消息中间件/" target="_blank">
-                                <span class="chip bg-color">消息中间件</span>
+                            <a href="/tags/设计模式/" target="_blank">
+                                <span class="chip bg-color">设计模式</span>
                             </a>
                         
                     </div>
@@ -395,8 +389,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                消息中间件
+                            <a href="/categories/设计模式/" class="post-category" target="_blank">
+                                设计模式
                             </a>
                         
                     </div>
@@ -407,21 +401,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-02
+                    2019-09-10
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1,073
+                        2,204
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        8 分
                     </div>
                     
                 
@@ -437,126 +431,72 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="命令行与管控台-基础操作"><a href="#命令行与管控台-基础操作" class="headerlink" title="命令行与管控台-基础操作"></a>命令行与管控台-基础操作</h2><p>  <strong>启动应用</strong><br>  [root@Jiavg /]# rabbitmqctl start_app<br>  Starting node rabbit@Jiavg …</p>
-<p>  <strong>节点状态</strong></p>
-<pre><code>[root@Jiavg /]# rabbitmqctl status
-Status of node rabbit@Jiavg ...
-[{pid,24387},
- {running_applications,
-     [{rabbitmq_management,&quot;RabbitMQ Management Console&quot;,&quot;3.6.6&quot;},
-      {rabbitmq_management_agent,&quot;RabbitMQ Management Agent&quot;,&quot;3.6.6&quot;},
-      {rabbitmq_web_dispatch,&quot;RabbitMQ Web Dispatcher&quot;,&quot;3.6.6&quot;},
-      {rabbit,&quot;RabbitMQ&quot;,&quot;3.6.6&quot;},
-      {os_mon,&quot;CPO  CXC 138 46&quot;,&quot;2.4.1&quot;},
-      {amqp_client,&quot;RabbitMQ AMQP Client&quot;,&quot;3.6.6&quot;},
-      {rabbit_common,[],&quot;3.6.6&quot;},
-      {webmachine,&quot;webmachine&quot;,&quot;1.10.3&quot;},
-      {mochiweb,&quot;MochiMedia Web Server&quot;,&quot;2.13.1&quot;},
-      {mnesia,&quot;MNESIA  CXC 138 12&quot;,&quot;4.14&quot;},
-      {inets,&quot;INETS  CXC 138 49&quot;,&quot;6.3.2&quot;},
-      {ssl,&quot;Erlang/OTP SSL application&quot;,&quot;8.0.1&quot;},
-      {public_key,&quot;Public key infrastructure&quot;,&quot;1.2&quot;},
-      {xmerl,&quot;XML parser&quot;,&quot;1.3.11&quot;},
-      {crypto,&quot;CRYPTO&quot;,&quot;3.7&quot;},
-      {compiler,&quot;ERTS  CXC 138 10&quot;,&quot;7.0.1&quot;},
-      {asn1,&quot;The Erlang ASN1 compiler version 4.0.3&quot;,&quot;4.0.3&quot;},
-      {ranch,&quot;Socket acceptor pool for TCP protocols.&quot;,&quot;1.2.1&quot;},
-      {syntax_tools,&quot;Syntax tools&quot;,&quot;2.0&quot;},
-      {sasl,&quot;SASL  CXC 138 11&quot;,&quot;3.0&quot;},
-      {stdlib,&quot;ERTS  CXC 138 10&quot;,&quot;3.0.1&quot;},
-      {kernel,&quot;ERTS  CXC 138 10&quot;,&quot;5.0.1&quot;}]},
- {os,{unix,linux}},
- {erlang_version,
-     &quot;Erlang/OTP 19 [erts-8.0.3] [source] [64-bit] [smp:2:2] [async-threads:64] [hipe] [kernel-poll:true]\n&quot;},
- {memory,
-     [{total,55645528},
-      {connection_readers,0},
-      {connection_writers,0},
-      {connection_channels,0},
-      {connection_other,2832},
-      {queue_procs,2832},
-      {queue_slave_procs,0},
-      {plugins,770696},
-      {other_proc,18182848},
-      {mnesia,67616},
-      {mgmt_db,661496},
-      {msg_index,44080},
-      {other_ets,1430128},
-      {binary,29576},
-      {code,24640713},
-      {atom,1000625},
-      {other_system,8812086}]},
- {alarms,[]},
- {listeners,[{clustering,25672,&quot;::&quot;},{amqp,5672,&quot;::&quot;}]},
- {vm_memory_high_watermark,0.4},
- {vm_memory_limit,767174246},
- {disk_free_limit,50000000},
- {disk_free,20552192000},
- {file_descriptors,
-     [{total_limit,924},{total_used,2},{sockets_limit,829},{sockets_used,0}]},
- {processes,[{limit,1048576},{used,228}]},
- {run_queue,0},
- {uptime,80},
- {kernel,{net_ticktime,60}}]</code></pre><p>  <strong>关闭应用</strong><br>  [root@Jiavg /]# rabbitmqctl stop_app<br>  Stopping node rabbit@Jiavg …</p>
-<p>  注意:</p>
+                <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>  关于设计模式,笔者有话说:自大一学习C语言以来,直到大二上学期自学Java至今,虽然中间经历了磕磕绊绊,<br>但也算是走到了今天,在这两年半的学习生涯中(狗头),一直致力于埋头苦敲代码。也认识到了自己学习的一些不<br>足，虽然笔者前期跟随视频能理清一些业务逻辑，再到后来自己能够独立的完成类似功能的逻辑，并码出代码。<br>但也深知自己的差距，并在最近有了学习设计模式的想法（还好这次意志力不这么坚定，没把学习的念头给压下<br>去）。<br>  笔者在学习Java基础教程时就接触到设计模式的相关概念,无奈当时代码量不够,无法体验出一个好的设计模式<br>能够给项目带来的巨大好处。起始，最开始对项目的结构感觉到力不从心时并不是一开始着手于Java项目，这是<br>因为我所联系的Java项目虽然业务量不少，但是整体的架构已经实现，自己只需要按层次开发就行，根据不同模<br>块来进行开发。而让我真正感到力不从心的是今年暑假参加的一个3D建模大赛，此项目利用C#作为脚本语言进行<br>开发，虽然此项目的代码量甚至不到以前写的项目的百分之一（确实如此），但自己来“设计”这个项目的整体架<br>构，确实让我掉了不少头发（甚至我的Jiavg-1家族——刘海）也难以幸免。而在结束这个项目时，让我自己再来<br>看这个项目时，真是一行都看不下去（可维护性为-1…）。<br>  至此，我已深知设计模式的重要性，并参考了网上的一些视频教程和图文教程，但都感觉不是乏味难懂，就是<br>觉得和实际开发中难以结合，不能体会设计模式的奥妙之处。直到我找寻了一位大佬的教程，他把设计模式深入<br>到Java源码中去讲解，让我能够体会设计模式在实际开发中的作用。而自己接下来的教程中，我将会跟随大佬的<br>脚步来慢慢体会设计模式的奥妙之处。当然，其中也必然穿插着一些理论性的概念及讲解（本文将参考C语言中<br>文网的理论基础），因为这也是高层建筑的基础。<br>  大佬的链接:<a href="https://patterns.coderbuff.com/" target="_blank" rel="noopener">https://patterns.coderbuff.com/</a><br>  C语言中文网:<a href="http://c.biancheng.net/design_pattern/" target="_blank" rel="noopener">http://c.biancheng.net/design_pattern/</a></p>
+<h2 id="设计模式的分类和功能-安利一波理论基础"><a href="#设计模式的分类和功能-安利一波理论基础" class="headerlink" title="设计模式的分类和功能(安利一波理论基础)"></a>设计模式的分类和功能(安利一波理论基础)</h2><h3 id="1-根据目的来分"><a href="#1-根据目的来分" class="headerlink" title="1. 根据目的来分"></a>1. 根据目的来分</h3><p>  根据模式是用来完成什么工作来划分，这种方式可分为创建型模式、结构型模式和行为型模式 3 种。</p>
 <ul>
-<li><p>如果在关闭RabbitMQ管控台(即使用<em>rabbitmqctl stop_app</em>命令)后,重新启动管控台,可能会出现如下情况:</p>
-<pre><code>  [root@Jiavg /]# rabbitmqctl start_app   
-  Starting node rabbit@Jiavg ...
-  Error: unable to connect to node rabbit@Jiavg: nodedown
-
-  DIAGNOSTICS
-  ===========
-
-  attempted to contact: [rabbit@Jiavg]
-
-  rabbit@Jiavg:
-    * connected to epmd (port 4369) on Jiavg
-    * epmd reports: node &#39;rabbit&#39; not running at all
-                    no other nodes on Jiavg
-    * suggestion: start the node
-
-  current node details:
-  - node name: &#39;rabbitmq-cli-99@Jiavg&#39;
-  - home dir: /var/lib/rabbitmq
-  - cookie hash: aTORW4S5X/Uol6/P8PSLqw==
-
-  解决方案:
-  1.kill掉RabbitMQ所有进程
-  2.重启RabbitMQ服务
-  [root@Jiavg /]# rabbitmq-server start    
-                RabbitMQ 3.6.6. Copyright (C) 2007-2016 Pivotal Software, Inc.
-    ##  ##      Licensed under the MPL.  See http://www.rabbitmq.com/
-    ##  ##
-    ##########  Logs: /var/log/rabbitmq/rabbit@Jiavg.log
-    ######  ##        /var/log/rabbitmq/rabbit@Jiavg-sasl.log
-    ##########
-                Starting broker...
-   completed with 6 plugins.
-  3.重新运行rabbitmqctl start_app命令</code></pre></li>
+<li><p>创建型模式：用于描述“怎样创建对象”，它的主要特点是“将对象的创建与使用分离”。GoF 中提供了单例、<br>原型、工厂方法、抽象工厂、建造者等 5 种创建型模式。</p>
+</li>
+<li><p>结构型模式：用于描述如何将类或对象按某种布局组成更大的结构，GoF 中提供了代理、适配器、桥接、装<br>饰、外观、享元、组合等 7 种结构型模式。</p>
+</li>
+<li><p>行为型模式：用于描述类或对象之间怎样相互协作共同完成单个对象都无法单独完成的任务，以及怎样分配职<br>责。GoF 中提供了模板方法、策略、命令、职责链、状态、观察者、中介者、迭代器、访问者、备忘录、解释器<br>等 11 种行为型模式。</p>
+</li>
 </ul>
-<p>  <strong>使用lsof命令查看RabbitMQ状态</strong><br>  lsof(list open files)是一个列出当前系统打开文件的工具。在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。因为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过lsof工具能够查看这个列表对系统监测以及排错将是很有帮助的。</p>
-<p>  [root@Jiavg /]# lsof -i:5672<br>  COMMAND    PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME<br>  beam.smp 24387 rabbitmq   53u  IPv6 139726      0t0  TCP *:amqp (LISTEN)</p>
-<p>  <strong>添加用户</strong><br>  <strong>rabbitmqctl add_user <em>username password</em></strong><br>  [root@Jiavg /]# rabbitmqctl add_user jiavg jiavg<br>  Creating user “jiavg” …</p>
-<p>  <strong>列出所有用户</strong><br>  <strong>rabbitmqctl list_users</strong><br>  [root@Jiavg /]# rabbitmqctl list_users<br>  Listing users …<br>  jiavg   []<br>  guest   [administrator]</p>
-<p>  <strong>修改密码</strong><br>  <strong>rabbitmqctl change_password <em>username newpassword</em></strong><br>  [root@Jiavg /]# rabbitmqctl change_password jiavg jiavg123<br>  Changing password for user “jiavg” ..</p>
-<p>  <strong>删除用户</strong><br>  <strong>rabbitmqctl delete_user <em>username</em></strong><br>  [root@Jiavg /]# rabbitmqctl delete_user jiavg<br>  Deleting user “jiavg” …</p>
-<p>  <strong>创建虚拟主机</strong><br>  <em>*rabbitmqctl add_vhost *vhostpath</em> **
-  [root@Jiavg /]# rabbitmqctl add_vhost /test<br>  Creating vhost “/test” …</p>
-<p>  <strong>列出所有虚拟主机</strong><br>  <strong>rabbitmqctl list_vhosts</strong><br>  [root@Jiavg /]# rabbitmqctl list_vhosts<br>  Listing vhosts …<br>  /test<br>  /</p>
-<p>  <strong>设置用户权限</strong><br>  <strong>rabbitmqctl set_permissions -p <em>vhostpath username “.</em>“ “.*” “.*”*</strong><br>  [root@Jiavg /]# rabbitmqctl set_permissions -p /test jiavg “.*” “.*” “.*”<br>  Setting permissions for user “jiavg” in vhost “/test” …</p>
-<p>  <strong>列出虚拟主机上所有权限</strong><br>  <strong>rabbitmqctl list_permissions -p <em>vhostpath</em></strong><br>  [root@Jiavg /]# rabbitmqctl list_permissions -p /test<br>  Listing permissions in vhost “/test” …<br>  jiavg   .*      .*      .*</p>
-<p>  <strong>清除用户权限</strong><br>  <strong>rabbitmqctl clear_permissions -p <em>vhostpath username</em></strong><br>  [root@Jiavg /]# rabbitmqctl clear_permissions -p /test jiavg<br>  Clearing permissions for user “jiavg” in vhost “/test” …</p>
-<p>  <strong>查看所有交换机信息</strong><br>  <strong>rabbitmqctl list_exchanges</strong><br>  [root@Jiavg /]# rabbitmqctl list_exchanges<br>  Listing exchanges …<br>          direct<br>  amq.fanout      fanout<br>  amq.headers     headers<br>  amq.rabbitmq.log        topic<br>  amq.direct      direct<br>  amq.match       headers<br>  amq.rabbitmq.trace      topic<br>  amq.topic       topic</p>
-<p>  <strong>查看所有队列信息</strong><br>  <strong>rabbitmqctl list_queues</strong><br>  [root@Jiavg /]# rabbitmqctl list_queues<br>  Listing queues …<br>  <em>注:此时没有队列</em></p>
-<p>  <strong>清除队列里的消息</strong><br>  <strong>rabbitmqctl -p <em>vhostpath</em> purge_queue <em>blue</em></strong></p>
-<h2 id="命令行与管控台-高级操作"><a href="#命令行与管控台-高级操作" class="headerlink" title="命令行与管控台-高级操作"></a>命令行与管控台-高级操作</h2><p>  <strong>移除所有数据,要在rabbitmqctl stop_app之后使用</strong><br>  <strong>rabbitmqctl reset</strong></p>
-<p>  <strong>组成集群命令</strong><br>  <strong>rabbitmqctl join_cluster <clusternode> [–ram]</clusternode></strong></p>
-<p>  <strong>查看集群状态</strong><br>  <strong>rabbitmqctl cluster_status</strong></p>
-<p>  <strong>修改集群节点的储存形式</strong><br>  <strong>rabbitmqctl change_cluster_node_type disc|ram</strong></p>
-<p>  <strong>忘记节点(摘除节点)</strong><br>  <strong>rabbitmqctl forget_cluster_node [–offline]</strong></p>
-<p>  <strong>修改节点名称</strong><br>  <strong>rabbitmqctl rename_cluster_node oldnode1 newnode1 [oldnode2] [newnode2…]</strong></p>
-<h2 id="管控台-Overview项预览"><a href="#管控台-Overview项预览" class="headerlink" title="管控台-Overview项预览"></a>管控台-Overview项预览</h2><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_102428.jpg" alt></p>
+<h3 id="2-根据作用范围来分"><a href="#2-根据作用范围来分" class="headerlink" title="2. 根据作用范围来分"></a>2. 根据作用范围来分</h3><p>  根据模式是主要用于类上还是主要用于对象上来分，这种方式可分为类模式和对象模式两种。</p>
+<ul>
+<li><p>类模式：用于处理类与子类之间的关系，这些关系通过继承来建立，是静态的，在编译时刻便确定下来了。<br>GoF中的工厂方法、（类）适配器、模板方法、解释器属于该模式。</p>
+</li>
+<li><p>对象模式：用于处理对象之间的关系，这些关系可以通过组合或聚合来实现，在运行时刻是可以变化的，更具<br>动态性。GoF 中除了以上 4 种，其他的都是对象模式。</p>
+</li>
+</ul>
+<h2 id="GoF的23种设计模式的功能"><a href="#GoF的23种设计模式的功能" class="headerlink" title="GoF的23种设计模式的功能"></a>GoF的23种设计模式的功能</h2><p>前面说明了 GoF 的 23 种设计模式的分类，现在对各个模式的功能进行介绍。</p>
+<ol>
+<li><p>单例（Singleton）模式：某个类只能生成一个实例，该类提供了一个全局访问点供外部获取该实例，其拓展是有限多例模式。</p>
+</li>
+<li><p>原型（Prototype）模式：将一个对象作为原型，通过对其进行复制而克隆出多个和原型类似的新实例。</p>
+</li>
+<li><p>工厂方法（Factory Method）模式：定义一个用于创建产品的接口，由子类决定生产什么产品。</p>
+</li>
+<li><p>抽象工厂（AbstractFactory）模式：提供一个创建产品族的接口，其每个子类可以生产一系列相关的产<br>品。</p>
+</li>
+<li><p>建造者（Builder）模式：将一个复杂对象分解成多个相对简单的部分，然后根据不同需要分别创建它们，<br>最后构建成该复杂对象。</p>
+</li>
+<li><p>代理（Proxy）模式：为某对象提供一种代理以控制对该对象的访问。即客户端通过代理间接地访问该对象，<br>从而限制、增强或修改该对象的一些特性。</p>
+</li>
+<li><p>适配器（Adapter）模式：将一个类的接口转换成客户希望的另外一个接口，使得原本由于接口不兼容而不<br>能一起工作的那些类能一起工作。</p>
+</li>
+<li><p>桥接（Bridge）模式：将抽象与实现分离，使它们可以独立变化。它是用组合关系代替继承关系来实现，从<br>而降低了抽象和实现这两个可变维度的耦合度。</p>
+</li>
+<li><p>装饰（Decorator）模式：动态的给对象增加一些职责，即增加其额外的功能。</p>
+</li>
+<li><p>外观（Facade）模式：为多个复杂的子系统提供一个一致的接口，使这些子系统更加容易被访问。</p>
+</li>
+<li><p>享元（Flyweight）模式：运用共享技术来有效地支持大量细粒度对象的复用。</p>
+</li>
+<li><p>组合（Composite）模式：将对象组合成树状层次结构，使用户对单个对象和组合对象具有一致的访问性。</p>
+</li>
+<li><p>模板方法（TemplateMethod）模式：定义一个操作中的算法骨架，而将算法的一些步骤延迟到子类中，<br>使得子类可以不改变该算法结构的情况下重定义该算法的某些特定步骤。</p>
+</li>
+<li><p>策略（Strategy）模式：定义了一系列算法，并将每个算法封装起来，使它们可以相互替换，且算法的改<br>变不会影响使用算法的客户。</p>
+</li>
+<li><p>命令（Command）模式：将一个请求封装为一个对象，使发出请求的责任和执行请求的责任分割开。</p>
+</li>
+<li><p>职责链（Chain of Responsibility）模式：把请求从链中的一个对象传到下一个对象，直到请求被响<br>应为止。通过这种方式去除对象之间的耦合。</p>
+</li>
+<li><p>状态（State）模式：允许一个对象在其内部状态发生改变时改变其行为能力。</p>
+</li>
+<li><p>观察者（Observer）模式：多个对象间存在一对多关系，当一个对象发生改变时，把这种改变通知给其他<br>多个对象，从而影响其他对象的行为.</p>
+</li>
+<li><p>中介者（Mediator）模式：定义一个中介对象来简化原有对象之间的交互关系，降低系统中对象间的耦合<br>度，使原有对象之间不必相互了解。</p>
+</li>
+<li><p>迭代器（Iterator）模式：提供一种方法来顺序访问聚合对象中的一系列数据，而不暴露聚合对象的内部<br>表示。</p>
+</li>
+<li><p>访问者（Visitor）模式：在不改变集合元素的前提下，为一个集合中的每个元素提供多种访问方式，即<br>每个元素有多个访问者对象访问。</p>
+</li>
+<li><p>备忘录（Memento）模式：在不破坏封装性的前提下，获取并保存一个对象的内部状态，以便以后恢复它。</p>
+</li>
+<li><p>解释器（Interpreter）模式：提供如何定义语言的文法，以及对语言句子的解释方法，即解释器。</p>
+</li>
+</ol>
 
             </div>
             <hr/>
@@ -715,9 +655,9 @@ Status of node rabbit@Jiavg ...
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RabbitMQ命令行与管控台》
+                    《GoF的23种设计模式》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/02/RabbitMQ02/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/10/设计模式02/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -779,50 +719,48 @@ Status of node rabbit@Jiavg ...
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/09/02/RabbitMQ03/">
+                <a href="/2019/09/10/设计模式02/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="RabbitMQ快速入门">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="GoF的23种设计模式">
                         
-                        <span class="card-title">RabbitMQ快速入门</span>
+                        <span class="card-title">GoF的23种设计模式</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ快速入门
+                            作为练习了两年半的Java实习生,我喜欢唱,跳...
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-10
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                    消息中间件
+                            <a href="/categories/设计模式/" class="post-category" target="_blank">
+                                    设计模式
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RabbitMQ/" target="_blank">
-                        <span class="chip bg-color">RabbitMQ</span>
-                    </a>
-                    
-                    <a href="/tags/消息中间件/" target="_blank">
-                        <span class="chip bg-color">消息中间件</span>
+                    <a href="/tags/设计模式/" target="_blank">
+                        <span class="chip bg-color">设计模式</span>
                     </a>
                     
                 </div>
@@ -836,24 +774,24 @@ Status of node rabbit@Jiavg ...
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/01/RabbitMQ安装01/">
+                <a href="/2019/09/10/RabbitMQ12/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="RabbitMQ安装及基本设置">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="RabbitMQ-死信队列">
                         
-                        <span class="card-title">RabbitMQ安装及基本设置</span>
+                        <span class="card-title">RabbitMQ-死信队列</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ安装及基本设置
+                            死信队列(DLX:Dead-Letter-eXchange)
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-01
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-10
                             </span>
                         <span class="publish-author">
                             

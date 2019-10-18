@@ -445,7 +445,7 @@ Cac">
 <li><strong>Entry</strong>：是一个存储在<code>Cache</code>中的key-value对。</li>
 <li><strong>Expiry</strong>：每一个存储在<code>Cache</code>中的条目有一个定义的有效期。一旦超过这个时间，条目为过期的状态。一旦过期，条目将不可访问、更新和删除。缓存有效期可以通过ExpiryPolicy设置。</li>
 </ul>
-<p><img src="E:%5CALL%5CDocuments%5CMarkdown%5Cimages%5C2019-10-18_225050.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-11/2019-10-18_225050.png" alt></p>
 <h3 id="二、Spring缓存抽象"><a href="#二、Spring缓存抽象" class="headerlink" title="二、Spring缓存抽象"></a>二、Spring缓存抽象</h3><p>Spring从3.1开始定义了<code>org.springframework.cache.Cache</code>和<code>org.springframework.cache.CacheManager</code>接口来统一不同的缓存技术；并支持使用<code>JCache（JSR-107）</code>注解简化我们开发；</p>
 <ul>
 <li><code>Cache</code>接口为缓存的组件规范定义，包含缓存的各种操作集合；</li>
@@ -458,7 +458,7 @@ Cac">
 <li>确定方法需要被缓存以及他们的缓存策略</li>
 <li>从缓存中读取之前缓存存储的数据</li>
 </ul>
-<p><img src="E:%5CALL%5CDocuments%5CMarkdown%5Cimages%5C2019-10-18_230136.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-11/2019-10-18_230136.png" alt></p>
 <h3 id="三、重要概念-amp-缓存注解"><a href="#三、重要概念-amp-缓存注解" class="headerlink" title="三、重要概念&amp;缓存注解"></a>三、重要概念&amp;缓存注解</h3><table>
 <thead>
 <tr>
@@ -496,9 +496,9 @@ Cac">
 </tr>
 </tbody></table>
 <p>  <strong>@Cacheable/@CachePut/@CacheEvict主要的参数</strong>   </p>
-<p><img src="E:%5CALL%5CDocuments%5CMarkdown%5Cimages%5C2019-10-18_232039.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-11/2019-10-18_232039.png" alt></p>
 <p>  <strong>Cache SpEL available metadata</strong></p>
-<p><img src="E:%5CALL%5CDocuments%5CMarkdown%5Cimages%5C2019-10-18_232132.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-11/2019-10-18_232132.png" alt></p>
 <h3 id="四、缓存使用"><a href="#四、缓存使用" class="headerlink" title="四、缓存使用"></a>四、缓存使用</h3><ol>
 <li>引入spring-boot-starter-cache模块</li>
 </ol>
@@ -567,8 +567,8 @@ logging.level.club.lylgjiang.cache=debug</code></pre>
 <li><p>其中浏览器显示数据与控制台输出数据如下图所示：</p>
 </li>
 </ol>
-<p><img src="E:%5CALL%5CDocuments%5CMarkdown%5Cimages%5C2019-10-18_234259.png" alt></p>
-<p><img src="E:%5CALL%5CDocuments%5CMarkdown%5Cimages%5C2019-10-18_234332.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-11/2019-10-18_234259.png" alt></p>
+<p><img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-9-11/2019-10-18_234332.png" alt></p>
 <ol start="3">
 <li>刷新浏览器（F5）：控制台无变化，证明无响应的SQL语句执行，缓存成功。</li>
 </ol>

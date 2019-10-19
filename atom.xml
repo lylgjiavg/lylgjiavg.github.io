@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2019-10-18T15:56:54.156Z</updated>
+  <updated>2019-10-19T13:33:31.121Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringBoot Cache配置原理</title>
+    <link href="https://lylgjiavg.github.io/2019/10/19/SpringBoot%E7%BC%93%E5%AD%98%E5%8E%9F%E7%90%86/"/>
+    <id>https://lylgjiavg.github.io/2019/10/19/SpringBoot缓存原理/</id>
+    <published>2019-10-18T16:00:00.000Z</published>
+    <updated>2019-10-19T13:33:31.121Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;SpringBoot-Cache配置原理&quot;&gt;&lt;a href=&quot;#SpringBoot-Cache配置原理&quot; class=&quot;headerlink&quot; title=&quot;SpringBoot Cache配置原理&quot;&gt;&lt;/a&gt;SpringBoot
+        
+      
+    
+    </summary>
+    
+      <category term="SpringBoot" scheme="https://lylgjiavg.github.io/categories/SpringBoot/"/>
+    
+    
+      <category term="SpringBoot" scheme="https://lylgjiavg.github.io/tags/SpringBoot/"/>
+    
+      <category term="Cache" scheme="https://lylgjiavg.github.io/tags/Cache/"/>
+    
+  </entry>
   
   <entry>
     <title>SpringBoot Cache初体验</title>
@@ -540,34 +568,6 @@
     
     
       <category term="牛客网" scheme="https://lylgjiavg.github.io/tags/%E7%89%9B%E5%AE%A2%E7%BD%91/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Docker基本使用</title>
-    <link href="https://lylgjiavg.github.io/2019/08/17/Docker/"/>
-    <id>https://lylgjiavg.github.io/2019/08/17/Docker/</id>
-    <published>2019-08-17T12:09:32.000Z</published>
-    <updated>2019-08-17T16:04:53.304Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;Docker描述&quot;&gt;&lt;a href=&quot;#Docker描述&quot; class=&quot;headerlink&quot; title=&quot;Docker描述&quot;&gt;&lt;/a&gt;Docker描述&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;    Docker
-        
-      
-    
-    </summary>
-    
-      <category term="容器引擎" scheme="https://lylgjiavg.github.io/categories/%E5%AE%B9%E5%99%A8%E5%BC%95%E6%93%8E/"/>
-    
-    
-      <category term="Docker" scheme="https://lylgjiavg.github.io/tags/Docker/"/>
-    
-      <category term="container" scheme="https://lylgjiavg.github.io/tags/container/"/>
     
   </entry>
   

@@ -4,14 +4,14 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Jiavg">
-    <meta name="description" content="实战: 分析Elasticsearch 查询语句目标
-收集ELasticsearch集群的查询语句
-分析查询语句的常用语句,响应时长等
+    <meta name="keywords" content="Logstash入门, Jiavg">
+    <meta name="description" content="Logstash入门Logstash简介
+集中、转换和存储数据
+Logstash 是开源的服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。
 
-方案
-应用Packetbeat + Logstash完成数据收集工作
-使用Kibana + Elast">
+Data Shipper (数据传送者)
+
+E">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +19,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Jiavg</title>
+    <title>Logstash入门 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -266,13 +266,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        
+                        Logstash入门
                     </div>
                 </div>
             </div>
@@ -381,12 +381,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Logstash/" target="_blank">
+                                <span class="chip bg-color">Logstash</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                Elastic Stack
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -394,21 +407,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-05
+                    2020-04-03
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        695
+                        1,191
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        6 分
                     </div>
                     
                 
@@ -424,136 +437,211 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="实战-分析Elasticsearch-查询语句"><a href="#实战-分析Elasticsearch-查询语句" class="headerlink" title="实战: 分析Elasticsearch 查询语句"></a>实战: 分析Elasticsearch 查询语句</h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
-<li>收集ELasticsearch集群的查询语句</li>
-<li>分析查询语句的常用语句,响应时长等</li>
-</ul>
-<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><ul>
-<li>应用Packetbeat + Logstash完成数据收集工作</li>
-<li>使用Kibana + Elasticsearch完成数据分析工作</li>
-</ul>
-<p><img src="E:%5CDocument%5CDesktop%5CES%5Cimage%5C2020-04-03_012611.png" alt="2020-04-03_012611"></p>
+                <h1 id="Logstash入门"><a href="#Logstash入门" class="headerlink" title="Logstash入门"></a>Logstash入门</h1><h2 id="Logstash简介"><a href="#Logstash简介" class="headerlink" title="Logstash简介"></a>Logstash简介</h2><ul>
+<li><p>集中、转换和存储数据</p>
+<p>Logstash 是开源的服务器端<code>数据处理管道</code>，能够同时从多个来源<code>采集数据</code>，<code>转换数据</code>，然后将数据<code>发送</code>到您最喜欢的“存储库”中。</p>
+</li>
+<li><p>Data Shipper (数据传送者)</p>
+</li>
+<li><p>ETL</p>
 <ul>
-<li><p>Production Cluster         # 生产数据</p>
-<ul>
-<li>Elasticsearch <a href="http://127.0.0.1:9200" target="_blank" rel="noopener">http://127.0.0.1:9200</a></li>
-<li>Kibana <a href="http://127.0.0.1:5601" target="_blank" rel="noopener">http://127.0.0.1:5601</a></li>
+<li>Extract (采集数据)</li>
+<li>Transform (转换数据)</li>
+<li>Load (传输数据)</li>
 </ul>
 </li>
-<li><p>Monitoring Cluster         # 存储Packetbeat抓取到的Production Cluster产生的数据</p>
-<ul>
-<li><p>Elasticsearch <a href="http://127.0.0.1:8200" target="_blank" rel="noopener">http://127.0.0.1:8200</a></p>
-<p>bin/elasticsearch -Ecluster.name=sniff_search -Ehttp.port=8200 -Epath.data=sniff</p>
-</li>
-<li><p>Kibana <a href="http://127.0.0.1:8601" target="_blank" rel="noopener">http://127.0.0.1:8601</a></p>
-<p>bin/kibana -e <a href="http://127.0.0.1:8200" target="_blank" rel="noopener">http://127.0.0.1:8200</a> -p 8601</p>
-</li>
+</ul>
+<h2 id="Logstash处理流程"><a href="#Logstash处理流程" class="headerlink" title="Logstash处理流程"></a>Logstash处理流程</h2><ul>
+<li>Input        # 输入,其中输入源如下<ul>
+<li>file</li>
+<li>Redis</li>
+<li>beats</li>
+<li>kafka</li>
+<li>……</li>
 </ul>
 </li>
-<li><p>Production  和 Monitoring 不能是一个集群,否则会进入抓包死循环</p>
+<li>Filter        # 处理,处理方式如下<ul>
+<li>grok</li>
+<li>mutate</li>
+<li>drop</li>
+<li>date</li>
+</ul>
+</li>
+<li>Output     # 输出,输出源如下<ul>
+<li>stdout</li>
+<li>Elasticsearch</li>
+<li>……</li>
+</ul>
 </li>
 </ul>
-<h2 id="方案配置信息"><a href="#方案配置信息" class="headerlink" title="方案配置信息"></a>方案配置信息</h2><h3 id="方案之Logstash配置"><a href="#方案之Logstash配置" class="headerlink" title="方案之Logstash配置"></a>方案之Logstash配置</h3><p>配置文件(<code>sniff_search.conf</code>)</p>
-<pre><code>input {
-    beats {
-        port =&gt; 5044
-    }
+<h3 id="Input-和-Output配置"><a href="#Input-和-Output配置" class="headerlink" title="Input 和 Output配置"></a>Input 和 Output配置</h3><p>例:</p>
+<pre><code># 输入配置
+input {file { path =&gt; &quot;/tmp/abc.log&quot;}}
+
+# 输出配置
+output { stdout {codec =&gt; rubydebug}}</code></pre><h3 id="Filter配置"><a href="#Filter配置" class="headerlink" title="Filter配置"></a>Filter配置</h3><ul>
+<li>Grok<ul>
+<li>基于正则表达式提供了丰富可重用的模式(pattern)</li>
+<li>基于此可以将非结构化数据作为结构化处理</li>
+</ul>
+</li>
+<li>Date<ul>
+<li>将字符串类型的时间字段转换为时间戳类型, 方便后续数据处理</li>
+</ul>
+</li>
+<li>Mutate<ul>
+<li>进行增加, 修改, 删除, 替换等字段相关的处理</li>
+</ul>
+</li>
+<li>…….</li>
+</ul>
+<p>例:</p>
+<pre><code># 待转换的数据
+# 55.3.244.1 GET /index.html 15824 0.043
+
+# 转换配置
+%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}
+
+# 转换后的数据
+{
+    &quot;client&quot;: &quot;55.3.244.1&quot;,
+    &quot;method&quot;: &quot;GET&quot;,
+    &quot;request&quot;: &quot;/index.html&quot;,
+    &quot;bytes&quot;: &quot;15824&quot;,
+    &quot;duration&quot;: &quot;0.043&quot;
+}</code></pre><h2 id="收集nginx-log"><a href="#收集nginx-log" class="headerlink" title="收集nginx log"></a>收集nginx log</h2><ol>
+<li><p>下载Logstash</p>
+<p>下载地址: <a href="https://www.elastic.co/cn" target="_blank" rel="noopener">https://www.elastic.co/cn</a></p>
+</li>
+<li><p>运行Logstash</p>
+<p>解压</p>
+<pre class=" language-shell"><code class="language-shell">[jlc@localhost es]$ tar -zxf logstash-6.1.1.tar.gz</code></pre>
+<p>Logstash配置文件</p>
+<pre><code># Logstash从标准输入读取数据
+input {
+  stdin { }
 }
+
+# 数据处理流程
 filter {
-    if &quot;search&quot; in [request]{
-        grok {
-            match =&gt; { &quot;request&quot; =&gt; &quot;.*\n\{(?&lt;query_body&gt;.*)&quot;} 
-        }
-        grok {
-            match =&gt; { &quot;path&quot; =&gt; &quot;\/(?&lt;index&gt;.*)\/_search&quot;}     
-        }
-     if [index] {
-      } else {
-            mutate {
-              add_field  =&gt; { &quot;index&quot; =&gt; &quot;All&quot; }
-        }
-      }
 
-      mutate {
-              update  =&gt; { &quot;query_body&quot; =&gt; &quot;{%{query_body}&quot;}}
-      }
+  # 将非结构化数据作为结构化处理
+  grok {
+    match =&gt; {
+      &quot;message&quot; =&gt; &#39;%{IPORHOST:remote_ip} - %{DATA:user_name} \[%{HTTPDATE:time}\] &quot;%{WORD:request_action} %{DATA:request} HTTP/%{NUMBER:http_version}&quot; %{NUMBER:response} %{NUMBER:bytes} &quot;%{DATA:referrer}&quot; &quot;%{DATA:agent}&quot;&#39;
+    }
+  }
 
-  #    mutate {
-  #        remove_field =&gt; [ &quot;[http][response][body]&quot; ]
-  #    }
+  # 将时间字符串进行处理,转换为此条信息的时间戳
+  date {
+    match =&gt; [ &quot;time&quot;, &quot;dd/MMM/YYYY:HH:mm:ss Z&quot; ]
+    locale =&gt; en
+  }
+
+  # 将IP信息转换为地理位置信息
+  geoip {
+    source =&gt; &quot;remote_ip&quot;
+    target =&gt; &quot;geoip&quot;
+  }
+
+  # useragent处理
+  useragent {
+    source =&gt; &quot;agent&quot;
+    target =&gt; &quot;user_agent&quot;
+  }
 }
 
+# 数据输出到标准输出,并按rubydebug进行解码(格式化)
 output {
-  #stdout{codec=&gt;rubydebug}
-
-      if &quot;search&quot; in [request]{
-        elasticsearch {
-        hosts =&gt; &quot;127.0.0.1:8200&quot;
-        }
-   }
-}</code></pre><h3 id="方案之Packetbeat配置"><a href="#方案之Packetbeat配置" class="headerlink" title="方案之Packetbeat配置"></a>方案之Packetbeat配置</h3><p>配置文件(<code>packetbeat_es.yml</code>)</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">packetbeat.interfaces.device</span><span class="token punctuation">:</span> lo
-
-<span class="token key atrule">packetbeat.protocols</span><span class="token punctuation">:</span>
-<span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> http
-  <span class="token key atrule">ports</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">9200</span><span class="token punctuation">]</span>
-  <span class="token key atrule">send_request</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-  <span class="token key atrule">include_body_for</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"application/json"</span><span class="token punctuation">,</span><span class="token string">"x-www-form-urlencoded"</span><span class="token punctuation">]</span>
-
-<span class="token key atrule">output.logstash</span><span class="token punctuation">:</span>
-  <span class="token key atrule">hosts</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"127.0.0.1:5044"</span><span class="token punctuation">]</span></code></pre>
-<h2 id="实战步骤"><a href="#实战步骤" class="headerlink" title="实战步骤"></a>实战步骤</h2><h3 id="1-运行Production-Cluster"><a href="#1-运行Production-Cluster" class="headerlink" title="1.运行Production Cluster"></a>1.运行Production Cluster</h3><ul>
-<li><p>运行Elasticsearch (–Production , port=9200, cluster.name=prod_cluster, path.data=prod_data)</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost elasticsearch-6.1.1]$ bin/elasticsearch -Ecluster.name=prod_cluster -Ehttp.port=9200 -Epath.data=prod_data</code></pre>
+  stdout {
+    codec =&gt; rubydebug 
+  }
+}</code></pre><p>处理数据示例</p>
+<pre class=" language-shell"><code class="language-shell"># [jlc@localhost logstash-6.1.1]$ head -n 2 ../access.log
+127.0.0.1 - - [27/Jan/2020:23:15:54 +0800] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
+127.0.0.1 - - [27/Jan/2020:23:38:36 +0800] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"</code></pre>
+<p>运行Logstash</p>
+<pre class=" language-shell"><code class="language-shell">[jlc@localhost logstash-6.1.1]$ head -n 2 ../access.log | bin/logstash -f nginx_logstash.conf</code></pre>
 </li>
-<li><p>运行Kibana (–Production , es服务地址 <a href="http://127.0.0.1:9200" target="_blank" rel="noopener">http://127.0.0.1:9200</a>, port=5601)</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost kibana-6.1.1-linux-x86_64]$ bin/kibana -e http://127.0.0.1:9200 -p 5601</code></pre>
+<li><p>标准输出数据</p>
+<pre class=" language-shell"><code class="language-shell">Sending Logstash's logs to /usr/local/es/logstash-6.1.1/logs which is now configured via log4j2.properties
+[2020-04-03T01:09:01,830][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"fb_apache", :directory=>"/usr/local/es/logstash-6.1.1/modules/fb_apache/configuration"}
+[2020-04-03T01:09:01,868][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"netflow", :directory=>"/usr/local/es/logstash-6.1.1/modules/netflow/configuration"}
+[2020-04-03T01:09:02,084][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.queue", :path=>"/usr/local/es/logstash-6.1.1/data/queue"}
+[2020-04-03T01:09:02,091][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.dead_letter_queue", :path=>"/usr/local/es/logstash-6.1.1/data/dead_letter_queue"}
+[2020-04-03T01:09:02,797][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are specified
+[2020-04-03T01:09:02,968][INFO ][logstash.agent           ] No persistent UUID file found. Generating new UUID {:uuid=>"5de9619e-a0ef-4ba6-a53d-0a966ee65eb9", :path=>"/usr/local/es/logstash-6.1.1/data/uuid"}
+[2020-04-03T01:09:04,137][INFO ][logstash.runner          ] Starting Logstash {"logstash.version"=>"6.1.1"}
+[2020-04-03T01:09:05,219][INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
+[2020-04-03T01:09:10,505][INFO ][logstash.filters.geoip   ] Using geoip database {:path=>"/usr/local/es/logstash-6.1.1/vendor/bundle/jruby/2.3.0/gems/logstash-filter-geoip-5.0.2-java/vendor/GeoLite2-City.mmdb"}
+[2020-04-03T01:09:10,991][INFO ][logstash.pipeline        ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>2, "pipeline.batch.size"=>125, "pipeline.batch.delay"=>5, "pipeline.max_inflight"=>250, :thread=>"#<Thread:0x3d6477a2 run>"}
+[2020-04-03T01:09:11,143][INFO ][logstash.pipeline        ] Pipeline started {"pipeline.id"=>"main"}
+[2020-04-03T01:09:11,419][INFO ][logstash.agent           ] Pipelines running {:count=>1, :pipelines=>["main"]}
+{
+             "geoip" => {},
+           "request" => "/",
+      "http_version" => "1.1",
+          "@version" => "1",
+             "bytes" => "612",
+              "tags" => [
+        [0] "_geoip_lookup_failure"
+    ],
+        "user_agent" => {
+             "os" => "Windows 10",
+         "device" => "Other",
+        "os_name" => "Windows 10",
+          "build" => "",
+          "minor" => "0",
+           "name" => "Chrome",
+          "major" => "78",
+          "patch" => "3904"
+    },
+           "message" => "127.0.0.1 - - [27/Jan/2020:23:15:54 +0800] \"GET / HTTP/1.1\" 200 612 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36\"\r",
+    "request_action" => "GET",
+              "time" => "27/Jan/2020:23:15:54 +0800",
+        "@timestamp" => 2020-01-27T15:15:54.000Z,
+             "agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
+              "host" => "localhost.localdomain",
+         "user_name" => "-",
+          "response" => "200",
+          "referrer" => "-",
+         "remote_ip" => "127.0.0.1"
+}
+{
+             "geoip" => {},
+           "request" => "/",
+      "http_version" => "1.1",
+          "@version" => "1",
+             "bytes" => "0",
+              "tags" => [
+        [0] "_geoip_lookup_failure"
+    ],
+        "user_agent" => {
+             "os" => "Windows 10",
+         "device" => "Other",
+        "os_name" => "Windows 10",
+          "build" => "",
+          "minor" => "0",
+           "name" => "Chrome",
+          "major" => "78",
+          "patch" => "3904"
+    },
+           "message" => "127.0.0.1 - - [27/Jan/2020:23:38:36 +0800] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36\"\r",
+    "request_action" => "GET",
+              "time" => "27/Jan/2020:23:38:36 +0800",
+        "@timestamp" => 2020-01-27T15:38:36.000Z,
+             "agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
+              "host" => "localhost.localdomain",
+         "user_name" => "-",
+          "response" => "304",
+          "referrer" => "-",
+         "remote_ip" => "127.0.0.1"
+}
+[2020-04-03T01:09:12,993][INFO ][logstash.pipeline        ] Pipeline terminated {"pipeline.id"=>"main"}</code></pre>
+<p>注: 其中<code>_geoip_lookup_failure</code></p>
+<p>此错误是由于,本机IP地址为私网IP, 无法转换为地理位置。</p>
 </li>
-</ul>
-<h3 id="2-运行Monitoring-Cluster"><a href="#2-运行Monitoring-Cluster" class="headerlink" title="2.运行Monitoring Cluster"></a>2.运行Monitoring Cluster</h3><ul>
-<li><p>运行Elasticsearch (–Monitoring , port=8200, cluster.name=moni_cluster, path.data=moni_data)</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost elasticsearch-6.1.1]$ bin/elasticsearch -Ecluster.name=monit_cluster -Ehttp.port=8200 -Epath.data=monit_data</code></pre>
-</li>
-<li><p>运行Kibana (–Monitoring, es服务地址 <a href="http://127.0.0.1:8200" target="_blank" rel="noopener">http://127.0.0.1:8200</a>, port=6601)</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost kibana-6.1.1-linux-x86_64]$ bin/kibana -e http://127.0.0.1:8200 -p 6601</code></pre>
-</li>
-<li><p>运行Logstash (–Monitoring)</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost logstash-6.1.1]$ bin/logstash -f sniff_search.conf </code></pre>
-</li>
-<li><p>运行Packetbeat (–Monitoring)</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost packetbeat-6.1.1-linux-x86_64]$ sudo ./packetbeat -e -c packetbeat_es.yml -strict.perms=false</code></pre>
-</li>
-</ul>
-<h3 id="3-Kibana分析"><a href="#3-Kibana分析" class="headerlink" title="3.Kibana分析"></a>3.Kibana分析</h3><ul>
-<li>1) 在浏览器中打开<code>http://127.0.0.1:5601/</code>(Production), 点击Dev Tools面板, 进入Kibana控制台界面</li>
-<li>2) 在Kibana控制台界面输入<code>Elasticsearch Query</code>语句并运行,如下图所示:</li>
-</ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_234319.jpg" alt="2020-04-03_234319" style="zoom:50%;">
-
-<ul>
-<li>3) 在浏览器中打开<code>http://127.0.0.1:6601/</code>(Monitoring), 点击Management面板, 在Kibana选项选择<code>Index Patterns</code> 进行<code>Create index pattern</code>‘;</li>
-<li>4) 在<code>Index Patterns</code>输入框输入索引的正则表达式(如不明白, 可以输入<code>logstash*</code>进行匹配, 正确匹配后下方会有绿色提示<code>Success</code>),如下图所示.</li>
-</ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_234817.jpg" alt="2020-04-03_234817" style="zoom:50%;">
-
-<ul>
-<li>5) 点击Next Step进行下一步操作, 在<code>Time Filter field name</code>下拉框中选择<code>@timestamp</code>,点击<code>Create index pattern</code>;</li>
-</ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_235319.jpg" alt="2020-04-03_235319" style="zoom:50%;">
-
-<ul>
-<li>6) 点击Discover面板进行查询, 即可显示在<code>Production</code>中运行kibana的Console面板产生的查询语句,如下图所示:</li>
-</ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_235822.jpg" alt="2020-04-03_235822" style="zoom:50%;">
-
-<ul>
-<li>7) 选择<code>Available Fields</code>下方你想要的添加的字段,即可在右方显示对应的日志信息.如:我们选择<code>path</code>,<code>query_body</code>,<code>responsetime</code>字段,界面的显示效果如下所示:</li>
-</ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-04_000153.jpg" alt="2020-04-04_000153" style="zoom:50%;">
-
-<ul>
-<li>8) 制作dashboard: (略)</li>
-</ul>
+</ol>
 
             </div>
             <hr/>
@@ -712,9 +800,9 @@ output {
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《》
+                    《Logstash入门》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/05/4.案例实战/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/03/3.Logstash入门/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -776,45 +864,61 @@ output {
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
-            </div>
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/04/05/4.案例实战/">
+                <a href="/2020/04/04/4.案例实战/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="实战：分析Elasticsearch 查询语句">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">实战：分析Elasticsearch 查询语句</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            实战: 分析Elasticsearch 查询语句目标
-收集ELasticsearch集群的查询语句
-分析查询语句的常用语句,响应时长等
-
-方案
-应用Packetbeat + Logstash完成数据收集工作
-使用Kibana + Elast
+                            Elastic Stack
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-05
-                            </span>
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-04
+                        </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-user fa-fw"></i>
-                            Jiavg
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
+                                </a>
+                            
                             
                         </span>
                     </div>
                 </div>
-
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ElasticSearch/" target="_blank">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                    <a href="/tags/Kibana/" target="_blank">
+                        <span class="chip bg-color">Kibana</span>
+                    </a>
+                    
+                    <a href="/tags/Beats/" target="_blank">
+                        <span class="chip bg-color">Beats</span>
+                    </a>
+                    
+                    <a href="/tags/Logstash/" target="_blank">
+                        <span class="chip bg-color">Logstash</span>
+                    </a>
+                    
+                </div>
                 
             </div>
         </div>
@@ -825,38 +929,44 @@ output {
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/05/3.Logstash入门/">
+                <a href="/2020/04/02/2.Beats、Filebeat入门/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Beats入门">
                         
-                        <span class="card-title"></span>
+                        <span class="card-title">Beats入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Logstash入门Logstash简介
-集中、转换和存储数据
-Logstash 是开源的服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。
-
-Data Shipper (数据传送者)
-
-E
+                            Elastic Stack
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-05
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-02
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-user fa-fw"></i>
-                            Jiavg
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Beats/" target="_blank">
+                        <span class="chip bg-color">Beats</span>
+                    </a>
+                    
                 </div>
                 
             </div>

@@ -4,14 +4,8 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="实战：分析Elasticsearch 查询语句, Jiavg">
-    <meta name="description" content="实战: 分析Elasticsearch 查询语句目标
-收集ELasticsearch集群的查询语句
-分析查询语句的常用语句,响应时长等
-
-方案
-应用Packetbeat + Logstash完成数据收集工作
-使用Kibana + Elast">
+    <meta name="keywords" content="Jiavg">
+    <meta name="description" content="title: 实战：分析Elasticsearch 查询语句date: 2020-04-04 22:28:50summary: Elastic Stackcategories: Elastic Stacktags: [ElasticSear">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +13,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>实战：分析Elasticsearch 查询语句 | Jiavg</title>
+    <title>Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -266,13 +260,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        实战：分析Elasticsearch 查询语句
+                        
                     </div>
                 </div>
             </div>
@@ -381,37 +375,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/ElasticSearch/" target="_blank">
-                                <span class="chip bg-color">ElasticSearch</span>
-                            </a>
-                        
-                            <a href="/tags/Kibana/" target="_blank">
-                                <span class="chip bg-color">Kibana</span>
-                            </a>
-                        
-                            <a href="/tags/Beats/" target="_blank">
-                                <span class="chip bg-color">Beats</span>
-                            </a>
-                        
-                            <a href="/tags/Logstash/" target="_blank">
-                                <span class="chip bg-color">Logstash</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fa fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
-                                Elastic Stack
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -419,21 +388,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-04
+                    2020-04-05
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        695
+                        723
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        3 分
+                        4 分
                     </div>
                     
                 
@@ -449,7 +418,8 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="实战-分析Elasticsearch-查询语句"><a href="#实战-分析Elasticsearch-查询语句" class="headerlink" title="实战: 分析Elasticsearch 查询语句"></a>实战: 分析Elasticsearch 查询语句</h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
+                <p>title: 实战：分析Elasticsearch 查询语句<br>date: 2020-04-04 22:28:50<br>summary: Elastic Stack<br>categories: Elastic Stack<br>tags: [ElasticSearch,Kibana,Beats,Logstash]</p>
+<h1 id="实战-分析Elasticsearch-查询语句"><a href="#实战-分析Elasticsearch-查询语句" class="headerlink" title="实战: 分析Elasticsearch 查询语句"></a>实战: 分析Elasticsearch 查询语句</h1><h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><ul>
 <li>收集ELasticsearch集群的查询语句</li>
 <li>分析查询语句的常用语句,响应时长等</li>
 </ul>
@@ -457,7 +427,7 @@
 <li>应用Packetbeat + Logstash完成数据收集工作</li>
 <li>使用Kibana + Elasticsearch完成数据分析工作</li>
 </ul>
-<p><img src="E:%5CDocument%5CDesktop%5CES%5Cimage%5C2020-04-03_012611.png" alt="2020-04-03_012611"></p>
+<p><img src="https://i.loli.net/2020/04/06/xqn5OFZAyXREMgt.png" alt="2020-04-03_012611.png"></p>
 <ul>
 <li><p>Production Cluster         # 生产数据</p>
 <ul>
@@ -553,29 +523,24 @@ output {
 <li>1) 在浏览器中打开<code>http://127.0.0.1:5601/</code>(Production), 点击Dev Tools面板, 进入Kibana控制台界面</li>
 <li>2) 在Kibana控制台界面输入<code>Elasticsearch Query</code>语句并运行,如下图所示:</li>
 </ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_234319.jpg" alt="2020-04-03_234319" style="zoom:50%;">
-
+<p><img src="https://i.loli.net/2020/04/06/pCOIJszG3wXSP6Y.jpg" alt="2020-04-03_234319.jpg"></p>
 <ul>
 <li>3) 在浏览器中打开<code>http://127.0.0.1:6601/</code>(Monitoring), 点击Management面板, 在Kibana选项选择<code>Index Patterns</code> 进行<code>Create index pattern</code>‘;</li>
 <li>4) 在<code>Index Patterns</code>输入框输入索引的正则表达式(如不明白, 可以输入<code>logstash*</code>进行匹配, 正确匹配后下方会有绿色提示<code>Success</code>),如下图所示.</li>
 </ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_234817.jpg" alt="2020-04-03_234817" style="zoom:50%;">
-
+<p><img src="https://i.loli.net/2020/04/06/ztGBo8nWu2emSlD.jpg" alt="2020-04-03_234817.jpg"></p>
 <ul>
 <li>5) 点击Next Step进行下一步操作, 在<code>Time Filter field name</code>下拉框中选择<code>@timestamp</code>,点击<code>Create index pattern</code>;</li>
 </ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_235319.jpg" alt="2020-04-03_235319" style="zoom:50%;">
-
+<p><img src="https://i.loli.net/2020/04/06/daLOqejrTGF5WBp.jpg" alt="2020-04-03_235319.jpg"></p>
 <ul>
 <li>6) 点击Discover面板进行查询, 即可显示在<code>Production</code>中运行kibana的Console面板产生的查询语句,如下图所示:</li>
 </ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-03_235822.jpg" alt="2020-04-03_235822" style="zoom:50%;">
-
+<p><img src="https://i.loli.net/2020/04/06/e32x6NmuoarRCEK.jpg" alt="2020-04-03_235822.jpg"></p>
 <ul>
 <li>7) 选择<code>Available Fields</code>下方你想要的添加的字段,即可在右方显示对应的日志信息.如:我们选择<code>path</code>,<code>query_body</code>,<code>responsetime</code>字段,界面的显示效果如下所示:</li>
 </ul>
-<img src="E:\Document\Desktop\ES\image\2020-04-04_000153.jpg" alt="2020-04-04_000153" style="zoom:50%;">
-
+<p><img src="https://i.loli.net/2020/04/06/8tkuv69JObCIL1M.jpg" alt="2020-04-04_000153.jpg"></p>
 <ul>
 <li>8) 制作dashboard: (略)</li>
 </ul>
@@ -737,9 +702,9 @@ output {
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《实战：分析Elasticsearch 查询语句》
+                    《》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/04/4.案例实战/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/05/4.案例实战/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -806,58 +771,34 @@ output {
                 <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
             </div>
             <div class="card">
-                <a href="/2020/04/04/4.案例实战/">
+                <a href="/2020/04/05/4.案例实战/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="实战：分析Elasticsearch 查询语句">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="">
                         
-                        <span class="card-title">实战：分析Elasticsearch 查询语句</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Elastic Stack
+                            title: 实战：分析Elasticsearch 查询语句date: 2020-04-04 22:28:50summary: Elastic Stackcategories: Elastic Stacktags: [ElasticSear
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-04
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-05
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fa fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
-                                    Elastic Stack
-                                </a>
-                            
+                            <i class="fa fa-user fa-fw"></i>
+                            Jiavg
                             
                         </span>
                     </div>
                 </div>
 
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/ElasticSearch/" target="_blank">
-                        <span class="chip bg-color">ElasticSearch</span>
-                    </a>
-                    
-                    <a href="/tags/Kibana/" target="_blank">
-                        <span class="chip bg-color">Kibana</span>
-                    </a>
-                    
-                    <a href="/tags/Beats/" target="_blank">
-                        <span class="chip bg-color">Beats</span>
-                    </a>
-                    
-                    <a href="/tags/Logstash/" target="_blank">
-                        <span class="chip bg-color">Logstash</span>
-                    </a>
-                    
-                </div>
                 
             </div>
         </div>

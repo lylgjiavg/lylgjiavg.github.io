@@ -4,12 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ-死信队列, Jiavg">
-    <meta name="description" content="死信队列
-利用DLX,当消息在一个队列中变成死信(dead message)之后,他能够被重新publish到另一个Exchange,这个Exchange就是DLX.
+    <meta name="keywords" content="Elasticsearch Stack概述, Jiavg">
+    <meta name="description" content="Elasticsearch Stack概述
+“Search is something that any application should have!”  – Shay Banon (Creator of Elasticsearch)
 
-消息变成死信有以下几种情况
-消息被拒绝(basic.reject/ba">
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +16,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RabbitMQ-死信队列 | Jiavg</title>
+    <title>Elasticsearch Stack概述 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -270,7 +269,7 @@
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RabbitMQ-死信队列
+                        Elasticsearch Stack概述
                     </div>
                 </div>
             </div>
@@ -381,12 +380,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RabbitMQ/" target="_blank">
-                                <span class="chip bg-color">RabbitMQ</span>
-                            </a>
-                        
-                            <a href="/tags/消息中间件/" target="_blank">
-                                <span class="chip bg-color">消息中间件</span>
+                            <a href="/tags/Elastic-Stack/" target="_blank">
+                                <span class="chip bg-color">Elastic Stack</span>
                             </a>
                         
                     </div>
@@ -397,8 +392,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                消息中间件
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                Elastic Stack
                             </a>
                         
                     </div>
@@ -409,14 +404,14 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-10
+                    2020-04-05
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        505
+                        464
                     </div>
                     
 
@@ -439,89 +434,78 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="死信队列"><a href="#死信队列" class="headerlink" title="死信队列"></a>死信队列</h1><ul>
-<li>利用DLX,当消息在一个队列中变成死信(dead message)之后,他能够被重新publish到另一个Exchange,这<br>个Exchange就是DLX.</li>
+                <h1 id="Elasticsearch-Stack概述"><a href="#Elasticsearch-Stack概述" class="headerlink" title="Elasticsearch Stack概述"></a>Elasticsearch Stack概述</h1><ul>
+<li>“Search is something that any application should have!”  – Shay Banon (Creator of Elasticsearch)</li>
 </ul>
-<h2 id="消息变成死信有以下几种情况"><a href="#消息变成死信有以下几种情况" class="headerlink" title="消息变成死信有以下几种情况"></a>消息变成死信有以下几种情况</h2><ul>
-<li><p>消息被拒绝(basic.reject/basic.nack)并且requeue=false</p>
+<h2 id="名词介绍"><a href="#名词介绍" class="headerlink" title="名词介绍"></a>名词介绍</h2><ul>
+<li><p>什么是 ELK Stack？很简单，指的就是 Elastic Stack。</p>
 </li>
-<li><p>消息TTL过期</p>
+<li><p>ELK:  “ELK”是三个开源项目的首字母缩写，这三个项目分别是：Elasticsearch、Logstash 和 Kibana。</p>
 </li>
-<li><p>队列到达最大长度</p>
+<li><p>Elasticsearch: Elasticsearch 是一个搜索和分析引擎。</p>
 </li>
-</ul>
-<h2 id="死信队列特点"><a href="#死信队列特点" class="headerlink" title="死信队列特点"></a>死信队列特点</h2><ul>
-<li><p>DLX也是一个正常的Exchange,和一般的Exchange没有区别,它能在任何的队列上被指定,实际上就是设置某个<br>队列的属性.</p>
+<li><p>Logstash: Logstash 是服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到诸如 Elasticsearch 等“存储库”中。</p>
 </li>
-<li><p>当这个队列中有死信时,RabbitMQ就会自动将这个消息重新发布到设置的这个Exchange上去,进而被路由到另<br>一个队列.</p>
+<li><p>Kibana: Kibana 则可以让用户在 Elasticsearch 中使用图形和图表对数据进行可视化。</p>
 </li>
-<li><p>可以监听这个队列中消息做相应的处理,这个特性可以弥补RabbitMQ3.0以前支持的immediate参数的功能.</p>
+<li><p>Elastic Stack 就是 ELK Stack，但是更加灵活，可以帮助人们出色完成各项事务。Elastic Stack 是 ELK Stack 的更新换代产品。</p>
 </li>
 </ul>
-<h2 id="死信队列设置"><a href="#死信队列设置" class="headerlink" title="死信队列设置"></a>死信队列设置</h2><ul>
-<li><p>首先需要设置死信队列的exchange和queue,然后进行绑定;例:</p>
+<h2 id="Elastic-Stack特性"><a href="#Elastic-Stack特性" class="headerlink" title="Elastic Stack特性"></a>Elastic Stack特性</h2><ul>
+<li><p>使用门槛低, 开发周期短, 上线快</p>
+<p>Hadoop:         ############################## 30天</p>
+<p>Elastic Stack:  #######                                                          7天</p>
+</li>
+<li><p>性能好, 查询快, 实时展示结果</p>
+<p>对<code>T+1</code>说不: <code>T+1</code>即当天结果必须等一天才能拿到分析数据</p>
+</li>
+<li><p>扩容方便, 快速支撑增长迅猛的数据</p>
+<p>Elastic Stack能够非常方便进行扩容, 以达到TP/PB级别的规模</p>
+</li>
+</ul>
+<h2 id="Elastic-Stack组成"><a href="#Elastic-Stack组成" class="headerlink" title="Elastic Stack组成"></a>Elastic Stack组成</h2><ul>
+<li><p><code>ELK Stack</code> 组成:</p>
+<p><code>Elasticsearch</code></p>
+<p><code>Logstash</code></p>
+<p><code>Kibana</code></p>
+</li>
+<li><p><code>Elastic Stack</code> 组成:</p>
+<p><code>Elasticsearch</code></p>
+<p><code>Logstash</code></p>
+<p><code>Kibana</code></p>
+<p><code>Beats</code></p>
+</li>
+<li><p>Elastic Stack 是 ELK Stack 的更新换代产品, 是一个完备的数据分析工具集合.</p>
+</li>
+<li><p>部件主要作用:</p>
+<p><code>Kibana</code>: 数据探索与可视化分析</p>
+<p><code>Elasticsearch</code>: 数据存储, 查询与分析</p>
+<p><code>Beats</code>, <code>Logstash</code>: 数据收集与处理</p>
+</li>
+<li><p><code>Beats</code>, <code>Logstash</code> 作用</p>
 <ul>
-<li>Exchange:dlx.exchange</li>
-<li>Queue:dlx.queue</li>
-<li>RoutingKey:#</li>
+<li>数据收集与处理</li>
+<li>ELT<ul>
+<li>Extract Transform Load</li>
 </ul>
 </li>
-<li><p>然后我们进行正常声明交换机、队列、绑定，只不过我们需要在队列上加一个参数即可:arguments.put<br>(“x-dead-letter-exchange”, “dlx.exchange”);</p>
+<li>数据源多样<ul>
+<li>数据文件, 如日志, Excel等</li>
+<li>数据库, 如MySQL, Oracle等</li>
+<li>http服务</li>
+<li>网络数据</li>
+</ul>
 </li>
-<li><p>这样消息在过期、requeue、队列在到达最大长度时，消息就可以直接路由到死信队列！</p>
+<li>支持自定义扩展, 无限可能</li>
+</ul>
 </li>
 </ul>
-<h2 id="死信队列实现"><a href="#死信队列实现" class="headerlink" title="死信队列实现"></a>死信队列实现</h2><pre class=" language-java"><code class="language-java">
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Channel<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>Connection<span class="token punctuation">;</span>
-<span class="token keyword">import</span> com<span class="token punctuation">.</span>rabbitmq<span class="token punctuation">.</span>client<span class="token punctuation">.</span>ConnectionFactory<span class="token punctuation">;</span>
-<span class="token keyword">import</span> lylgjiavg<span class="token punctuation">.</span>step02<span class="token punctuation">.</span>limit<span class="token punctuation">.</span>MyConsumer<span class="token punctuation">;</span>
-
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HashMap<span class="token punctuation">;</span>
-<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
-
-<span class="token comment" spellcheck="true">/**
- * @Classname Consumer
- * @Description 死信队列：消费端
- * @Date 2019/9/10 15:48
- * @Created by Jiavg
- */</span>
-<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Consumer</span> <span class="token punctuation">{</span>
-
-    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token keyword">throws</span> Exception<span class="token punctuation">{</span>
-
-        ConnectionFactory connectionFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ConnectionFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setHost</span><span class="token punctuation">(</span><span class="token string">"127.0.0.1"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setPort</span><span class="token punctuation">(</span><span class="token number">5672</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setVirtualHost</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setUsername</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        connectionFactory<span class="token punctuation">.</span><span class="token function">setPassword</span><span class="token punctuation">(</span><span class="token string">"guest"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        Connection connection <span class="token operator">=</span> connectionFactory<span class="token punctuation">.</span><span class="token function">newConnection</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        Channel channel <span class="token operator">=</span> connection<span class="token punctuation">.</span><span class="token function">createChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        String exchangeName <span class="token operator">=</span> <span class="token string">"test_DLX_Exchange"</span><span class="token punctuation">;</span>
-        String routingKey <span class="token operator">=</span> <span class="token string">"DLX.save"</span><span class="token punctuation">;</span>
-        String queueName <span class="token operator">=</span> <span class="token string">"test_DLX_Queue"</span><span class="token punctuation">;</span>
-
-        channel<span class="token punctuation">.</span><span class="token function">exchangeDeclare</span><span class="token punctuation">(</span>exchangeName<span class="token punctuation">,</span> <span class="token string">"topic"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        Map<span class="token operator">&lt;</span>String<span class="token punctuation">,</span> Object<span class="token operator">></span> arguments <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span><span class="token operator">></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        arguments<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"x-dead-letter-exchange"</span><span class="token punctuation">,</span> <span class="token string">"dlx.exchange"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token comment" spellcheck="true">// 这个arguments属性要设置到声明队列上</span>
-        channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">,</span><span class="token boolean">false</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        channel<span class="token punctuation">.</span><span class="token function">queueBind</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> exchangeName<span class="token punctuation">,</span> routingKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        <span class="token comment" spellcheck="true">// 要进行死信队列的声明</span>
-        channel<span class="token punctuation">.</span><span class="token function">exchangeDeclare</span><span class="token punctuation">(</span><span class="token string">"dlx.exchange"</span><span class="token punctuation">,</span> <span class="token string">"topic"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        channel<span class="token punctuation">.</span><span class="token function">queueDeclare</span><span class="token punctuation">(</span><span class="token string">"dlx.queue"</span><span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">,</span> null<span class="token punctuation">)</span><span class="token punctuation">;</span>
-        channel<span class="token punctuation">.</span><span class="token function">queueBind</span><span class="token punctuation">(</span><span class="token string">"dlx.queue"</span><span class="token punctuation">,</span> <span class="token string">"dlx.exchange"</span><span class="token punctuation">,</span> <span class="token string">"#"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-        channel<span class="token punctuation">.</span><span class="token function">basicConsume</span><span class="token punctuation">(</span>queueName<span class="token punctuation">,</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">MyConsumer</span><span class="token punctuation">(</span>channel<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>        
-    <span class="token punctuation">}</span>    
-<span class="token punctuation">}</span>
-</code></pre>
+<h2 id="Elastic-Stack-应用"><a href="#Elastic-Stack-应用" class="headerlink" title="Elastic Stack 应用"></a>Elastic Stack 应用</h2><p>Elastic Stack 是 ELK Stack 的更新换代产品, 是一个完备的数据分析工具集合, 可以应用于:</p>
+<ul>
+<li>搜索引擎</li>
+<li>日志分析</li>
+<li>指标分析</li>
+</ul>
 
             </div>
             <hr/>
@@ -680,9 +664,9 @@
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RabbitMQ-死信队列》
+                    《Elasticsearch Stack概述》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/10/RabbitMQ12/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/05/第1章-Elasticsearch Stack概述/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -748,31 +732,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2019/10/18/SpringBoot缓存初体验/">
+                <a href="/2020/04/06/第2章-Elasticsearch篇之入门/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="SpringBoot Cache初体验">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Elasticsearch篇之入门">
                         
-                        <span class="card-title">SpringBoot Cache初体验</span>
+                        <span class="card-title">Elasticsearch篇之入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            SpringBoot Cache
+                            Elasticsearch
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-10-18
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-06
                         </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/SpringBoot/" class="post-category" target="_blank">
-                                    SpringBoot
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
                                 </a>
                             
                             
@@ -782,12 +766,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/SpringBoot/" target="_blank">
-                        <span class="chip bg-color">SpringBoot</span>
-                    </a>
-                    
-                    <a href="/tags/Cache/" target="_blank">
-                        <span class="chip bg-color">Cache</span>
+                    <a href="/tags/Elasticsearch/" target="_blank">
+                        <span class="chip bg-color">Elasticsearch</span>
                     </a>
                     
                 </div>
@@ -801,31 +781,31 @@
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/10/RabbitMQ11/">
+                <a href="/2020/04/04/4.案例实战/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="RabbitMQ-TTL队列/消息">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="实战：分析Elasticsearch 查询语句">
                         
-                        <span class="card-title">RabbitMQ-TTL队列/消息</span>
+                        <span class="card-title">实战：分析Elasticsearch 查询语句</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            TTL(Time To Live:生存时间)
+                            Elastic Stack
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-10
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-04
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                    消息中间件
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
                                 </a>
                             
                             
@@ -835,12 +815,20 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RabbitMQ/" target="_blank">
-                        <span class="chip bg-color">RabbitMQ</span>
+                    <a href="/tags/ElasticSearch/" target="_blank">
+                        <span class="chip bg-color">ElasticSearch</span>
                     </a>
                     
-                    <a href="/tags/消息中间件/" target="_blank">
-                        <span class="chip bg-color">消息中间件</span>
+                    <a href="/tags/Kibana/" target="_blank">
+                        <span class="chip bg-color">Kibana</span>
+                    </a>
+                    
+                    <a href="/tags/Beats/" target="_blank">
+                        <span class="chip bg-color">Beats</span>
+                    </a>
+                    
+                    <a href="/tags/Logstash/" target="_blank">
+                        <span class="chip bg-color">Logstash</span>
                     </a>
                     
                 </div>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2020-04-07T21:15:43.312Z</updated>
+  <updated>2020-04-08T19:26:39.503Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Elasticsearch篇之Mapping设置</title>
+    <link href="https://lylgjiavg.github.io/2020/04/09/%E7%AC%AC4%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8BMapping%E8%AE%BE%E7%BD%AE/"/>
+    <id>https://lylgjiavg.github.io/2020/04/09/第4章-Elasticsearch篇之Mapping设置/</id>
+    <published>2020-04-08T16:18:34.000Z</published>
+    <updated>2020-04-08T19:26:39.503Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Elasticsearch篇之Mapping设置&quot;&gt;&lt;a href=&quot;#Elasticsearch篇之Mapping设置&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Elastic Stack" scheme="https://lylgjiavg.github.io/categories/Elastic-Stack/"/>
+    
+    
+      <category term="ElasticSearch" scheme="https://lylgjiavg.github.io/tags/ElasticSearch/"/>
+    
+      <category term="Mapping" scheme="https://lylgjiavg.github.io/tags/Mapping/"/>
+    
+  </entry>
   
   <entry>
     <title>Elasticsearch篇之倒排索引与分词</title>
@@ -124,9 +152,9 @@
     
       <category term="Kibana" scheme="https://lylgjiavg.github.io/tags/Kibana/"/>
     
-      <category term="Beats" scheme="https://lylgjiavg.github.io/tags/Beats/"/>
-    
       <category term="Logstash" scheme="https://lylgjiavg.github.io/tags/Logstash/"/>
+    
+      <category term="Beats" scheme="https://lylgjiavg.github.io/tags/Beats/"/>
     
   </entry>
   
@@ -533,34 +561,6 @@
         
         
           &lt;h2 id=&quot;RabbitMQ入门&quot;&gt;&lt;a href=&quot;#RabbitMQ入门&quot; class=&quot;headerlink&quot; title=&quot;RabbitMQ入门&quot;&gt;&lt;/a&gt;RabbitMQ入门&lt;/h2&gt;&lt;h3
-        
-      
-    
-    </summary>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RabbitMQ命令行与管控台</title>
-    <link href="https://lylgjiavg.github.io/2019/09/02/RabbitMQ02/"/>
-    <id>https://lylgjiavg.github.io/2019/09/02/RabbitMQ02/</id>
-    <published>2019-09-02T00:15:36.000Z</published>
-    <updated>2019-09-04T07:29:46.747Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;命令行与管控台-基础操作&quot;&gt;&lt;a href=&quot;#命令行与管控台-基础操作&quot; class=&quot;headerlink&quot; title=&quot;命令行与管控台-基础操作&quot;&gt;&lt;/a&gt;命令行与管控台-基础操作&lt;/h2&gt;&lt;p&gt;  &lt;strong&gt;启动应用&lt;/strong&gt;&lt;br&gt; 
         
       
     

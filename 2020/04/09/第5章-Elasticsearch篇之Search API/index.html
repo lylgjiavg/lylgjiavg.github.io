@@ -1,0 +1,2736 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Elasticsearch篇之Search API, Jiavg">
+    <meta name="description" content="Elasticsearch篇之Search APISearch API概览
+实现对es中储存的数据进行查询分析, endpoint为_search, 如下所示:
+
+
+查询主要有两种形式
+
+URI Search
+操作简便, 方便通过命令行测试">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Elasticsearch篇之Search API | Jiavg</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Jiavg</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Jiavg</div>
+        <div class="logo-desc">
+            
+            个人技术总结
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/5.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Elasticsearch篇之Search API
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/ElasticSearch/" target="_blank">
+                                <span class="chip bg-color">ElasticSearch</span>
+                            </a>
+                        
+                            <a href="/tags/Search-API/" target="_blank">
+                                <span class="chip bg-color">Search API</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                Elastic Stack
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-04-09
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        4,775
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        24 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Elasticsearch篇之Search-API"><a href="#Elasticsearch篇之Search-API" class="headerlink" title="Elasticsearch篇之Search API"></a>Elasticsearch篇之Search API</h1><h2 id="Search-API概览"><a href="#Search-API概览" class="headerlink" title="Search API概览"></a>Search API概览</h2><ul>
+<li><p>实现对es中储存的数据进行查询分析, endpoint为<code>_search</code>, 如下所示:</p>
+<img src="https://i.loli.net/2020/04/10/uZ6f2OzH5shV9xM.jpg" alt="2020-04-09_234750" style="zoom:50%;">
+</li>
+<li><p>查询主要有两种形式</p>
+<ul>
+<li>URI Search<ul>
+<li>操作简便, 方便通过命令行测试</li>
+<li>仅包含部分查询语法</li>
+</ul>
+</li>
+<li>Request Body Search<ul>
+<li>es提供的完备查询语法 Query DSL (Domain Specific language)</li>
+</ul>
+</li>
+</ul>
+<p><img src="E:%5Cblog-static%5Cimage%5C2020-04%5C2020-04-10_000246.jpg" alt="2020-04-10_000246"></p>
+</li>
+</ul>
+<h2 id="URI-Search"><a href="#URI-Search" class="headerlink" title="URI Search"></a>URI Search</h2><ul>
+<li><p>通过url query 参数来实现搜索, 常用参数如下:</p>
+<ul>
+<li>q                指定查询的语句, 语法为Query String Syntax</li>
+<li>df               q中不指定字段时默认查询的字段, 如果不指定, es会查询所有字段</li>
+<li>sort            排序</li>
+<li>timeout     指定超时时间, 默认不超时</li>
+<li>from, size  用于分页</li>
+</ul>
+<p><img src="E:%5Cblog-static%5Cimage%5C2020-04%5C2020-04-10_004358.jpg" alt="2020-04-10_004358"></p>
+</li>
+</ul>
+<h3 id="Query-String-Syntax"><a href="#Query-String-Syntax" class="headerlink" title="Query String Syntax"></a>Query String Syntax</h3><h4 id="term-与-phrase"><a href="#term-与-phrase" class="headerlink" title="term 与 phrase"></a>term 与 phrase</h4><ul>
+<li>term(做分词处理):  alfred way等效于 alfred OR way</li>
+<li>phrase(不做分词处理):  “alfred way” 词语查询, 要求先后顺序</li>
+</ul>
+<h4 id="泛查询"><a href="#泛查询" class="headerlink" title="泛查询"></a>泛查询</h4><ul>
+<li><p>该查询q参数没有指定字段, 且df参数没有指定字段</p>
+</li>
+<li><p>alfred 等效于在所有字段去匹配该term</p>
+</li>
+</ul>
+<h4 id="指定字段"><a href="#指定字段" class="headerlink" title="指定字段"></a>指定字段</h4><ul>
+<li>示例 name: alfred</li>
+</ul>
+<h4 id="Group分组"><a href="#Group分组" class="headerlink" title="Group分组"></a>Group分组</h4><ul>
+<li><p>使用括号指定匹配的规则</p>
+</li>
+<li><p>示例 (quick OR brown) AND fox</p>
+</li>
+<li><p>示例 status: (active OR pending) title: (full text search)</p>
+</li>
+</ul>
+<h4 id="布尔操作符"><a href="#布尔操作符" class="headerlink" title="布尔操作符"></a>布尔操作符</h4><ul>
+<li>AND(&amp;&amp;), OR(||), NOT(!)<ul>
+<li>示例 name: (tom NOT lee)</li>
+<li>注意大写, 不能小写</li>
+</ul>
+</li>
+<li><code>+</code>, <code>-</code> 分别对应must 和 must_not<ul>
+<li>示例 name: (tom +lee -alfred)</li>
+<li>示例 name:((lee &amp;&amp; !alfred) || (tom &amp;&amp; lee &amp;&amp; !alfred))</li>
+<li><code>+</code> 在url中会被解析为空格, 要使用encode 后的结果才可以, 为 <code>%2B</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="范围查询"><a href="#范围查询" class="headerlink" title="范围查询"></a>范围查询</h4><ul>
+<li><p>支持数值和日期</p>
+</li>
+<li><p>区间写法, 闭区间用[], 开区间用{}</p>
+<ul>
+<li>示例 age:[1 TO 10] 意为 1 &lt;= age &lt;= 10</li>
+<li>示例 age:[1 TO 10} 意为 1 &lt;= age &lt; 10</li>
+<li>示例 age:[1 TO] 意为 1 &lt;= age</li>
+<li>示例 age:[* TO 10] 意为 age &lt;= 10</li>
+</ul>
+</li>
+<li><p>算术符号写法</p>
+<ul>
+<li>示例 age: &gt;= 1</li>
+<li>示例 age: (&gt;= 1 &amp;&amp; &lt;= 10) 或者 age: (+&gt;= 1 +&lt;= 10)</li>
+</ul>
+</li>
+</ul>
+<h4 id="通配符查询"><a href="#通配符查询" class="headerlink" title="通配符查询"></a>通配符查询</h4><ul>
+<li><p><code>?</code> 代表1个字符, <code>*</code>代表0或多个字符</p>
+<ul>
+<li><p>示例 name: t?m</p>
+</li>
+<li><p>示例 name: tom*</p>
+</li>
+<li><p>示例 name: t*m</p>
+</li>
+</ul>
+</li>
+<li><p>通配符匹配执行效率低, 且占用内存较多, 不建议使用</p>
+</li>
+<li><p>如无特殊要求, 不要将 <code>?</code>或者<code>*</code>放在最前面</p>
+</li>
+</ul>
+<h4 id="正则表达式匹配"><a href="#正则表达式匹配" class="headerlink" title="正则表达式匹配"></a>正则表达式匹配</h4><ul>
+<li>示例 name: /[mb]oat/</li>
+</ul>
+<h4 id="模糊匹配-fuzzy-query"><a href="#模糊匹配-fuzzy-query" class="headerlink" title="模糊匹配(fuzzy query)"></a>模糊匹配(fuzzy query)</h4><ul>
+<li>示例 name: roam~1</li>
+<li>匹配与roam 差一个character的词, 比如foam, roams等</li>
+</ul>
+<h4 id="近似度查询-proximity-search"><a href="#近似度查询-proximity-search" class="headerlink" title="近似度查询(proximity search)"></a>近似度查询(proximity search)</h4><ul>
+<li>“fox quick”~2</li>
+<li>以term为单位进行差异比较, 比如 “quick fox” “quick brown fox”都会被匹配</li>
+</ul>
+<p>查询示例: </p>
+<pre class=" language-shell"><code class="language-shell"># 测试Query String Syntax
+# 测试数据
+POST test_search_index/doc/_bulk
+{"index":{"_id":"1"}}
+{"username":"alfred way","job":"java engineer","age":18,"birth":"1990-01-02","isMarried":false}
+{"index":{"_id":"2"}}
+{"username":"alfred","job":"java senior engineer and java specialist","age":28,"birth":"1980-05-07","isMarried":true}
+{"index":{"_id":"3"}}
+{"username":"lee","job":"java and ruby engineer","age":22,"birth":"1985-08-07","isMarried":false}
+{"index":{"_id":"4"}}
+{"username":"alfred junior way","job":"ruby engineer","age":23,"birth":"1989-08-07","isMarried":false}
+
+# 1.request
+# 测试q参数
+# 查询所有字段有包含alfred的文档
+GET /test_search_index/_search?q=alfred
+
+# 1.response
+{
+  "took": 78,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0.6931472,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.6931472,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.2876821,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": 0.1513613,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}
+
+# 2.request
+# 使用profile设置可以查看es查询的详细过程
+# 测试profile的用法
+GET /test_search_index/_search?q=alfred
+{
+  "profile": true
+}
+
+# 2.response
+{
+  "took": 66,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0.6931472,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.6931472,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.2876821,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": 0.1513613,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        }
+      }
+    ]
+  },
+  "profile": {
+    "shards": [
+      {
+        "id": "[Eyro1LLhQOSsyBQNJV86kQ][test_search_index][0]",
+        "searches": [
+          {
+            "query": [
+              {
+                "type": "DisjunctionMaxQuery",
+                "description": """(username.keyword:alfred | MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]") | job:alfred | MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]") | username:alfred | job.keyword:alfred)""",
+                "time_in_nanos": 474000,
+                "breakdown": {
+                  "score": 0,
+                  "build_scorer_count": 0,
+                  "match_count": 0,
+                  "create_weight": 473999,
+                  "next_doc": 0,
+                  "match": 0,
+                  "create_weight_count": 1,
+                  "next_doc_count": 0,
+                  "score_count": 0,
+                  "build_scorer": 0,
+                  "advance": 0,
+                  "advance_count": 0
+                },
+                "children": [
+                  {
+                    "type": "TermQuery",
+                    "description": "username.keyword:alfred",
+                    "time_in_nanos": 59956,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 59955,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]")""",
+                    "time_in_nanos": 1858,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 1857,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job:alfred",
+                    "time_in_nanos": 35355,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 35354,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]")""",
+                    "time_in_nanos": 740,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 739,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "username:alfred",
+                    "time_in_nanos": 27501,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 27500,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job.keyword:alfred",
+                    "time_in_nanos": 26546,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 26545,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  }
+                ]
+              }
+            ],
+            "rewrite_time": 17661,
+            "collector": [
+              {
+                "name": "CancellableCollector",
+                "reason": "search_cancelled",
+                "time_in_nanos": 10467,
+                "children": [
+                  {
+                    "name": "SimpleTopScoreDocCollector",
+                    "reason": "search_top_hits",
+                    "time_in_nanos": 1881
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "aggregations": []
+      },
+      {
+        "id": "[Eyro1LLhQOSsyBQNJV86kQ][test_search_index][1]",
+        "searches": [
+          {
+            "query": [
+              {
+                "type": "DisjunctionMaxQuery",
+                "description": """(username.keyword:alfred | MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]") | job:alfred | MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]") | username:alfred | job.keyword:alfred)""",
+                "time_in_nanos": 159743,
+                "breakdown": {
+                  "score": 0,
+                  "build_scorer_count": 0,
+                  "match_count": 0,
+                  "create_weight": 159742,
+                  "next_doc": 0,
+                  "match": 0,
+                  "create_weight_count": 1,
+                  "next_doc_count": 0,
+                  "score_count": 0,
+                  "build_scorer": 0,
+                  "advance": 0,
+                  "advance_count": 0
+                },
+                "children": [
+                  {
+                    "type": "TermQuery",
+                    "description": "username.keyword:alfred",
+                    "time_in_nanos": 45517,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 45516,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]")""",
+                    "time_in_nanos": 9510,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 9509,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job:alfred",
+                    "time_in_nanos": 25277,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 25276,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]")""",
+                    "time_in_nanos": 646,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 645,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "username:alfred",
+                    "time_in_nanos": 24136,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 24135,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job.keyword:alfred",
+                    "time_in_nanos": 20368,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 0,
+                      "match_count": 0,
+                      "create_weight": 20367,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 0,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  }
+                ]
+              }
+            ],
+            "rewrite_time": 8905,
+            "collector": [
+              {
+                "name": "CancellableCollector",
+                "reason": "search_cancelled",
+                "time_in_nanos": 1153,
+                "children": [
+                  {
+                    "name": "SimpleTopScoreDocCollector",
+                    "reason": "search_top_hits",
+                    "time_in_nanos": 437
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "aggregations": []
+      },
+      {
+        "id": "[Eyro1LLhQOSsyBQNJV86kQ][test_search_index][2]",
+        "searches": [
+          {
+            "query": [
+              {
+                "type": "DisjunctionMaxQuery",
+                "description": """(username.keyword:alfred | MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]") | job:alfred | MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]") | username:alfred | job.keyword:alfred)""",
+                "time_in_nanos": 1616489,
+                "breakdown": {
+                  "score": 16996,
+                  "build_scorer_count": 2,
+                  "match_count": 0,
+                  "create_weight": 315929,
+                  "next_doc": 14935,
+                  "match": 0,
+                  "create_weight_count": 1,
+                  "next_doc_count": 3,
+                  "score_count": 2,
+                  "build_scorer": 1268621,
+                  "advance": 0,
+                  "advance_count": 0
+                },
+                "children": [
+                  {
+                    "type": "TermQuery",
+                    "description": "username.keyword:alfred",
+                    "time_in_nanos": 751330,
+                    "breakdown": {
+                      "score": 3394,
+                      "build_scorer_count": 2,
+                      "match_count": 0,
+                      "create_weight": 123268,
+                      "next_doc": 3196,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 2,
+                      "score_count": 1,
+                      "build_scorer": 621466,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]")""",
+                    "time_in_nanos": 6639,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 5702,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 935,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job:alfred",
+                    "time_in_nanos": 51639,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 49299,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 2338,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]")""",
+                    "time_in_nanos": 1127,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 822,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 303,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "username:alfred",
+                    "time_in_nanos": 125399,
+                    "breakdown": {
+                      "score": 7989,
+                      "build_scorer_count": 2,
+                      "match_count": 0,
+                      "create_weight": 48097,
+                      "next_doc": 3758,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 3,
+                      "score_count": 2,
+                      "build_scorer": 65547,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job.keyword:alfred",
+                    "time_in_nanos": 49838,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 48713,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 1123,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  }
+                ]
+              }
+            ],
+            "rewrite_time": 16905,
+            "collector": [
+              {
+                "name": "CancellableCollector",
+                "reason": "search_cancelled",
+                "time_in_nanos": 10222469,
+                "children": [
+                  {
+                    "name": "SimpleTopScoreDocCollector",
+                    "reason": "search_top_hits",
+                    "time_in_nanos": 30953
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "aggregations": []
+      },
+      {
+        "id": "[Eyro1LLhQOSsyBQNJV86kQ][test_search_index][3]",
+        "searches": [
+          {
+            "query": [
+              {
+                "type": "DisjunctionMaxQuery",
+                "description": """(username.keyword:alfred | MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]") | job:alfred | MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]") | username:alfred | job.keyword:alfred)""",
+                "time_in_nanos": 376655,
+                "breakdown": {
+                  "score": 2945,
+                  "build_scorer_count": 2,
+                  "match_count": 0,
+                  "create_weight": 267481,
+                  "next_doc": 3414,
+                  "match": 0,
+                  "create_weight_count": 1,
+                  "next_doc_count": 2,
+                  "score_count": 1,
+                  "build_scorer": 102809,
+                  "advance": 0,
+                  "advance_count": 0
+                },
+                "children": [
+                  {
+                    "type": "TermQuery",
+                    "description": "username.keyword:alfred",
+                    "time_in_nanos": 94069,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 90252,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 3815,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]")""",
+                    "time_in_nanos": 2120,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 1067,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 1051,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job:alfred",
+                    "time_in_nanos": 45978,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 45406,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 570,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]")""",
+                    "time_in_nanos": 1291,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 816,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 473,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "username:alfred",
+                    "time_in_nanos": 128922,
+                    "breakdown": {
+                      "score": 2326,
+                      "build_scorer_count": 2,
+                      "match_count": 0,
+                      "create_weight": 50312,
+                      "next_doc": 2021,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 2,
+                      "score_count": 1,
+                      "build_scorer": 74257,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job.keyword:alfred",
+                    "time_in_nanos": 43668,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 42613,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 1053,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  }
+                ]
+              }
+            ],
+            "rewrite_time": 7191,
+            "collector": [
+              {
+                "name": "CancellableCollector",
+                "reason": "search_cancelled",
+                "time_in_nanos": 9782718,
+                "children": [
+                  {
+                    "name": "SimpleTopScoreDocCollector",
+                    "reason": "search_top_hits",
+                    "time_in_nanos": 9198
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "aggregations": []
+      },
+      {
+        "id": "[Eyro1LLhQOSsyBQNJV86kQ][test_search_index][4]",
+        "searches": [
+          {
+            "query": [
+              {
+                "type": "DisjunctionMaxQuery",
+                "description": """(username.keyword:alfred | MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]") | job:alfred | MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]") | username:alfred | job.keyword:alfred)""",
+                "time_in_nanos": 360917,
+                "breakdown": {
+                  "score": 0,
+                  "build_scorer_count": 1,
+                  "match_count": 0,
+                  "create_weight": 344405,
+                  "next_doc": 0,
+                  "match": 0,
+                  "create_weight_count": 1,
+                  "next_doc_count": 0,
+                  "score_count": 0,
+                  "build_scorer": 16510,
+                  "advance": 0,
+                  "advance_count": 0
+                },
+                "children": [
+                  {
+                    "type": "TermQuery",
+                    "description": "username.keyword:alfred",
+                    "time_in_nanos": 89067,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 85608,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 3457,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [birth] query, caused by parse_exception:[failed to parse date field [alfred] with format [strict_date_optional_time||epoch_millis]]")""",
+                    "time_in_nanos": 1710,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 1002,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 706,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job:alfred",
+                    "time_in_nanos": 122999,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 122410,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 587,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "MatchNoDocsQuery",
+                    "description": """MatchNoDocsQuery("failed [age] query, caused by number_format_exception:[For input string: "alfred"]")""",
+                    "time_in_nanos": 1352,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 1038,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 312,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "username:alfred",
+                    "time_in_nanos": 53253,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 52748,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 503,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  },
+                  {
+                    "type": "TermQuery",
+                    "description": "job.keyword:alfred",
+                    "time_in_nanos": 42649,
+                    "breakdown": {
+                      "score": 0,
+                      "build_scorer_count": 1,
+                      "match_count": 0,
+                      "create_weight": 42028,
+                      "next_doc": 0,
+                      "match": 0,
+                      "create_weight_count": 1,
+                      "next_doc_count": 0,
+                      "score_count": 0,
+                      "build_scorer": 619,
+                      "advance": 0,
+                      "advance_count": 0
+                    }
+                  }
+                ]
+              }
+            ],
+            "rewrite_time": 7234,
+            "collector": [
+              {
+                "name": "CancellableCollector",
+                "reason": "search_cancelled",
+                "time_in_nanos": 4641913,
+                "children": [
+                  {
+                    "name": "SimpleTopScoreDocCollector",
+                    "reason": "search_top_hits",
+                    "time_in_nanos": 1527
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "aggregations": []
+      }
+    ]
+  }
+}
+
+# 3.request
+# 测试指定字段查询
+# 查询username字段包含way的文档
+GET /test_search_index/_search?q=username:way
+
+# 3.response
+{
+  "took": 12,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 2,
+    "max_score": 0.5754429,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": 0.5754429,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.2876821,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}
+
+# 4.request
+# 测试phrase查询
+# 注意以下两个的区别:
+# 1) 查询username字段包含alfred的, 或者其他所有字段包含way的文档
+# 2) 查询username字段包含alfred way的(alfred way是一个整体)文档
+GET /test_search_index/_search?q=username:alfred way
+GET /test_search_index/_search?q=username:"alfred way"
+
+# 4.response
+{
+  "took": 11,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 0.5753642,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.5753642,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}
+
+# 5.request
+# 测试布尔操作符
+# 查询username字段包含alfred且不包含way的文档
+GET /test_search_index/_search?q=username: (alfred NOT way)
+
+# 查询username字段包含alfred且必须包含way的文档
+GET /test_search_index/_search?q=username: (alfred %2Bway)
+
+# 6.request
+# 测试范围查询, 支持数值和日期
+# 查询age字段>25, 注意>于数字之间不能有空格
+GET /test_search_index/_search?q=age: >25
+
+# 查询birth字段>1986且<1990
+GET /test_search_index/_search?q=birth: (>1986 AND <1990)</code></pre>
+<h3 id="Request-Body-Search"><a href="#Request-Body-Search" class="headerlink" title="Request Body Search"></a>Request Body Search</h3><ul>
+<li><p>将查询语句通过http request body 发送到es, 主要包含如下参数:</p>
+<ul>
+<li>query           符合 Query DSL语法的查询语句</li>
+<li>from, size</li>
+<li>timeout</li>
+<li>sort</li>
+<li>……</li>
+</ul>
+<img src="https://i.loli.net/2020/04/10/3oWvqs5EPh8Y79c.jpg" alt="2020-04-10_014446" style="zoom:80%;">
+
+</li>
+</ul>
+<h4 id="Query-DSL"><a href="#Query-DSL" class="headerlink" title="Query DSL"></a>Query DSL</h4><ul>
+<li>基于Json定义的查询语言, 主要包含如下两种类型:<ul>
+<li>字段类查询<ul>
+<li>如term, match, range等, 只针对某一个字段进行查询</li>
+</ul>
+</li>
+<li>复合查询<ul>
+<li>如bool查询等, 包含一个或多个字段类查询或者复合查询</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="字段类查询"><a href="#字段类查询" class="headerlink" title="字段类查询"></a>字段类查询</h5><ul>
+<li>字段类查询主要包括以下两类:<ul>
+<li>全文匹配<ul>
+<li>针对text类型的字段进行全文检索, 会对查询的语句先进行分词处理</li>
+<li>如match, match_phrase等query类型</li>
+</ul>
+</li>
+<li>单词匹配<ul>
+<li>不会对查询语句进行分词处理, 直接去匹配字段的倒排索引</li>
+<li>如term, terms, range 等query类型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="Match-Query"><a href="#Match-Query" class="headerlink" title="Match Query"></a>Match Query</h6><ul>
+<li>对字段进行全文检索, 最基本和常用的查询类型, API示例如下:</li>
+</ul>
+<img src="https://i.loli.net/2020/04/10/xDMCuRghEVpN6Gt.jpg" alt="2020-04-10_020051" style="zoom:80%;">
+
+<img src="https://i.loli.net/2020/04/10/L5Vm4JoEK9vDaNz.jpg" alt="2020-04-10_020245" style="zoom:80%;">
+
+<ul>
+<li><p>Match Query 检索流程</p>
+<p><img src="https://i.loli.net/2020/04/10/2gb5PvaWN6QjGCr.jpg" alt="2020-04-10_020358"></p>
+</li>
+<li><p>通过operator参数可以控制单词间的匹配关系, 可选项为<code>or</code> 和 <code>and</code></p>
+<p>如下示例: 查询username字段包含alfred且包含way的文档</p>
+<p><img src="https://i.loli.net/2020/04/10/LIUSNROFwyXlriH.jpg" alt="2020-04-10_020536"></p>
+</li>
+<li><p>minimum_should_match 参数可以控制需要匹配的单词数</p>
+<p>如下示例: 查询username字段包含alfred, way(query中的查询所有分词)中两个单词的文档</p>
+<p><img src="https://i.loli.net/2020/04/10/vR6WZOzFUN23qQX.jpg" alt="2020-04-10_020839"></p>
+</li>
+</ul>
+<h6 id="相关性算分"><a href="#相关性算分" class="headerlink" title="相关性算分"></a>相关性算分</h6><ul>
+<li><p>相关性算分是指文档与查询语句间的相关度, 英文为relevance</p>
+<ul>
+<li><p>通过倒排索引可以获取与查询语句相匹配的文档列表, 那么<strong>如何将最符合用户查询需求的文档放在最前列呢?</strong></p>
+</li>
+<li><p>本质是一个排序问题, 排序的依据是相关性算分</p>
+<p><img src="https://i.loli.net/2020/04/10/vzmtGJ4pBaurokg.jpg" alt="2020-04-10_032307"></p>
+</li>
+</ul>
+</li>
+<li><p>相关性算分的几个重要概念如下:</p>
+<ul>
+<li>Term Frequency(TF) 词频, 即单词在该文档中出现的次数, 词频越高, 相关度越高</li>
+<li>Document Frequency(DF) 文档频率, 即单词出现的文档数</li>
+<li>Inverse Document Frequency(IDF)  逆向文档频率, 与文档频率相反, 简单理解为1/DF, 即单词出现的文档数越少, 相关度越高</li>
+<li>Filed-length Norm 文档越短, 相关性越高</li>
+</ul>
+</li>
+<li><p>ES目前主要有两个相关性算分模型, 如下:</p>
+<ul>
+<li>TF/IDF 模型</li>
+<li>BM25模型  5.x之后的默认模型</li>
+</ul>
+</li>
+<li><p>TF/IDF 模型是Lucene的经典模型, 其计算公式如下:</p>
+<p><img src="https://i.loli.net/2020/04/10/3r1hunbPYkdmIa6.jpg" alt="2020-04-10_032832"></p>
+</li>
+<li><p>可以通过explain参数来查看具体的计算方法, 但要注意:</p>
+<ul>
+<li>ES算分是按照shard进行的, 即shard的分数计算是相互独立的, 所以在使用explain的时候注意分片数</li>
+<li>可以通过设置索引的分片数为1来避免这个问题</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/10/qbVNuv2QFek9PcA.jpg" alt="2020-04-10_033100"></p>
+</li>
+<li><p>BM25模型中BM是指Best Match, 25指迭代了25次才计算方法, 是针对TF/IDF 的一个优化, 其计算公式如下:</p>
+<p><img src="https://i.loli.net/2020/04/10/QgHB3mf8dAPeyS2.jpg" alt="2020-04-10_033251"></p>
+</li>
+<li><p>BM25相比TF/IDF的一大优化是降低了tf在过大时的权重</p>
+<p><img src="https://i.loli.net/2020/04/10/5NKqdLEsWIBMhzO.jpg" alt="2020-04-10_033356"></p>
+</li>
+</ul>
+<h6 id="Match-Phrase-Query"><a href="#Match-Phrase-Query" class="headerlink" title="Match Phrase Query"></a>Match Phrase Query</h6><ul>
+<li><p>对字段做检索, 有顺序要求, API示例如下:</p>
+<p><img src="https://i.loli.net/2020/04/10/K5vjDBEk2QUThzn.jpg" alt="2020-04-10_033738"></p>
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 和match区别如下:
+# request
+GET /test_search_index/_search
+{
+  "query": {
+    "match_phrase": {
+      "job": "java engineer"
+    }
+  }
+}
+
+# response
+{
+  "took": 20,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 0.5753642,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.5753642,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}
+
+# request
+GET /test_search_index/_search
+{
+  "query": {
+    "match": {
+      "job": "java engineer"
+    }
+  }
+}
+
+# response
+{
+  "took": 23,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 0.986936,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.986936,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.5753642,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 0.5753642,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": 0.22920427,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}</code></pre>
+<ul>
+<li><p>通过slop参数可以控制单词间的间隔</p>
+<img src="https://i.loli.net/2020/04/10/IbyZnLBx1a45Xsz.jpg" alt="2020-04-10_034031" style="zoom:67%;">
+
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_search_index/_search
+{
+  "query": {
+    "match_phrase": {
+      "job": {
+        "query": "java engineer",
+        "slop": 2
+      }
+    }
+  }
+}
+
+# response
+{
+  "took": 13,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 2,
+    "max_score": 0.5753642,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.5753642,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.4479142,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        }
+      }
+    ]
+  }
+}</code></pre>
+<h6 id="Query-String-Query"><a href="#Query-String-Query" class="headerlink" title="Query String Query"></a>Query String Query</h6><ul>
+<li><p>类似于URI Search 中的<code>q</code>参数查询</p>
+<img src="https://i.loli.net/2020/04/10/kTeBo8FDXmRjEUN.jpg" alt="2020-04-10_034839" style="zoom:50%;">
+
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># request
+GET test_search_index/_search
+{
+  "query": {
+    "query_string": {
+      "default_field": "job",
+      "query": "java AND ruby"
+    }
+  }
+}
+
+# response
+{
+  "took": 8,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 0.5753642,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 0.5753642,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}</code></pre>
+<ul>
+<li>fileds指定默认查询的字段数组</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/10/pcHniLk7JIeKbN1.jpg" alt="2020-04-10_035107"></p>
+<h6 id="Simple-Query-String-Query"><a href="#Simple-Query-String-Query" class="headerlink" title="Simple Query String Query"></a>Simple Query String Query</h6><ul>
+<li><p>类似Query String, 但是会忽略错误的查询语法, 并且仅支持部分查询语法</p>
+</li>
+<li><p>其常用的逻辑符号如下, 不能使用AND, OR, NOT等关键词:</p>
+<ul>
+<li><code>+</code> 代指ANd</li>
+<li><code>|</code> 代指OR</li>
+<li><code>-</code> 代指NOT</li>
+</ul>
+<img src="https://i.loli.net/2020/04/10/PUR3bgylF2ZwvTS.jpg" alt="2020-04-10_035751" style="zoom:50%;">
+
+</li>
+</ul>
+<h6 id="Term-Terms-Query"><a href="#Term-Terms-Query" class="headerlink" title="Term/Terms Query"></a>Term/Terms Query</h6><ul>
+<li><p>term Query</p>
+<ul>
+<li>将查询语句作为整个单词进行查询, 即不对查询语句做分词处理, 如下所示:</li>
+</ul>
+<img src="https://i.loli.net/2020/04/10/3TOnc9aoBs7tACl.jpg" alt="2020-04-10_040229" style="zoom:67%;">
+
+<pre class=" language-shell"><code class="language-shell"># request
+GET test_search_index/_search
+{
+  "query": {
+    "term": {
+      "username": "alfred way"
+    }
+  }
+}
+
+</code></pre>
+</li>
+</ul>
+<h1 id="response"><a href="#response" class="headerlink" title="response"></a>response</h1><h1 id="注意-没有匹配到是因为在写入文档时-进行倒排索引时进行分词-故倒排索引的单词词典没有完整"><a href="#注意-没有匹配到是因为在写入文档时-进行倒排索引时进行分词-故倒排索引的单词词典没有完整" class="headerlink" title="注意:没有匹配到是因为在写入文档时, 进行倒排索引时进行分词, 故倒排索引的单词词典没有完整"></a>注意:没有匹配到是因为在写入文档时, 进行倒排索引时进行分词, 故倒排索引的单词词典没有完整</h1><h1 id="的”alfred-way”-故没有匹配到任何文档"><a href="#的”alfred-way”-故没有匹配到任何文档" class="headerlink" title="的”alfred way”, 故没有匹配到任何文档"></a>的”alfred way”, 故没有匹配到任何文档</h1><p>  {<br>    “took”: 5,<br>    “timed_out”: false,<br>    “_shards”: {<br>      “total”: 5,<br>      “successful”: 5,<br>      “skipped”: 0,<br>      “failed”: 0<br>    },<br>    “hits”: {<br>      “total”: 0,<br>      “max_score”: null,<br>      “hits”: []<br>    }<br>  }</p>
+<pre><code>
+
+
+- terms Query
+
+  - 一次传入多个单词进行查询, 如下所示:
+
+    &lt;img src=&quot;https://i.loli.net/2020/04/10/p3cVruRPbkMiZmh.jpg&quot; alt=&quot;2020-04-10_040339&quot; style=&quot;zoom:67%;&quot; /&gt;
+
+###### Range Query
+
+- 范围查询主要针对数值和日期类型, 如下所示:
+
+  ![2020-04-10_041318](https://i.loli.net/2020/04/10/SrYydKi7snAl1QM.jpg)
+
+- 针对日期做查询如下:
+
+  ![2020-04-10_041410](https://i.loli.net/2020/04/10/m2n5C6ASx1iQyJD.jpg)
+
+- Date Math
+
+  - 针对日期提供一种更友好的计算方式, 格式如下:
+
+    &lt;img src=&quot;https://i.loli.net/2020/04/10/jG3Hp8FPxECO6W7.jpg&quot; alt=&quot;2020-04-10_041526&quot; style=&quot;zoom:50%;&quot; /&gt;
+
+  - 假设now为`2018-01-02 12:00:00`, n那么计算结果实际为:
+
+    &lt;img src=&quot;https://i.loli.net/2020/04/10/4hSVZkCbPA2QqUu.jpg&quot; alt=&quot;2020-04-10_041701&quot; style=&quot;zoom:80%;&quot; /&gt;
+
+##### 复合查询
+
+- 复合查询是指包含字段类查询或者复合查询的类型, 主要包括以下几类:
+  - constant_score query
+  - bool query
+  - dis_max query
+  - function_score query
+  - boosting query
+
+###### Constant Score Query
+
+- 该查询将其内部的查询结果文档得分都设定为1或者boost的值
+
+  - 多用于结合bool查询实现自定义得分
+
+    ![2020-04-10_042354](https://i.loli.net/2020/04/10/Vt5jpWrAE6FfcTL.jpg)
+
+```shell
+# request
+GET test_search_index/_search
+{
+  &quot;query&quot;: {
+    &quot;constant_score&quot;: {
+      &quot;filter&quot;: {
+        &quot;match&quot;: {
+          &quot;username&quot;: &quot;alfred&quot;
+        }
+      },
+      &quot;boost&quot;: 1.2
+    }
+  }
+}
+
+# response
+{
+  &quot;took&quot;: 19,
+  &quot;timed_out&quot;: false,
+  &quot;_shards&quot;: {
+    &quot;total&quot;: 5,
+    &quot;successful&quot;: 5,
+    &quot;skipped&quot;: 0,
+    &quot;failed&quot;: 0
+  },
+  &quot;hits&quot;: {
+    &quot;total&quot;: 3,
+    &quot;max_score&quot;: 1.2,
+    &quot;hits&quot;: [
+      {
+        &quot;_index&quot;: &quot;test_search_index&quot;,
+        &quot;_type&quot;: &quot;doc&quot;,
+        &quot;_id&quot;: &quot;2&quot;,
+        &quot;_score&quot;: 1.2,
+        &quot;_source&quot;: {
+          &quot;username&quot;: &quot;alfred&quot;,
+          &quot;job&quot;: &quot;java senior engineer and java specialist&quot;,
+          &quot;age&quot;: 28,
+          &quot;birth&quot;: &quot;1980-05-07&quot;,
+          &quot;isMarried&quot;: true
+        }
+      },
+      {
+        &quot;_index&quot;: &quot;test_search_index&quot;,
+        &quot;_type&quot;: &quot;doc&quot;,
+        &quot;_id&quot;: &quot;4&quot;,
+        &quot;_score&quot;: 1.2,
+        &quot;_source&quot;: {
+          &quot;username&quot;: &quot;alfred junior way&quot;,
+          &quot;job&quot;: &quot;ruby engineer&quot;,
+          &quot;age&quot;: 23,
+          &quot;birth&quot;: &quot;1989-08-07&quot;,
+          &quot;isMarried&quot;: false
+        }
+      },
+      {
+        &quot;_index&quot;: &quot;test_search_index&quot;,
+        &quot;_type&quot;: &quot;doc&quot;,
+        &quot;_id&quot;: &quot;1&quot;,
+        &quot;_score&quot;: 1.2,
+        &quot;_source&quot;: {
+          &quot;username&quot;: &quot;alfred way&quot;,
+          &quot;job&quot;: &quot;java engineer&quot;,
+          &quot;age&quot;: 18,
+          &quot;birth&quot;: &quot;1990-01-02&quot;,
+          &quot;isMarried&quot;: false
+        }
+      }
+    ]
+  }
+}</code></pre><h6 id="Bool-Query"><a href="#Bool-Query" class="headerlink" title="Bool Query"></a>Bool Query</h6><ul>
+<li><p>布尔查询由一个或多个布尔子句组成, 主要包含如下4个:</p>
+<img src="https://i.loli.net/2020/04/10/IViWeNX4tnQrRUM.jpg" alt="2020-04-10_043500" style="zoom:67%;">
+</li>
+<li><p>Bool查询的API如下所示:</p>
+<img src="https://i.loli.net/2020/04/10/n5afrRBqNPbe7Kg.jpg" alt="2020-04-10_043552" style="zoom:50%;">
+</li>
+<li><p>Bool Query - Filter</p>
+<ul>
+<li><p>Filter查询只过滤符合条件的文档, 不会进行相关性算分</p>
+<ul>
+<li><p>es针对Filter会做只能缓存, 因此其执行效率很高</p>
+</li>
+<li><p>做简单匹配查询且不考虑算分时, 推荐使用Filter替代query等</p>
+<p><img src="https://i.loli.net/2020/04/10/EfreCzWT3Loa1x4.jpg" alt="2020-04-10_043858"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Bool Query - Must</p>
+<p><img src="https://i.loli.net/2020/04/10/KA5i6jlr1f2L7W3.jpg" alt="2020-04-10_043950"></p>
+</li>
+<li><p>Bool Query - Should</p>
+<ul>
+<li><p>should分两种情况:</p>
+<ul>
+<li>bool查询中只包含should, 不包含must查询</li>
+<li>bool查询中同时包含should和must查询</li>
+</ul>
+</li>
+<li><p>只包含should是, 文档必须满足至少一个条件</p>
+<ul>
+<li>minimum_should_match 可以控制满足条件的个数或者百分比</li>
+</ul>
+<img src="https://i.loli.net/2020/04/10/mZqxuSEWQ46CePT.jpg" alt="2020-04-10_044244" style="zoom:50%;">
+</li>
+<li><p>同时包含should和must时, 文档不必满足should中的条件, 但是如果满足条件, 会增加相关性得分</p>
+<p><img src="https://i.loli.net/2020/04/10/tyjp7gqiw2uz1Ol.jpg" alt="2020-04-10_044441"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h6 id="Query-Context-VS-Filter-Context"><a href="#Query-Context-VS-Filter-Context" class="headerlink" title="Query Context VS Filter Context"></a>Query Context VS Filter Context</h6><ul>
+<li><p>当一个查询语句位于Query 或者Filter上下文时, es执行的结果会不同, 对比如下:</p>
+<p><img src="https://i.loli.net/2020/04/10/EADWb3jiPoZvchd.jpg" alt="2020-04-10_044626"></p>
+<ul>
+<li>故利用这两种的优势, 在进行相关性算分的字段使用query, 不计算相关性算分使用filter,可以增加效率</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/10/vhNTrj1MIweqBDA.jpg" alt="2020-04-10_044703"></p>
+</li>
+</ul>
+<h3 id="Count-API"><a href="#Count-API" class="headerlink" title="Count API"></a>Count API</h3><ul>
+<li><p>获取符合条件的文档数, endpoint为<code>_count</code>, 当只想获得文档数时使用可以节省网络开销</p>
+<p><img src="https://i.loli.net/2020/04/10/rNCkpnwuaRJ13x9.jpg" alt="2020-04-10_045223"></p>
+</li>
+</ul>
+<h3 id="Source-Filtering"><a href="#Source-Filtering" class="headerlink" title="Source Filtering"></a>Source Filtering</h3><ul>
+<li>过滤返回结果中<code>_source</code>中的字段, 主要有如下几种方式:<br><img src="https://i.loli.net/2020/04/10/LptJvsU2EHoS4IR.jpg" alt="2020-04-10_045504"></li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Elasticsearch篇之Search API》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/09/第5章-Elasticsearch篇之Search API/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jiavg
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC80NTAyMi8yMTU0MA==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/04/09/第5章-Elasticsearch篇之Search API/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="Elasticsearch篇之Search API">
+                        
+                        <span class="card-title">Elasticsearch篇之Search API</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Elastic Stack
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ElasticSearch/" target="_blank">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                    <a href="/tags/Search-API/" target="_blank">
+                        <span class="chip bg-color">Search API</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/09/第4章-Elasticsearch篇之Mapping设置/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.jpg" class="responsive-img" alt="Elasticsearch篇之Mapping设置">
+                        
+                        <span class="card-title">Elasticsearch篇之Mapping设置</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Elastic Stack
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ElasticSearch/" target="_blank">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                    <a href="/tags/Mapping/" target="_blank">
+                        <span class="chip bg-color">Mapping</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Jiavg<br />'
+            + '作者: Jiavg<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://lylgjiavg.github.io/" target="_blank">Jiavg</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">38.2k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/lylgjiavg" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1370221084@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1370221084" class="tooltipped" data-tooltip="QQ联系我: 1370221084" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,3145 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Elasticsearch篇之深入了解Search的运行机制, Jiavg">
+    <meta name="description" content="Elasticsearch篇之深入了解Search的运行机制Search的运行机制
+Search执行的时候实际分为两个步骤运作的
+Query阶段
+Fetch阶段
+
+
+Query-Then-Fetch
+
+Query阶段
+Node3在接收到用户">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Elasticsearch篇之深入了解Search的运行机制 | Jiavg</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Jiavg</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Jiavg</div>
+        <div class="logo-desc">
+            
+            个人技术总结
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Elasticsearch篇之深入了解Search的运行机制
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/ElasticSearch/" target="_blank">
+                                <span class="chip bg-color">ElasticSearch</span>
+                            </a>
+                        
+                            <a href="/tags/Search运行机制/" target="_blank">
+                                <span class="chip bg-color">Search运行机制</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                Elastic Stack
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-04-12
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        4,776
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        26 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Elasticsearch篇之深入了解Search的运行机制"><a href="#Elasticsearch篇之深入了解Search的运行机制" class="headerlink" title="Elasticsearch篇之深入了解Search的运行机制"></a>Elasticsearch篇之深入了解Search的运行机制</h1><h2 id="Search的运行机制"><a href="#Search的运行机制" class="headerlink" title="Search的运行机制"></a>Search的运行机制</h2><ul>
+<li>Search执行的时候实际分为两个步骤运作的<ul>
+<li>Query阶段</li>
+<li>Fetch阶段</li>
+</ul>
+</li>
+<li>Query-Then-Fetch</li>
+</ul>
+<h3 id="Query阶段"><a href="#Query阶段" class="headerlink" title="Query阶段"></a>Query阶段</h3><ul>
+<li><p>Node3在接收到用户的search请求后, 会先进行Query阶段 (此时Coordinating Node角色)</p>
+<ol>
+<li>node3在6个主副分片中随机选择3个分片, 发送search request</li>
+<li>被选中的3个分片会分别执行查询并排序, 返回from + size个文档Id和排序值</li>
+<li>node3整合3个分片返回的from + size个文档Id, 根据排序值排序后选取<code>from 到 (from + size)</code>(共size个)的文档Id</li>
+</ol>
+<p><img src="https://i.loli.net/2020/04/12/bhsYp2PTc6XGyvB.jpg" alt="2020-04-12_003418"></p>
+</li>
+</ul>
+<h3 id="Fetch阶段"><a href="#Fetch阶段" class="headerlink" title="Fetch阶段"></a>Fetch阶段</h3><ul>
+<li><p>Node3根据Query阶段获取的文档Id列表去对应的shard上获取文档详情数据</p>
+<ol>
+<li>node3向相关的分片发送multi_get请求</li>
+<li>3个分片返回文档详细数据</li>
+<li>node3拼接返回的结果并返回给客户</li>
+</ol>
+<p><img src="https://i.loli.net/2020/04/12/CsLEZ2XzJxUq4lG.jpg" alt="2020-04-12_003912"></p>
+</li>
+</ul>
+<h2 id="相关性算分问题"><a href="#相关性算分问题" class="headerlink" title="相关性算分问题"></a>相关性算分问题</h2><ul>
+<li>相关性算分在shard与shard之间是相互独立的, 也就意味着同一个Term的IDF等值在不同shard上是不同的.文档的相关性算分和他所处的shard相关</li>
+<li>在文档数量不多时, 会导致相关性算分严重不准的情况</li>
+</ul>
+<h3 id="问题引出"><a href="#问题引出" class="headerlink" title="问题引出"></a>问题引出</h3><ol>
+<li><p>首先, 在ES中插入如下文档</p>
+<pre class=" language-shell"><code class="language-shell"># request
+POST test_search_relevance/doc/1
+{
+  "name": "hello"
+}
+
+# request
+POST test_search_relevance/doc/2
+{
+  "name": "hello, world"
+}
+
+# request
+POST test_search_relevance/doc/3
+{
+  "name": "hello, world. a beatiful word"
+}</code></pre>
+</li>
+<li><p>查询插入的索引<code>test_search_relevance</code>默认配置, 及文档插入的正确性</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET test_search_relevance
+
+# response
+# "number_of_shards"值为5, 说明es默认创建的索引shard数为5
+{
+  "test_search_relevance": {
+    "aliases": {},
+    "mappings": {
+      "doc": {
+        "properties": {
+          "name": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          }
+        }
+      }
+    },
+    "settings": {
+      "index": {
+        "creation_date": "1586624049883",
+        "number_of_shards": "5",
+        "number_of_replicas": "1",
+        "uuid": "liS9BY-ERzG6hR4pezVNCw",
+        "version": {
+          "created": "6010199"
+        },
+        "provided_name": "test_search_relevance"
+      }
+    }
+  }
+}
+
+</code></pre>
+</li>
+</ol>
+<h1 id="request"><a href="#request" class="headerlink" title="request"></a>request</h1><p>   GET test_search_relevance/_search</p>
+<h1 id="response"><a href="#response" class="headerlink" title="response"></a>response</h1><p>   {<br>     “took”: 19,<br>     “timed_out”: false,<br>     “_shards”: {<br>       “total”: 5,<br>       “successful”: 5,<br>       “skipped”: 0,<br>       “failed”: 0<br>     },<br>     “hits”: {<br>       “total”: 3,<br>       “max_score”: 1,<br>       “hits”: [<br>         {<br>           “_index”: “test_search_relevance”,<br>           “_type”: “doc”,<br>           “_id”: “2”,<br>           “_score”: 1,<br>           “_source”: {<br>             “name”: “hello, world”<br>           }<br>         },<br>         {<br>           “_index”: “test_search_relevance”,<br>           “_type”: “doc”,<br>           “_id”: “1”,<br>           “_score”: 1,<br>           “_source”: {<br>             “name”: “hello”<br>           }<br>         },<br>         {<br>           “_index”: “test_search_relevance”,<br>           “_type”: “doc”,<br>           “_id”: “3”,<br>           “_score”: 1,<br>           “_source”: {<br>             “name”: “hello, world. a beatiful word”<br>           }<br>         }<br>       ]<br>     }<br>   }</p>
+<pre><code>
+3. 在目标索引查询`name`字段, 查询内容为`hello`, 分析查询结果
+
+   ```shell
+   # request
+   GET test_search_relevance/_search
+   {
+     &quot;query&quot;: {
+       &quot;match&quot;: {
+         &quot;name&quot;: &quot;hello&quot;
+       }
+     }
+   }
+
+   # response
+   # 由查询结果可以看出查询的结果并非我们预期的那样(hello应该在最前面)
+   {
+     &quot;took&quot;: 14,
+     &quot;timed_out&quot;: false,
+     &quot;_shards&quot;: {
+       &quot;total&quot;: 5,
+       &quot;successful&quot;: 5,
+       &quot;skipped&quot;: 0,
+       &quot;failed&quot;: 0
+     },
+     &quot;hits&quot;: {
+       &quot;total&quot;: 3,
+       &quot;max_score&quot;: 0.2876821,
+       &quot;hits&quot;: [
+         {
+           &quot;_index&quot;: &quot;test_search_relevance&quot;,
+           &quot;_type&quot;: &quot;doc&quot;,
+           &quot;_id&quot;: &quot;2&quot;,
+           &quot;_score&quot;: 0.2876821,
+           &quot;_source&quot;: {
+             &quot;name&quot;: &quot;hello, world&quot;
+           }
+         },
+         {
+           &quot;_index&quot;: &quot;test_search_relevance&quot;,
+           &quot;_type&quot;: &quot;doc&quot;,
+           &quot;_id&quot;: &quot;1&quot;,
+           &quot;_score&quot;: 0.2876821,
+           &quot;_source&quot;: {
+             &quot;name&quot;: &quot;hello&quot;
+           }
+         },
+         {
+           &quot;_index&quot;: &quot;test_search_relevance&quot;,
+           &quot;_type&quot;: &quot;doc&quot;,
+           &quot;_id&quot;: &quot;3&quot;,
+           &quot;_score&quot;: 0.2876821,
+           &quot;_source&quot;: {
+             &quot;name&quot;: &quot;hello, world. a beatiful word&quot;
+           }
+         }
+       ]
+     }
+   }</code></pre><ol start="4">
+<li><p>由步骤3我们发现, 查询结果发现所有的文档得分值一样, 并非我们的预期(hello应该在最前面), 于是我们在查询字段添加<code>explain: true</code>条件来查看具体的查询算分过程.</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET test_search_relevance/_search
+{
+  "explain": true, 
+  "query": {
+    "match": {
+      "name": "hello"
+    }
+  }
+}
+
+# response
+# 此时我们发现, 由于文档分散在不同的shard上("_shard"字段显示shard值), 故其直接影响到了
+# docFreq的取值(此时都为1), 进而影响到了相关性算分
+{
+  "took": 27,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0.2876821,
+    "hits": [
+      {
+        "_shard": "[test_search_relevance][2]",
+        "_node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.2876821,
+        "_source": {
+          "name": "hello, world"
+        },
+        "_explanation": {
+          "value": 0.2876821,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.2876821,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.2876821,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 1,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 1,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 2,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 2,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "_shard": "[test_search_relevance][3]",
+        "_node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.2876821,
+        "_source": {
+          "name": "hello"
+        },
+        "_explanation": {
+          "value": 0.2876821,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.2876821,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.2876821,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 1,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 1,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 1,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 1,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "_shard": "[test_search_relevance][4]",
+        "_node": "WIUsESqiTZqLs_4nQTvbeQ",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 0.2876821,
+        "_source": {
+          "name": "hello, world. a beatiful word"
+        },
+        "_explanation": {
+          "value": 0.2876821,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.2876821,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.2876821,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 1,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 1,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 5,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 5,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}</code></pre>
+</li>
+</ol>
+<h3 id="解决思路"><a href="#解决思路" class="headerlink" title="解决思路"></a>解决思路</h3><ul>
+<li><p>设置分片数为1个, 从根本上排除问题, 在文档数数量不多的时候可以考虑该方案, 比如百万级别到千万级别的文档.</p>
+<p>过程:</p>
+<pre class=" language-shell"><code class="language-shell"># 1.设置分片数为1
+PUT test_search_relevance
+{
+  "settings": {
+    "index": {
+      "number_of_shards": 1
+    }
+  }
+}
+
+# 2.插入测试数据
+# request
+POST test_search_relevance/doc/1
+{
+  "name": "hello"
+}
+POST test_search_relevance/doc/2
+{
+  "name": "hello, world"
+}
+POST test_search_relevance/doc/3
+{
+  "name": "hello, world. a beatiful word"
+}
+
+# 3.查询数据
+# request
+GET test_search_relevance/_search
+{
+  "query": {
+    "match": {
+      "name": "hello"
+    }
+  }
+}
+
+# response
+{
+  "took": 69,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0.17940095,
+    "hits": [
+      {
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.17940095,
+        "_source": {
+          "name": "hello"
+        }
+      },
+      {
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.14874382,
+        "_source": {
+          "name": "hello, world"
+        }
+      },
+      {
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 0.09833273,
+        "_source": {
+          "name": "hello, world. a beatiful word"
+        }
+      }
+    ]
+  }
+}</code></pre>
+<p>由上例查询结果可以看出, 设置shard数为1可以解决相关性算分问题.</p>
+<p>另附<code>explain: true</code>查询</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET test_search_relevance/_search
+{
+  "explain": true, 
+  "query": {
+    "match": {
+      "name": "hello"
+    }
+  }
+}
+
+# response
+{
+  "took": 8,
+  "timed_out": false,
+  "_shards": {
+    "total": 1,
+    "successful": 1,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0.17940095,
+    "hits": [
+      {
+        "_shard": "[test_search_relevance][0]",
+        "_node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.17940095,
+        "_source": {
+          "name": "hello"
+        },
+        "_explanation": {
+          "value": 0.17940095,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.17940095,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.13353139,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 3,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 3,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 1.3435115,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 2.6666667,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 1,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "_shard": "[test_search_relevance][0]",
+        "_node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.14874382,
+        "_source": {
+          "name": "hello, world"
+        },
+        "_explanation": {
+          "value": 0.14874382,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.14874382,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.13353139,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 3,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 3,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 1.113924,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 2.6666667,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 2,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "_shard": "[test_search_relevance][0]",
+        "_node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 0.09833273,
+        "_source": {
+          "name": "hello, world. a beatiful word"
+        },
+        "_explanation": {
+          "value": 0.09833273,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.09833273,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.13353139,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 3,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 3,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 0.7364016,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 2.6666667,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 5,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}</code></pre>
+</li>
+</ul>
+<ul>
+<li><p>使用DFS Query-Then-Fetch</p>
+<ul>
+<li>在不设置默认shard的情况下, 使用<code>dfs_query_then_fetch</code>参数来解决此问题</li>
+<li>DFS Query-Then-Fetch是在拿到所有文档后再重新计算完整的计算一次相关性得分, 耗费更多的CPU和内存, 执行性能也比较低, 一般不建议使用. 使用方式如下:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 此查询在问题引出的环境下测试(即未设置number_of_shard参数)
+# request
+GET test_search_relevance/_search?search_type=dfs_query_then_fetch
+{
+  "query": {
+    "match": {
+      "name": "hello"
+    }
+  }
+}
+
+# response
+{
+  "took": 143,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0.17940095,
+    "hits": [
+      {
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.17940095,
+        "_source": {
+          "name": "hello"
+        }
+      },
+      {
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.14874382,
+        "_source": {
+          "name": "hello, world"
+        }
+      },
+      {
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 0.09833273,
+        "_source": {
+          "name": "hello, world. a beatiful word"
+        }
+      }
+    ]
+  }
+}</code></pre>
+<p>附带<code>explain:true</code>的查询过程:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET test_search_relevance/_search?search_type=dfs_query_then_fetch
+{
+  "explain": true, 
+  "query": {
+    "match": {
+      "name": "hello"
+    }
+  }
+}
+
+# response
+{
+  "took": 42,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 3,
+    "max_score": 0.17940095,
+    "hits": [
+      {
+        "_shard": "[test_search_relevance][3]",
+        "_node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.17940095,
+        "_source": {
+          "name": "hello"
+        },
+        "_explanation": {
+          "value": 0.17940095,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.17940095,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.13353139,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 3,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 3,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 1.3435115,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 2.6666667,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 1,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "_shard": "[test_search_relevance][2]",
+        "_node": "-eS9ksggR-SI6NKJRLkOeQ",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 0.14874382,
+        "_source": {
+          "name": "hello, world"
+        },
+        "_explanation": {
+          "value": 0.14874382,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.14874382,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.13353139,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 3,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 3,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 1.113924,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 2.6666667,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 2,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "_shard": "[test_search_relevance][4]",
+        "_node": "WIUsESqiTZqLs_4nQTvbeQ",
+        "_index": "test_search_relevance",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 0.09833273,
+        "_source": {
+          "name": "hello, world. a beatiful word"
+        },
+        "_explanation": {
+          "value": 0.09833273,
+          "description": "weight(name:hello in 0) [PerFieldSimilarity], result of:",
+          "details": [
+            {
+              "value": 0.09833273,
+              "description": "score(doc=0,freq=1.0 = termFreq=1.0\n), product of:",
+              "details": [
+                {
+                  "value": 0.13353139,
+                  "description": "idf, computed as log(1 + (docCount - docFreq + 0.5) / (docFreq + 0.5)) from:",
+                  "details": [
+                    {
+                      "value": 3,
+                      "description": "docFreq",
+                      "details": []
+                    },
+                    {
+                      "value": 3,
+                      "description": "docCount",
+                      "details": []
+                    }
+                  ]
+                },
+                {
+                  "value": 0.7364016,
+                  "description": "tfNorm, computed as (freq * (k1 + 1)) / (freq + k1 * (1 - b + b * fieldLength / avgFieldLength)) from:",
+                  "details": [
+                    {
+                      "value": 1,
+                      "description": "termFreq=1.0",
+                      "details": []
+                    },
+                    {
+                      "value": 1.2,
+                      "description": "parameter k1",
+                      "details": []
+                    },
+                    {
+                      "value": 0.75,
+                      "description": "parameter b",
+                      "details": []
+                    },
+                    {
+                      "value": 2.6666667,
+                      "description": "avgFieldLength",
+                      "details": []
+                    },
+                    {
+                      "value": 5,
+                      "description": "fieldLength",
+                      "details": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}</code></pre>
+</li>
+</ul>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><ul>
+<li><p>es默认会采用相关性算分排序, 用户可以通过设定sorting参数来自行设定排序规则</p>
+<p><img src="https://i.loli.net/2020/04/12/13ZKYFI6Atmib2g.jpg" alt="2020-04-12_013411"></p>
+</li>
+<li><p>按照多个字段排序</p>
+<p>GET /test_search_index/_search<br>{
+  “sort”: [</p>
+<pre><code>{
+  &quot;birth&quot;: {
+    &quot;order&quot;: &quot;desc&quot;
+  },
+  &quot;_score&quot;: {
+    &quot;order&quot;: &quot;desc&quot;
+  },
+  &quot;_doc&quot;: {
+    &quot;order&quot;: &quot;desc&quot;
+  }
+}</code></pre><p>  ]<br>}</p>
+<p>示例1:</p>
+<p>使用的数据</p>
+<pre class=" language-shell"><code class="language-shell">POST test_search_index/doc/_bulk
+{"index":{"_id":"1"}}
+{"username":"alfred way","job":"java engineer","age":18,"birth":"1990-01-02","isMarried":false}
+{"index":{"_id":"2"}}
+{"username":"alfred","job":"java senior engineer and java specialist","age":28,"birth":"1980-05-07","isMarried":true}
+{"index":{"_id":"3"}}
+{"username":"lee","job":"java and ruby engineer","age":22,"birth":"1985-08-07","isMarried":false}
+{"index":{"_id":"4"}}
+{"username":"alfred junior way","job":"ruby engineer","age":23,"birth":"1989-08-07","isMarried":false}</code></pre>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_search_index/_search
+{
+  "sort": [
+    {
+      "birth": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# response
+# 在使用sort排序时, 默认的按照相关性算分排序就失效了, 故该查询没有计算文档的相关性得分
+# "_score": null
+{
+  "took": 405,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": null,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        },
+        "sort": [
+          631238400000
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": null,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          618451200000
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": null,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          492220800000
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": null,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        },
+        "sort": [
+          326505600000
+        ]
+      }
+    ]
+  }
+}</code></pre>
+<p>示例2:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_search_index/_search
+{
+  "sort": [
+    {
+      "birth": {
+        "order": "desc"
+      },
+      "_score": {
+        "order": "desc"
+      },
+      "_doc": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# response
+# 由于此排序用到了_score字段, 故es对其文档进行了相关性算分
+{
+  "took": 72,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 1,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        },
+        "sort": [
+          631238400000,
+          1,
+          0
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": 1,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          618451200000,
+          1,
+          1
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 1,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          492220800000,
+          1,
+          0
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 1,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        },
+        "sort": [
+          326505600000,
+          1,
+          0
+        ]
+      }
+    ]
+  }
+}</code></pre>
+</li>
+</ul>
+<h3 id="字符串排序"><a href="#字符串排序" class="headerlink" title="字符串排序"></a>字符串排序</h3><ul>
+<li><p>按照字符串排序比较特殊, 因为es有text 和keyword两种类型, 针对text类型排序, 如下所示:</p>
+<p><img src="https://i.loli.net/2020/04/12/zkCu5yc1EPLsmwO.jpg" alt="2020-04-12_020724"></p>
+</li>
+</ul>
+<h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><ul>
+<li>排序的过程实质是对字段原始内容排序的过程, 这个过程中倒排索引无法发挥作用, 需要用到正排索引, 也就是通过文档Id和字段可以快速得到字段原始内容.</li>
+<li>es对此提供了2种实现方式:<ul>
+<li>fielddata (默认禁用)</li>
+<li>doc values (默认启用, 且对text类型无效)</li>
+</ul>
+</li>
+</ul>
+<h4 id="Fielddata"><a href="#Fielddata" class="headerlink" title="Fielddata"></a>Fielddata</h4><ul>
+<li><p>fielddata默认是关闭的, 可以通过如下api开启:</p>
+<ul>
+<li>此时字符串是按照分词后的term排序, 往往结果很难符合预期</li>
+<li>一般是在对分词做聚合分析的时候开启</li>
+</ul>
+<img src="https://i.loli.net/2020/04/12/1cdRaIr2sLuTeOX.jpg" alt="2020-04-12_021452" style="zoom:80%;">
+
+<p>演示(注意执行流程):</p>
+<pre class=" language-shell"><code class="language-shell"># 1.request
+GET /test_search_index/_search
+{
+  "sort": [
+    {
+      "username": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# 2.request
+GET /test_search_index/_search
+{
+  "sort": [
+    {
+      "username": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# 2.response
+{
+  "error": {
+    "root_cause": [
+      {
+        "type": "illegal_argument_exception",
+        "reason": "Fielddata is disabled on text fields by default. Set fielddata=true on [username] in order to load fielddata in memory by uninverting the inverted index. Note that this can however use significant memory. Alternatively use a keyword field instead."
+      }
+    ],
+    "type": "search_phase_execution_exception",
+    "reason": "all shards failed",
+    "phase": "query",
+    "grouped": true,
+    "failed_shards": [
+      {
+        "shard": 0,
+        "index": "test_search_index",
+        "node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "reason": {
+          "type": "illegal_argument_exception",
+          "reason": "Fielddata is disabled on text fields by default. Set fielddata=true on [username] in order to load fielddata in memory by uninverting the inverted index. Note that this can however use significant memory. Alternatively use a keyword field instead."
+        }
+      }
+    ]
+  },
+  "status": 400
+}
+
+# 3.request
+PUT /test_search_index/_mapping/doc
+{
+  "properties": {
+    "username": {
+      "type": "text", 
+      "fielddata": true
+    }
+  }
+}
+
+# 4.request
+GET /test_search_index/_search
+{
+  "sort": [
+    {
+      "username": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# 4.response
+{
+  "took": 53,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": null,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          "way"
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": null,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        },
+        "sort": [
+          "way"
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": null,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          "lee"
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": null,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        },
+        "sort": [
+          "alfred"
+        ]
+      }
+    ]
+  }
+}</code></pre>
+</li>
+</ul>
+<h4 id="Doc-Values"><a href="#Doc-Values" class="headerlink" title="Doc Values"></a>Doc Values</h4><ul>
+<li><p>Doc Values默认是启用的, 可以在创建索引的时候关闭</p>
+<ul>
+<li>如果后面要再开启doc values, <strong>需要reindex操作</strong></li>
+</ul>
+<img src="https://i.loli.net/2020/04/12/A84Xf2DKSoV37dm.jpg" alt="2020-04-12_022248" style="zoom: 80%;">
+
+</li>
+</ul>
+<h4 id="docvalues-fields"><a href="#docvalues-fields" class="headerlink" title="docvalues_fields"></a>docvalues_fields</h4><ul>
+<li><p>可以通过该字段获取fielddata或者doc values中储存的内容</p>
+<img src="https://i.loli.net/2020/04/12/qILkyJ7YUtv5AuC.jpg" alt="2020-04-12_022456" style="zoom:80%;">
+
+<p>示例:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+PUT /test_search_index/_mapping/doc
+{
+  "properties": {
+    "username": {
+      "type": "text", 
+      "fielddata": false
+    }
+  }
+}
+
+# request
+GET /test_search_index/_search
+{
+  "docvalue_fields": [
+      "username",
+      "birth",
+      "age"
+    ]
+}
+
+# response
+{
+  "took": 15,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 2,
+    "skipped": 0,
+    "failed": 3,
+    "failures": [
+      {
+        "shard": 2,
+        "index": "test_search_index",
+        "node": "WIUsESqiTZqLs_4nQTvbeQ",
+        "reason": {
+          "type": "illegal_argument_exception",
+          "reason": "Fielddata is disabled on text fields by default. Set fielddata=true on [username] in order to load fielddata in memory by uninverting the inverted index. Note that this can however use significant memory. Alternatively use a keyword field instead."
+        }
+      }
+    ]
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 1,
+    "hits": []
+  }
+}
+
+# request
+PUT /test_search_index/_mapping/doc
+{
+  "properties": {
+    "username": {
+      "type": "text", 
+      "fielddata": true
+    }
+  }
+}
+
+# request
+GET /test_search_index/_search
+{
+  "docvalue_fields": [
+      "username",
+      "birth",
+      "age"
+    ]
+}
+
+# response
+{
+  "took": 48,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 1,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        },
+        "fields": {
+          "birth": [
+            "1980-05-07T00:00:00.000Z"
+          ],
+          "age": [
+            28
+          ],
+          "username": [
+            "alfred"
+          ]
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": 1,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        },
+        "fields": {
+          "birth": [
+            "1989-08-07T00:00:00.000Z"
+          ],
+          "age": [
+            23
+          ],
+          "username": [
+            "alfred",
+            "junior",
+            "way"
+          ]
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 1,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        },
+        "fields": {
+          "birth": [
+            "1990-01-02T00:00:00.000Z"
+          ],
+          "age": [
+            18
+          ],
+          "username": [
+            "alfred",
+            "way"
+          ]
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 1,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        },
+        "fields": {
+          "birth": [
+            "1985-08-07T00:00:00.000Z"
+          ],
+          "age": [
+            22
+          ],
+          "username": [
+            "lee"
+          ]
+        }
+      }
+    ]
+  }
+}</code></pre>
+</li>
+</ul>
+<h2 id="分页与遍历"><a href="#分页与遍历" class="headerlink" title="分页与遍历"></a>分页与遍历</h2><ul>
+<li>es提供了3种方式来解决分页与遍历的问题<ul>
+<li>from/size</li>
+<li>scroll</li>
+<li>search_after</li>
+</ul>
+</li>
+</ul>
+<h3 id="From-Size"><a href="#From-Size" class="headerlink" title="From/Size"></a>From/Size</h3><ul>
+<li><p>最常用的分页方案</p>
+<ul>
+<li>from指明开始位置</li>
+<li>size指明获取总数</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/12/ypFYAzNg2virmd9.jpg" alt="2020-04-12_024729"></p>
+</li>
+</ul>
+<h3 id="深度分页"><a href="#深度分页" class="headerlink" title="深度分页"></a>深度分页</h3><ul>
+<li><p>深度分页是一个经典的问题: 在数据分片存储的情况下如何获取前1000个文档?</p>
+<ul>
+<li>获取从990~1000的文档时, 会在每个分片上都先获取1000个文档, 然后由Coordinating Node聚合所有的分片的结果再排序选取前1000个文档.</li>
+<li>页数越深, 处理文档越多, 占用内存越多, 耗时越长. 尽量避免深度分页, es通过index.max_result_window限定最多到10000条数据</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/12/ivFzK4JuwpIkycU.jpg" alt="2020-04-12_024729"></p>
+</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_search_index/_search
+{
+  "from": 2,
+  "size": 2
+}
+
+# response
+{
+  "took": 8,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 1,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 1,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}</code></pre>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_search_index/_search
+{
+  "from": 10000,
+  "size": 2
+}
+
+# response
+{
+  "error": {
+    "root_cause": [
+      {
+        "type": "query_phase_execution_exception",
+        "reason": "Result window is too large, from + size must be less than or equal to: [10000] but was [10002]. See the scroll api for a more efficient way to request large data sets. This limit can be set by changing the [index.max_result_window] index level setting."
+      }
+    ],
+    "type": "search_phase_execution_exception",
+    "reason": "all shards failed",
+    "phase": "query",
+    "grouped": true,
+    "failed_shards": [
+      {
+        "shard": 0,
+        "index": "test_search_index",
+        "node": "95bEF7jnS0uGrVlP6cA7Dw",
+        "reason": {
+          "type": "query_phase_execution_exception",
+          "reason": "Result window is too large, from + size must be less than or equal to: [10000] but was [10002]. See the scroll api for a more efficient way to request large data sets. This limit can be set by changing the [index.max_result_window] index level setting."
+        }
+      }
+    ]
+  },
+  "status": 500
+}</code></pre>
+<h3 id="Scroll"><a href="#Scroll" class="headerlink" title="Scroll"></a>Scroll</h3><ul>
+<li><p>遍历文档集的api, 以快照的方式来避免深度分页的问题</p>
+<ul>
+<li>不能用来做实时搜索, 因为数据不是实时的</li>
+<li>尽量不要使用复杂的sort条件, 使用_doc最高效</li>
+<li>使用稍显复杂</li>
+</ul>
+</li>
+<li><p>使用示例</p>
+<ol>
+<li>第一步需要发起一个scroll search, 如下所示:<ul>
+<li>es在收到该请求后会根据查询条件创建文档Id合集的快照</li>
+</ul>
+</li>
+</ol>
+<p><img src="https://i.loli.net/2020/04/12/wNlcisoQV4RLd1O.jpg" alt="2020-04-12_030159"></p>
+<ol start="2">
+<li><p>第二步调用scroll search的api, 获取文档集合, 如下所示:</p>
+<ul>
+<li>不断迭代调用直到hits.hits数组为空时停止</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/12/mSs2yw5jhoW6IzN.jpg" alt="2020-04-12_030403"></p>
+</li>
+</ol>
+<p>演示示例:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_search_index/_search?scroll=5m
+{
+  "size": 2
+}
+
+# response
+{
+  "_scroll_id": "DnF1ZXJ5VGhlbkZldGNoBQAAAAAAAAA_FldJVXNFU3FpVFpxTHNfNG5RVHZiZVEAAAAAAAAAPhY5NWJFRjdqblMwdUdyVmxQNmNBN0R3AAAAAAAAAD0WV0lVc0VTcWlUWnFMc180blFUdmJlUQAAAAAAAAA4Fi1lUzlrc2dnUi1TSTZOS0pSTGtPZVEAAAAAAAAAPhZXSVVzRVNxaVRacUxzXzRuUVR2YmVR",
+  "took": 12,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": 1,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": 1,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}
+
+# request
+POST _search/scroll
+{
+  "scroll": "5m",
+  "scroll_id": "DnF1ZXJ5VGhlbkZldGNoBQAAAAAAAAA_FldJVXNFU3FpVFpxTHNfNG5RVHZiZVEAAAAAAAAAPhY5NWJFRjdqblMwdUdyVmxQNmNBN0R3AAAAAAAAAD0WV0lVc0VTcWlUWnFMc180blFUdmJlUQAAAAAAAAA4Fi1lUzlrc2dnUi1TSTZOS0pSTGtPZVEAAAAAAAAAPhZXSVVzRVNxaVRacUxzXzRuUVR2YmVR"
+}
+
+# response
+{
+  "_scroll_id": "DnF1ZXJ5VGhlbkZldGNoBQAAAAAAAAA_FldJVXNFU3FpVFpxTHNfNG5RVHZiZVEAAAAAAAAAPhY5NWJFRjdqblMwdUdyVmxQNmNBN0R3AAAAAAAAAD0WV0lVc0VTcWlUWnFMc180blFUdmJlUQAAAAAAAAA4Fi1lUzlrc2dnUi1TSTZOS0pSTGtPZVEAAAAAAAAAPhZXSVVzRVNxaVRacUxzXzRuUVR2YmVR",
+  "took": 13,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 1,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        }
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": 1,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        }
+      }
+    ]
+  }
+}
+
+# request
+POST _search/scroll
+{
+  "scroll": "5m",
+  "scroll_id": "DnF1ZXJ5VGhlbkZldGNoBQAAAAAAAAA_FldJVXNFU3FpVFpxTHNfNG5RVHZiZVEAAAAAAAAAPhY5NWJFRjdqblMwdUdyVmxQNmNBN0R3AAAAAAAAAD0WV0lVc0VTcWlUWnFMc180blFUdmJlUQAAAAAAAAA4Fi1lUzlrc2dnUi1TSTZOS0pSTGtPZVEAAAAAAAAAPhZXSVVzRVNxaVRacUxzXzRuUVR2YmVR"
+}
+
+# response
+{
+  "_scroll_id": "DnF1ZXJ5VGhlbkZldGNoBQAAAAAAAAA_FldJVXNFU3FpVFpxTHNfNG5RVHZiZVEAAAAAAAAAPhY5NWJFRjdqblMwdUdyVmxQNmNBN0R3AAAAAAAAAD0WV0lVc0VTcWlUWnFMc180blFUdmJlUQAAAAAAAAA4Fi1lUzlrc2dnUi1TSTZOS0pSTGtPZVEAAAAAAAAAPhZXSVVzRVNxaVRacUxzXzRuUVR2YmVR",
+  "took": 6,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": 1,
+    "hits": []
+  }
+}</code></pre>
+</li>
+<li><p>过多的scroll调用会占用大量的内存, 可以通过clear api删除过多的scroll快照:</p>
+<img src="https://i.loli.net/2020/04/12/hkcb7aHlg4ABiNP.jpg" alt="2020-04-12_031216" style="zoom:80%;">
+
+</li>
+</ul>
+<h3 id="Search-After"><a href="#Search-After" class="headerlink" title="Search_After"></a>Search_After</h3><ul>
+<li><p>避免了深度分页的性能问题, 提供实时的下一页文档获取功能</p>
+<ul>
+<li>缺点是不能使用from参数, 即不能指定页数</li>
+<li>只能下一页, 不能上一页</li>
+<li>使用简单</li>
+</ul>
+</li>
+<li><p>使用步骤</p>
+<ol>
+<li>第一步为正常的搜索, 但要指定sort值, 并保证值唯一</li>
+<li>第二步为使用上一步最后一个文档的sort值进行查询</li>
+</ol>
+<p><img src="https://i.loli.net/2020/04/12/QEMoWJk5pLH2AFU.jpg" alt="2020-04-12_031941"></p>
+<p>演示:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_search_index/_search
+{
+  "size": 2,
+  "sort": [
+    {
+      "age": {
+        "order": "desc"
+      }
+    },
+    {
+      "birth": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# response
+{
+  "took": 6,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "2",
+        "_score": null,
+        "_source": {
+          "username": "alfred",
+          "job": "java senior engineer and java specialist",
+          "age": 28,
+          "birth": "1980-05-07",
+          "isMarried": true
+        },
+        "sort": [
+          28,
+          326505600000
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "4",
+        "_score": null,
+        "_source": {
+          "username": "alfred junior way",
+          "job": "ruby engineer",
+          "age": 23,
+          "birth": "1989-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          23,
+          618451200000
+        ]
+      }
+    ]
+  }
+}
+
+# request
+GET /test_search_index/_search
+{
+  "size": 2,
+  "search_after": [
+    23,
+    618451200000
+  ],
+  "sort": [
+    {
+      "age": {
+        "order": "desc"
+      }
+    },
+    {
+      "birth": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# response
+{
+  "took": 12,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": null,
+    "hits": [
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "3",
+        "_score": null,
+        "_source": {
+          "username": "lee",
+          "job": "java and ruby engineer",
+          "age": 22,
+          "birth": "1985-08-07",
+          "isMarried": false
+        },
+        "sort": [
+          22,
+          492220800000
+        ]
+      },
+      {
+        "_index": "test_search_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": null,
+        "_source": {
+          "username": "alfred way",
+          "job": "java engineer",
+          "age": 18,
+          "birth": "1990-01-02",
+          "isMarried": false
+        },
+        "sort": [
+          18,
+          631238400000
+        ]
+      }
+    ]
+  }
+}
+
+# request
+GET /test_search_index/_search
+{
+  "size": 2,
+  "search_after": [
+    18,
+    631238400000
+  ],
+  "sort": [
+    {
+      "age": {
+        "order": "desc"
+      }
+    },
+    {
+      "birth": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+# response
+{
+  "took": 5,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 4,
+    "max_score": null,
+    "hits": []
+  }
+}</code></pre>
+</li>
+<li><p>如何避免深度分页问题?</p>
+<ul>
+<li>通过唯一排序值定位将每次要处理的文档数都控制在size范围内</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/12/4FJlm1YtojWaTek.jpg" alt="2020-04-12_032718"></p>
+</li>
+</ul>
+<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><p><img src="https://i.loli.net/2020/04/12/x7VCKp1MaAFUzuR.jpg" alt="2020-04-12_032831"></p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Elasticsearch篇之深入了解Search的运行机制》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/12/Elastic Search/第7章-Elasticsearch篇之深入了解Search的运行机制/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jiavg
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC80NTAyMi8yMTU0MA==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/04/12/Elastic Search/第7章-Elasticsearch篇之深入了解Search的运行机制/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Elasticsearch篇之深入了解Search的运行机制">
+                        
+                        <span class="card-title">Elasticsearch篇之深入了解Search的运行机制</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Elastic Stack系列(十一)
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-12
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ElasticSearch/" target="_blank">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                    <a href="/tags/Search运行机制/" target="_blank">
+                        <span class="chip bg-color">Search运行机制</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/11/Elastic Search/第6章-Elasticsearch篇之分布式特性/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Elasticsearch篇之分布式特性">
+                        
+                        <span class="card-title">Elasticsearch篇之分布式特性</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Elastic Stack系列(十)
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-11
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ElasticSearch/" target="_blank">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                    <a href="/tags/分布式/" target="_blank">
+                        <span class="chip bg-color">分布式</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Jiavg<br />'
+            + '作者: Jiavg<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://lylgjiavg.github.io/" target="_blank">Jiavg</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">46.6k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/lylgjiavg" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1370221084@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1370221084" class="tooltipped" data-tooltip="QQ联系我: 1370221084" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

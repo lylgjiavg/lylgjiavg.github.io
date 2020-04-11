@@ -4,14 +4,13 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Logstash入门, Jiavg">
-    <meta name="description" content="Logstash入门Logstash简介
-集中、转换和存储数据
-Logstash 是开源的服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到您最喜欢的“存储库”中。
+    <meta name="keywords" content="Elasticsearch篇之入门, Jiavg">
+    <meta name="description" content="Elasticsearch篇之入门常用术语
+文档 Document
+用户存储在es中的数据文档.(相当于数据库表中的一行)
 
-Data Shipper (数据传送者)
-
-E">
+索引 Index
+由具有相同字段的文档列表组成.(相当于数据库中的表, es6.0以后index下的type只能有">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -19,7 +18,7 @@ E">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Logstash入门 | Jiavg</title>
+    <title>Elasticsearch篇之入门 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -266,13 +265,13 @@ E">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Logstash入门
+                        Elasticsearch篇之入门
                     </div>
                 </div>
             </div>
@@ -383,8 +382,8 @@ E">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Logstash/" target="_blank">
-                                <span class="chip bg-color">Logstash</span>
+                            <a href="/tags/Elasticsearch/" target="_blank">
+                                <span class="chip bg-color">Elasticsearch</span>
                             </a>
                         
                     </div>
@@ -407,21 +406,21 @@ E">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-03
+                    2020-04-06
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1,191
+                        1,718
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        6 分
+                        8 分
                     </div>
                     
                 
@@ -437,211 +436,494 @@ E">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Logstash入门"><a href="#Logstash入门" class="headerlink" title="Logstash入门"></a>Logstash入门</h1><h2 id="Logstash简介"><a href="#Logstash简介" class="headerlink" title="Logstash简介"></a>Logstash简介</h2><ul>
-<li><p>集中、转换和存储数据</p>
-<p>Logstash 是开源的服务器端<code>数据处理管道</code>，能够同时从多个来源<code>采集数据</code>，<code>转换数据</code>，然后将数据<code>发送</code>到您最喜欢的“存储库”中。</p>
+                <h1 id="Elasticsearch篇之入门"><a href="#Elasticsearch篇之入门" class="headerlink" title="Elasticsearch篇之入门"></a>Elasticsearch篇之入门</h1><h2 id="常用术语"><a href="#常用术语" class="headerlink" title="常用术语"></a>常用术语</h2><ul>
+<li><p>文档 <code>Document</code></p>
+<p>用户存储在es中的数据文档.(相当于数据库表中的一行)</p>
 </li>
-<li><p>Data Shipper (数据传送者)</p>
+<li><p>索引 <code>Index</code></p>
+<p>由具有相同字段的文档列表组成.(相当于数据库中的表, <code>es6.0</code>以后<code>index</code>下的<code>type</code>只能有一个, 且官方声明以后会取消掉<code>type</code>这个概念)</p>
 </li>
-<li><p>ETL</p>
+<li><p>节点 <code>Node</code></p>
+<p>一个<code>Elasticsearch</code>的运行实例, 是集群的构成单元.</p>
+</li>
+<li><p>集群 <code>Cluster</code></p>
+<p>由一个或多个节点组成, 对外提供服务.</p>
+</li>
+</ul>
+<h2 id="文档-Document"><a href="#文档-Document" class="headerlink" title="文档 Document"></a>文档 Document</h2><ul>
+<li><code>Document</code>在<code>es</code>中是一个 Json Object, 由字段(Field)组成, 常见数据类型如下:<ul>
+<li>字符串: <code>text</code>(进行分词的字符串), <code>keyword</code>(不进行分词的字符串)</li>
+<li>数值型: <code>long</code>, <code>integer</code>, <code>short</code>, <code>byte</code>, <code>double</code>, <code>float</code>, <code>half_float</code>, <code>scaled_float</code></li>
+<li>布尔: <code>boolean</code></li>
+<li>日期: <code>date</code></li>
+<li>二进制: <code>binary</code></li>
+<li>范围类型: <code>integer_range</code>, <code>float_range</code>, <code>long_range</code>, <code>double_range</code>, <code>date_range</code></li>
+</ul>
+</li>
+<li>每个文档有唯一的id标识<ul>
+<li>可以自行指定</li>
+<li>也可以es自动生成</li>
+</ul>
+</li>
+<li>如下所示是一条Nginx日志在ES储存为一条文档(<code>Document</code>), ES对其日志信息进行结构化处理, 包含多个字段(<code>Field</code>), 每个字段的字段名(<code>Field Name</code>)对应一个字段值(<code>Field Value</code>)</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/06/Cdtj536bT7Gqc1D.jpg" alt="2020-04-06_210508"></p>
+<h3 id="文档元数据-Document-MetaData"><a href="#文档元数据-Document-MetaData" class="headerlink" title="文档元数据 Document MetaData"></a>文档元数据 Document MetaData</h3><ul>
+<li>每个Document都有一个文档元数据(Document MetaData), 用于标注文档的相关信息<ul>
+<li><code>_index</code>: 文档所在的索引名</li>
+<li><code>_type</code>: 文档所在的类型名</li>
+<li><code>_id</code>: 文章唯一id</li>
+<li><code>_uid</code>: 组合id, 由<code>_type</code>和<code>_id</code>组成(6.x中<code>_type</code>不再起作用, 所以在6.x版本中这个字段值和<code>_id</code>一样)</li>
+<li><code>_source</code>: 文档的原始Json数据, 可以从这里获取每个字段的内容</li>
+<li><code>_all</code>: 整合所有的字段内容到该字段, 默认禁用(官方不推荐使用)</li>
+</ul>
+</li>
+</ul>
+<h2 id="索引-Index"><a href="#索引-Index" class="headerlink" title="索引 Index"></a>索引 Index</h2><ul>
+<li>索引中存储具有相同结构的文档(<code>Document</code>)<ul>
+<li>每个索引都有自己的mapping定义, 用于定义字段名和类型</li>
+</ul>
+</li>
+<li>一个集群可以有多个索引, 比如:<ul>
+<li>nginx日志存储的时候可以按日期每天生成一个索引来存储, 方便维护<ul>
+<li>nginx-log-2020-04-03</li>
+<li>nginx-log-2020-04-04</li>
+<li>nginx-log-2020-04-05</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Rest-API"><a href="#Rest-API" class="headerlink" title="Rest API"></a>Rest API</h2><ul>
+<li>Elasticsearch集群对外提供RESTful API<ul>
+<li>REST: REpresentational State Transfer (表述性状态转移)</li>
+<li>URI指定资源, 如Index, Document等</li>
+<li>Http Method指明资源操作类型, 如GET, POST, PUT, DELETE等</li>
+</ul>
+</li>
+<li>常用两种交互方式<ul>
+<li>Curl命令行</li>
+<li>Kibana DevTools</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/06/cM5GQl43e6paYdU.jpg" alt="2020-04-06_213418"></p>
+<h3 id="索引-Index-API"><a href="#索引-Index-API" class="headerlink" title="索引 Index API"></a>索引 Index API</h3><ul>
+<li><p>es有专门的Index API, 用于创建, 更新, 删除索引配置等</p>
 <ul>
-<li>Extract (采集数据)</li>
-<li>Transform (转换数据)</li>
-<li>Load (传输数据)</li>
-</ul>
-</li>
-</ul>
-<h2 id="Logstash处理流程"><a href="#Logstash处理流程" class="headerlink" title="Logstash处理流程"></a>Logstash处理流程</h2><ul>
-<li>Input        # 输入,其中输入源如下<ul>
-<li>file</li>
-<li>Redis</li>
-<li>beats</li>
-<li>kafka</li>
-<li>……</li>
-</ul>
-</li>
-<li>Filter        # 处理,处理方式如下<ul>
-<li>grok</li>
-<li>mutate</li>
-<li>drop</li>
-<li>date</li>
-</ul>
-</li>
-<li>Output     # 输出,输出源如下<ul>
-<li>stdout</li>
-<li>Elasticsearch</li>
-<li>……</li>
-</ul>
-</li>
-</ul>
-<h3 id="Input-和-Output配置"><a href="#Input-和-Output配置" class="headerlink" title="Input 和 Output配置"></a>Input 和 Output配置</h3><p>例:</p>
-<pre><code># 输入配置
-input {file { path =&gt; &quot;/tmp/abc.log&quot;}}
+<li><p>创建索引</p>
+<pre><code>PUT /{索引名}</code></pre><p>示例:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+PUT /test_index
 
-# 输出配置
-output { stdout {codec =&gt; rubydebug}}</code></pre><h3 id="Filter配置"><a href="#Filter配置" class="headerlink" title="Filter配置"></a>Filter配置</h3><ul>
-<li>Grok<ul>
-<li>基于正则表达式提供了丰富可重用的模式(pattern)</li>
-<li>基于此可以将非结构化数据作为结构化处理</li>
-</ul>
-</li>
-<li>Date<ul>
-<li>将字符串类型的时间字段转换为时间戳类型, 方便后续数据处理</li>
-</ul>
-</li>
-<li>Mutate<ul>
-<li>进行增加, 修改, 删除, 替换等字段相关的处理</li>
-</ul>
-</li>
-<li>…….</li>
-</ul>
-<p>例:</p>
-<pre><code># 待转换的数据
-# 55.3.244.1 GET /index.html 15824 0.043
-
-# 转换配置
-%{IP:client} %{WORD:method} %{URIPATHPARAM:request} %{NUMBER:bytes} %{NUMBER:duration}
-
-# 转换后的数据
+# response
 {
-    &quot;client&quot;: &quot;55.3.244.1&quot;,
-    &quot;method&quot;: &quot;GET&quot;,
-    &quot;request&quot;: &quot;/index.html&quot;,
-    &quot;bytes&quot;: &quot;15824&quot;,
-    &quot;duration&quot;: &quot;0.043&quot;
-}</code></pre><h2 id="收集nginx-log"><a href="#收集nginx-log" class="headerlink" title="收集nginx log"></a>收集nginx log</h2><ol>
-<li><p>下载Logstash</p>
-<p>下载地址: <a href="https://www.elastic.co/cn" target="_blank" rel="noopener">https://www.elastic.co/cn</a></p>
+  "acknowledged": true,
+  "shards_acknowledged": true,
+  "index": "test_index"
+}</code></pre>
 </li>
-<li><p>运行Logstash</p>
-<p>解压</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost es]$ tar -zxf logstash-6.1.1.tar.gz</code></pre>
-<p>Logstash配置文件</p>
-<pre><code># Logstash从标准输入读取数据
-input {
-  stdin { }
+<li><p>查看现有索引</p>
+<pre><code>GET /_cat/indices</code></pre><p>示例:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /_cat/indices
+
+# response
+red    open account    eIBKm9zfQhOZkW6tC1uyEA 5 1 1 0 5.4kb 5.4kb
+yellow open test_index XTzQRFtzRqK3B3EfULLrEg 5 1 0 0 1.1kb 1.1kb</code></pre>
+</li>
+<li><p>删除索引</p>
+<pre><code>DELETE /{索引名}</code></pre><p>示例:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+DELETE /test_index
+
+# response
+{
+  "acknowledged": true
+}</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="文档-Document-API"><a href="#文档-Document-API" class="headerlink" title="文档 Document API"></a>文档 Document API</h3><ul>
+<li><p>es有专门的Document API</p>
+<ul>
+<li><p>创建文档 (创建文档时, 如果索引不存在, es会自动创建对应的index和type)</p>
+<ul>
+<li><p>指定id创建文档</p>
+<pre><code># 其中类型名在6.x以后无实际作用, 并且将来版本要删除, 在这里可以任意指定, 一般指定无意义的doc
+PUT /{索引名}/{类型名}/{Id}
+{
+    # 文档内容
+}</code></pre><p>示例:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+PUT /test_index/doc/1
+{
+  "username": "Jiavg",
+  "age": 21
 }
 
-# 数据处理流程
-filter {
+# response
+# _version是为了在并行修改文档时, 防止发生错误
+{
+  "_index": "test_index",
+  "_type": "doc",
+  "_id": "1",
+  "_version": 1,
+  "result": "created",
+  "_shards": {
+    "total": 2,
+    "successful": 1,
+    "failed": 0
+  },
+  "_seq_no": 0,
+  "_primary_term": 1
+}</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 不指定id创建文档
 
-  # 将非结构化数据作为结构化处理
-  grok {
-    match =&gt; {
-      &quot;message&quot; =&gt; &#39;%{IPORHOST:remote_ip} - %{DATA:user_name} \[%{HTTPDATE:time}\] &quot;%{WORD:request_action} %{DATA:request} HTTP/%{NUMBER:http_version}&quot; %{NUMBER:response} %{NUMBER:bytes} &quot;%{DATA:referrer}&quot; &quot;%{DATA:agent}&quot;&#39;
+  ```
+  POST /test_index/doc
+  {
+      # 文档内容
+  }
+  ```
+
+  示例:
+
+  ```shell
+  # request
+  POST /test_index/doc
+  {
+    &quot;username&quot;: &quot;jlc&quot;,
+    &quot;age&quot;: 20
+  }
+
+  # response
+  # 由于未指定id, es将会生成一个id
+  {
+    &quot;_index&quot;: &quot;test_index&quot;,
+    &quot;_type&quot;: &quot;doc&quot;,
+    &quot;_id&quot;: &quot;QzXQT3EBkfca6l6Y9SXp&quot;,
+    &quot;_version&quot;: 1,
+    &quot;result&quot;: &quot;created&quot;,
+    &quot;_shards&quot;: {
+      &quot;total&quot;: 2,
+      &quot;successful&quot;: 1,
+      &quot;failed&quot;: 0
+    },
+    &quot;_seq_no&quot;: 0,
+    &quot;_primary_term&quot;: 1
+  }
+  ```</code></pre><ul>
+<li><p>查询文档</p>
+<ul>
+<li><p>指定要查询的文档id</p>
+<pre><code>GET /{索引名}/{类型名}/{id}</code></pre><p>示例:</p>
+<pre class=" language-shell"><code class="language-shell"># request
+GET /test_index/doc/1
+
+# response
+# _source 储存了文档的原始数据
+# 200 response
+{
+  "_index": "test_index",
+  "_type": "doc",
+  "_id": "1",
+  "_version": 1,
+  "found": true,
+  "_source": {
+    "username": "Jiavg",
+    "age": 21
+  }
+}
+
+# 404 response
+{
+  "_index": "test_index",
+  "_type": "doc",
+  "_id": "2",
+  "found": false
+}</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>- 搜索所有文档, 用到_search
+
+  ```
+  # 不含查询条件 (查询所有文档)
+  GET /{索引名}/{文档名}/_search
+
+  # 包含查询条件 (查询符合条件的所有文档)
+  GET /{索引名}/{文档名}/_search
+  {
+      # 查询条件
+  }
+  ```
+
+  示例:
+
+  ```shell
+  # 不含查询条件 (查询所有文档)
+  # request
+  GET /test_index/doc/_search
+
+  # response
+  # took: 查询花费时间, 单位ms
+  {
+    &quot;took&quot;: 4,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+      &quot;total&quot;: 5,
+      &quot;successful&quot;: 5,
+      &quot;skipped&quot;: 0,
+      &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+      &quot;total&quot;: 2,            # 符合条件的总文档数
+      &quot;max_score&quot;: 1,
+      &quot;hits&quot;: [            # 返回的文档详情数据数组, 默认前10个文档
+        {
+          &quot;_index&quot;: &quot;test_index&quot;,
+          &quot;_type&quot;: &quot;doc&quot;,
+          &quot;_id&quot;: &quot;QzXQT3EBkfca6l6Y9SXp&quot;,
+          &quot;_score&quot;: 1,    # 文档的得分
+          &quot;_source&quot;: {
+            &quot;username&quot;: &quot;jlc&quot;,
+            &quot;age&quot;: 20
+          }
+        },
+        {
+          &quot;_index&quot;: &quot;test_index&quot;,
+          &quot;_type&quot;: &quot;doc&quot;,
+          &quot;_id&quot;: &quot;1&quot;,
+          &quot;_score&quot;: 1,
+          &quot;_source&quot;: {
+            &quot;username&quot;: &quot;Jiavg&quot;,
+            &quot;age&quot;: 21
+          }
+        }
+      ]
     }
   }
 
-  # 将时间字符串进行处理,转换为此条信息的时间戳
-  date {
-    match =&gt; [ &quot;time&quot;, &quot;dd/MMM/YYYY:HH:mm:ss Z&quot; ]
-    locale =&gt; en
+  # 包含查询条件 (查询符合条件的所有文档)
+  # request
+  GET /test_index/doc/_search
+  {
+    &quot;query&quot;: {
+      &quot;term&quot;: {
+        &quot;_id&quot;: 1
+      }
+    }
   }
 
-  # 将IP信息转换为地理位置信息
-  geoip {
-    source =&gt; &quot;remote_ip&quot;
-    target =&gt; &quot;geoip&quot;
-  }
-
-  # useragent处理
-  useragent {
-    source =&gt; &quot;agent&quot;
-    target =&gt; &quot;user_agent&quot;
-  }
-}
-
-# 数据输出到标准输出,并按rubydebug进行解码(格式化)
-output {
-  stdout {
-    codec =&gt; rubydebug 
-  }
-}</code></pre><p>处理数据示例</p>
-<pre class=" language-shell"><code class="language-shell"># [jlc@localhost logstash-6.1.1]$ head -n 2 ../access.log
-127.0.0.1 - - [27/Jan/2020:23:15:54 +0800] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
-127.0.0.1 - - [27/Jan/2020:23:38:36 +0800] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"</code></pre>
-<p>运行Logstash</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost logstash-6.1.1]$ head -n 2 ../access.log | bin/logstash -f nginx_logstash.conf</code></pre>
-</li>
-<li><p>标准输出数据</p>
-<pre class=" language-shell"><code class="language-shell">Sending Logstash's logs to /usr/local/es/logstash-6.1.1/logs which is now configured via log4j2.properties
-[2020-04-03T01:09:01,830][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"fb_apache", :directory=>"/usr/local/es/logstash-6.1.1/modules/fb_apache/configuration"}
-[2020-04-03T01:09:01,868][INFO ][logstash.modules.scaffold] Initializing module {:module_name=>"netflow", :directory=>"/usr/local/es/logstash-6.1.1/modules/netflow/configuration"}
-[2020-04-03T01:09:02,084][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.queue", :path=>"/usr/local/es/logstash-6.1.1/data/queue"}
-[2020-04-03T01:09:02,091][INFO ][logstash.setting.writabledirectory] Creating directory {:setting=>"path.dead_letter_queue", :path=>"/usr/local/es/logstash-6.1.1/data/dead_letter_queue"}
-[2020-04-03T01:09:02,797][WARN ][logstash.config.source.multilocal] Ignoring the 'pipelines.yml' file because modules or command line options are specified
-[2020-04-03T01:09:02,968][INFO ][logstash.agent           ] No persistent UUID file found. Generating new UUID {:uuid=>"5de9619e-a0ef-4ba6-a53d-0a966ee65eb9", :path=>"/usr/local/es/logstash-6.1.1/data/uuid"}
-[2020-04-03T01:09:04,137][INFO ][logstash.runner          ] Starting Logstash {"logstash.version"=>"6.1.1"}
-[2020-04-03T01:09:05,219][INFO ][logstash.agent           ] Successfully started Logstash API endpoint {:port=>9600}
-[2020-04-03T01:09:10,505][INFO ][logstash.filters.geoip   ] Using geoip database {:path=>"/usr/local/es/logstash-6.1.1/vendor/bundle/jruby/2.3.0/gems/logstash-filter-geoip-5.0.2-java/vendor/GeoLite2-City.mmdb"}
-[2020-04-03T01:09:10,991][INFO ][logstash.pipeline        ] Starting pipeline {:pipeline_id=>"main", "pipeline.workers"=>2, "pipeline.batch.size"=>125, "pipeline.batch.delay"=>5, "pipeline.max_inflight"=>250, :thread=>"#<Thread:0x3d6477a2 run>"}
-[2020-04-03T01:09:11,143][INFO ][logstash.pipeline        ] Pipeline started {"pipeline.id"=>"main"}
-[2020-04-03T01:09:11,419][INFO ][logstash.agent           ] Pipelines running {:count=>1, :pipelines=>["main"]}
-{
-             "geoip" => {},
-           "request" => "/",
-      "http_version" => "1.1",
-          "@version" => "1",
-             "bytes" => "612",
-              "tags" => [
-        [0] "_geoip_lookup_failure"
-    ],
-        "user_agent" => {
-             "os" => "Windows 10",
-         "device" => "Other",
-        "os_name" => "Windows 10",
-          "build" => "",
-          "minor" => "0",
-           "name" => "Chrome",
-          "major" => "78",
-          "patch" => "3904"
+  # response
+  {
+    &quot;took&quot;: 23,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+      &quot;total&quot;: 5,
+      &quot;successful&quot;: 5,
+      &quot;skipped&quot;: 0,
+      &quot;failed&quot;: 0
     },
-           "message" => "127.0.0.1 - - [27/Jan/2020:23:15:54 +0800] \"GET / HTTP/1.1\" 200 612 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36\"\r",
-    "request_action" => "GET",
-              "time" => "27/Jan/2020:23:15:54 +0800",
-        "@timestamp" => 2020-01-27T15:15:54.000Z,
-             "agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
-              "host" => "localhost.localdomain",
-         "user_name" => "-",
-          "response" => "200",
-          "referrer" => "-",
-         "remote_ip" => "127.0.0.1"
-}
-{
-             "geoip" => {},
-           "request" => "/",
-      "http_version" => "1.1",
-          "@version" => "1",
-             "bytes" => "0",
-              "tags" => [
-        [0] "_geoip_lookup_failure"
-    ],
-        "user_agent" => {
-             "os" => "Windows 10",
-         "device" => "Other",
-        "os_name" => "Windows 10",
-          "build" => "",
-          "minor" => "0",
-           "name" => "Chrome",
-          "major" => "78",
-          "patch" => "3904"
-    },
-           "message" => "127.0.0.1 - - [27/Jan/2020:23:38:36 +0800] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36\"\r",
-    "request_action" => "GET",
-              "time" => "27/Jan/2020:23:38:36 +0800",
-        "@timestamp" => 2020-01-27T15:38:36.000Z,
-             "agent" => "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
-              "host" => "localhost.localdomain",
-         "user_name" => "-",
-          "response" => "304",
-          "referrer" => "-",
-         "remote_ip" => "127.0.0.1"
-}
-[2020-04-03T01:09:12,993][INFO ][logstash.pipeline        ] Pipeline terminated {"pipeline.id"=>"main"}</code></pre>
-<p>注: 其中<code>_geoip_lookup_failure</code></p>
-<p>此错误是由于,本机IP地址为私网IP, 无法转换为地理位置。</p>
+    &quot;hits&quot;: {
+      &quot;total&quot;: 1,
+      &quot;max_score&quot;: 1,
+      &quot;hits&quot;: [
+        {
+          &quot;_index&quot;: &quot;test_index&quot;,
+          &quot;_type&quot;: &quot;doc&quot;,
+          &quot;_id&quot;: &quot;1&quot;,
+          &quot;_score&quot;: 1,
+          &quot;_source&quot;: {
+            &quot;username&quot;: &quot;Jiavg&quot;,
+            &quot;age&quot;: 21
+          }
+        }
+      ]
+    }
+  }
+  ```</code></pre><ul>
+<li><p>更新文档</p>
+<pre><code>POST /{索引名}/{类型名}/{id}
+{ 
+   # 更新文档内容
+}</code></pre></li>
+</ul>
+<ul>
+<li><p>删除文档</p>
+<pre><code>DELETE /{索引名}/{类型名}/{id}</code></pre></li>
+</ul>
+<ul>
+<li><p>es允许一次创建多个文档, 从而减少网络传输开销, 提升写入速率</p>
+<ul>
+<li><p>endpoint 为 <code>_bulk</code>, 如下:</p>
+<p><code>index</code>和<code>create</code>同为创建文档, 不同的是<code>index</code>在创建文档时, 如果文档id已经存在, 则会覆盖相应的内容, 但是<code>create</code>在创建文档时,如果文档id已经存在, 则会报错。</p>
+<ul>
+<li>请求</li>
+</ul>
+<img src="https://i.loli.net/2020/04/06/aLJsOwQkyodvn8G.jpg" alt="2020-04-06_222840" style="zoom:50%;">
+
+<ul>
+<li><p>响应</p>
+<p><img src="https://i.loli.net/2020/04/06/6WFAzUwVgc4mHkS.jpg" alt="2020-04-06_223300"></p>
 </li>
-</ol>
+</ul>
+<p>注意: 在使用 <code>_bulk</code>时,REST API端点为/ _bulk，并且期望使用以下以换行符分隔的JSON（NDJSON）结构：</p>
+<pre><code>action_and_meta_data\n
+optional_source\n
+action_and_meta_data\n
+optional_source\n
+....
+action_and_meta_data\n
+optional_source\n</code></pre><p>NDJSON: ndjson（New-line Delimited JSON）是一个比较新的标准，本身超简单，就是一个.ndjson文件中，每行都是一个传统json对象，当然每个json对象中要去掉原本用于格式化的换行符，而json的string中本身就不允许出现换行符（取而代之的是\n）.</p>
+<p>所以当请求的数据为普通Json时会发生错误.</p>
+<p>示例:</p>
+<pre class=" language-shell"><code class="language-shell"># NDJSON
+# request
+POST _bulk
+{"index":{"_index":"test_index","_type":"doc","_id":1}}
+{"username":"Jiavg-1","age":5}
+{"update":{"_index":"test_index","_type":"doc","_id":"QzXQT3EBkfca6l6Y9SXp"}}
+{"doc":{"age":25}}
+{"create":{"_index":"test_index","_type":"doc","_id":3}}
+{"username":"znc","age":22}
+
+# response
+{
+  "took": 52,
+  "errors": false,
+  "items": [
+    {
+      "index": {
+        "_index": "test_index",
+        "_type": "doc",
+        "_id": "1",
+        "_version": 3,
+        "result": "updated",
+        "_shards": {
+          "total": 2,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 2,
+        "_primary_term": 2,
+        "status": 200
+      }
+    },
+    {
+      "update": {
+        "_index": "test_index",
+        "_type": "doc",
+        "_id": "QzXQT3EBkfca6l6Y9SXp",
+        "_version": 2,
+        "result": "updated",
+        "_shards": {
+          "total": 2,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 1,
+        "_primary_term": 2,
+        "status": 200
+      }
+    },
+    {
+      "create": {
+        "_index": "test_index",
+        "_type": "doc",
+        "_id": "3",
+        "_version": 1,
+        "result": "created",
+        "_shards": {
+          "total": 2,
+          "successful": 1,
+          "failed": 0
+        },
+        "_seq_no": 0,
+        "_primary_term": 2,
+        "status": 201
+      }
+    }
+  ]
+}
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>  # 普通json
+  # request
+  POST _bulk
+  {
+    &quot;index&quot;: {
+      &quot;_index&quot;: &quot;test_index&quot;,
+      &quot;_type&quot;: &quot;doc&quot;,
+      &quot;_id&quot;: 1
+    }
+  }
+  {
+    &quot;username&quot;: &quot;Jiavg-1&quot;,
+    &quot;age&quot;: 5
+  }
+  {
+    &quot;update&quot;: {
+      &quot;_index&quot;: &quot;test_index&quot;,
+      &quot;_type&quot;: &quot;doc&quot;,
+      &quot;_id&quot;: &quot;QzXQT3EBkfca6l6Y9SXp&quot;
+    }
+  }
+  {
+    &quot;doc&quot;: {
+      &quot;age&quot;: 25
+    }
+  }
+  {
+    &quot;create&quot;: {
+      &quot;_index&quot;: &quot;test_index&quot;,
+      &quot;_type&quot;: &quot;doc&quot;,
+      &quot;_id&quot;: 3
+    }
+  }
+  {
+    &quot;username&quot;: &quot;znc&quot;,
+    &quot;age&quot;: 22
+  }
+
+  # response
+  {
+    &quot;error&quot;: {
+      &quot;root_cause&quot;: [
+        {
+          &quot;type&quot;: &quot;json_e_o_f_exception&quot;,
+          &quot;reason&quot;: &quot;Unexpected end-of-input: expected close marker for Object (start marker at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@618ff58; line: 1, column: 1])\n at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@618ff58; line: 1, column: 3]&quot;
+        }
+      ],
+      &quot;type&quot;: &quot;json_e_o_f_exception&quot;,
+      &quot;reason&quot;: &quot;Unexpected end-of-input: expected close marker for Object (start marker at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@618ff58; line: 1, column: 1])\n at [Source: org.elasticsearch.transport.netty4.ByteBufStreamInput@618ff58; line: 1, column: 3]&quot;
+    },
+    &quot;status&quot;: 500
+  }
+  ```
+
+  json和ndjson区别参考: https://blog.csdn.net/github_38885296/article/details/100915601</code></pre><ul>
+<li><p>es允许一次查询多个文档</p>
+<ul>
+<li><p>endpoint为<code>_mget</code>, 如下:</p>
+<p><img src="https://i.loli.net/2020/04/06/2R19vJ3SC8Wgdy5.jpg" alt="2020-04-06_223806"></p>
+</li>
+</ul>
+</li>
+</ul>
 
             </div>
             <hr/>
@@ -800,9 +1082,9 @@ output {
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《Logstash入门》
+                    《Elasticsearch篇之入门》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/03/3.Logstash入门/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/06/Elastic Search/第2章-Elasticsearch篇之入门/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -868,24 +1150,24 @@ output {
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/04/04/4.案例实战/">
+                <a href="/2020/04/08/Elastic Search/第3章-Elasticsearch篇之倒排索引与分词/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="实战：分析Elasticsearch 查询语句">
+                        <img src="/medias/featureimages/17.jpg" class="responsive-img" alt="Elasticsearch篇之倒排索引与分词">
                         
-                        <span class="card-title">实战：分析Elasticsearch 查询语句</span>
+                        <span class="card-title">Elasticsearch篇之倒排索引与分词</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Elastic Stack
+                            Elastic Stack系列(七)
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-04
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-08
                         </span>
                         <span class="publish-author">
                             
@@ -906,16 +1188,12 @@ output {
                         <span class="chip bg-color">ElasticSearch</span>
                     </a>
                     
-                    <a href="/tags/Kibana/" target="_blank">
-                        <span class="chip bg-color">Kibana</span>
+                    <a href="/tags/倒排索引/" target="_blank">
+                        <span class="chip bg-color">倒排索引</span>
                     </a>
                     
-                    <a href="/tags/Beats/" target="_blank">
-                        <span class="chip bg-color">Beats</span>
-                    </a>
-                    
-                    <a href="/tags/Logstash/" target="_blank">
-                        <span class="chip bg-color">Logstash</span>
+                    <a href="/tags/分词/" target="_blank">
+                        <span class="chip bg-color">分词</span>
                     </a>
                     
                 </div>
@@ -929,24 +1207,24 @@ output {
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/02/2.Beats、Filebeat入门/">
+                <a href="/2020/04/05/Elastic Search/第1章-Elasticsearch Stack概述/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Beats入门">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="Elasticsearch Stack概述">
                         
-                        <span class="card-title">Beats入门</span>
+                        <span class="card-title">Elasticsearch Stack概述</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Elastic Stack
+                            Elastic Stack系列(五)
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-02
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-05
                             </span>
                         <span class="publish-author">
                             
@@ -963,8 +1241,8 @@ output {
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Beats/" target="_blank">
-                        <span class="chip bg-color">Beats</span>
+                    <a href="/tags/Elastic-Stack/" target="_blank">
+                        <span class="chip bg-color">Elastic Stack</span>
                     </a>
                     
                 </div>
@@ -1122,7 +1400,7 @@ output {
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">38.2k</span>
+                <span class="white-color">46.6k</span>
             
 
             

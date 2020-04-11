@@ -4,12 +4,11 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="Beats入门, Jiavg">
-    <meta name="description" content="Beats入门简介官方定义
-Lightweight Data Shipper (轻量级数据传送者)
-Filebeat                     # 日志文件
-Metricbeat                # 度量数据
-P">
+    <meta name="keywords" content="Elasticsearch Stack概述, Jiavg">
+    <meta name="description" content="Elasticsearch Stack概述
+“Search is something that any application should have!”  – Shay Banon (Creator of Elasticsearch)
+
+">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +16,7 @@ P">
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Beats入门 | Jiavg</title>
+    <title>Elasticsearch Stack概述 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -264,13 +263,13 @@ P">
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        Beats入门
+                        Elasticsearch Stack概述
                     </div>
                 </div>
             </div>
@@ -381,8 +380,8 @@ P">
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Beats/" target="_blank">
-                                <span class="chip bg-color">Beats</span>
+                            <a href="/tags/Elastic-Stack/" target="_blank">
+                                <span class="chip bg-color">Elastic Stack</span>
                             </a>
                         
                     </div>
@@ -405,21 +404,21 @@ P">
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-02
+                    2020-04-05
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        2,323
+                        464
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        13 分
+                        2 分
                     </div>
                     
                 
@@ -435,386 +434,78 @@ P">
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="Beats入门"><a href="#Beats入门" class="headerlink" title="Beats入门"></a>Beats入门</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="官方定义"><a href="#官方定义" class="headerlink" title="官方定义"></a>官方定义</h3><ul>
-<li>Lightweight Data Shipper (轻量级数据传送者)<ul>
-<li>Filebeat                     # 日志文件</li>
-<li>Metricbeat                # 度量数据</li>
-<li>Packetbeat                # 网络数据</li>
-<li>Winlogbeat                # Windows数据</li>
-<li>Heartbeat                  # 健康检查</li>
+                <h1 id="Elasticsearch-Stack概述"><a href="#Elasticsearch-Stack概述" class="headerlink" title="Elasticsearch Stack概述"></a>Elasticsearch Stack概述</h1><ul>
+<li>“Search is something that any application should have!”  – Shay Banon (Creator of Elasticsearch)</li>
 </ul>
+<h2 id="名词介绍"><a href="#名词介绍" class="headerlink" title="名词介绍"></a>名词介绍</h2><ul>
+<li><p>什么是 ELK Stack？很简单，指的就是 Elastic Stack。</p>
+</li>
+<li><p>ELK:  “ELK”是三个开源项目的首字母缩写，这三个项目分别是：Elasticsearch、Logstash 和 Kibana。</p>
+</li>
+<li><p>Elasticsearch: Elasticsearch 是一个搜索和分析引擎。</p>
+</li>
+<li><p>Logstash: Logstash 是服务器端数据处理管道，能够同时从多个来源采集数据，转换数据，然后将数据发送到诸如 Elasticsearch 等“存储库”中。</p>
+</li>
+<li><p>Kibana: Kibana 则可以让用户在 Elasticsearch 中使用图形和图表对数据进行可视化。</p>
+</li>
+<li><p>Elastic Stack 就是 ELK Stack，但是更加灵活，可以帮助人们出色完成各项事务。Elastic Stack 是 ELK Stack 的更新换代产品。</p>
 </li>
 </ul>
-<p><img src="https://i.loli.net/2020/04/06/KvBEwHtFXyQ4qIl.png" alt="2020-04-01_234342.jpg"></p>
-<h2 id="Filebeat"><a href="#Filebeat" class="headerlink" title="Filebeat"></a>Filebeat</h2><p>轻量型日志采集器</p>
-<p>处理流程:</p>
+<h2 id="Elastic-Stack特性"><a href="#Elastic-Stack特性" class="headerlink" title="Elastic Stack特性"></a>Elastic Stack特性</h2><ul>
+<li><p>使用门槛低, 开发周期短, 上线快</p>
+<p>Hadoop:         ############################## 30天</p>
+<p>Elastic Stack:  #######                                                          7天</p>
+</li>
+<li><p>性能好, 查询快, 实时展示结果</p>
+<p>对<code>T+1</code>说不: <code>T+1</code>即当天结果必须等一天才能拿到分析数据</p>
+</li>
+<li><p>扩容方便, 快速支撑增长迅猛的数据</p>
+<p>Elastic Stack能够非常方便进行扩容, 以达到TP/PB级别的规模</p>
+</li>
+</ul>
+<h2 id="Elastic-Stack组成"><a href="#Elastic-Stack组成" class="headerlink" title="Elastic Stack组成"></a>Elastic Stack组成</h2><ul>
+<li><p><code>ELK Stack</code> 组成:</p>
+<p><code>Elasticsearch</code></p>
+<p><code>Logstash</code></p>
+<p><code>Kibana</code></p>
+</li>
+<li><p><code>Elastic Stack</code> 组成:</p>
+<p><code>Elasticsearch</code></p>
+<p><code>Logstash</code></p>
+<p><code>Kibana</code></p>
+<p><code>Beats</code></p>
+</li>
+<li><p>Elastic Stack 是 ELK Stack 的更新换代产品, 是一个完备的数据分析工具集合.</p>
+</li>
+<li><p>部件主要作用:</p>
+<p><code>Kibana</code>: 数据探索与可视化分析</p>
+<p><code>Elasticsearch</code>: 数据存储, 查询与分析</p>
+<p><code>Beats</code>, <code>Logstash</code>: 数据收集与处理</p>
+</li>
+<li><p><code>Beats</code>, <code>Logstash</code> 作用</p>
 <ul>
-<li>输入Input</li>
-<li>处理Filter</li>
-<li>输出Output</li>
+<li>数据收集与处理</li>
+<li>ELT<ul>
+<li>Extract Transform Load</li>
 </ul>
-<p>Prospector(勘探者): 负责监控日志文件信息</p>
-<p>Harvester(收割者) :负责把Prospector监控到变化的日志信息发送到Spooler进行处理</p>
-<p>知识点:</p>
+</li>
+<li>数据源多样<ul>
+<li>数据文件, 如日志, Excel等</li>
+<li>数据库, 如MySQL, Oracle等</li>
+<li>http服务</li>
+<li>网络数据</li>
+</ul>
+</li>
+<li>支持自定义扩展, 无限可能</li>
+</ul>
+</li>
+</ul>
+<h2 id="Elastic-Stack-应用"><a href="#Elastic-Stack-应用" class="headerlink" title="Elastic Stack 应用"></a>Elastic Stack 应用</h2><p>Elastic Stack 是 ELK Stack 的更新换代产品, 是一个完备的数据分析工具集合, 可以应用于:</p>
 <ul>
-<li>一个Filebeat可以有多个Prospector</li>
-<li>每个日志文件拥有自己的Harvester</li>
+<li>搜索引擎</li>
+<li>日志分析</li>
+<li>指标分析</li>
 </ul>
-<p><img src="https://i.loli.net/2020/04/06/sBLcmfNiQeRwKZY.png" alt="2020-04-01_234942.jpg"></p>
-<h3 id="Filebeat-Input配置简介"><a href="#Filebeat-Input配置简介" class="headerlink" title="Filebeat Input配置简介"></a>Filebeat Input配置简介</h3><ul>
-<li>yaml语法</li>
-<li>input_type            # 拥有两种类型<ul>
-<li>log                  # 指定本Prospector监控的是log日志文件</li>
-<li>stdin               # 指定本Prospector监控的是标准输入</li>
-</ul>
-</li>
-</ul>
-<p>例:</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># prospectors 为一个数组,Filebeat可以配置多个prospectors</span>
-<span class="token key atrule">filebeat.prospectors</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> <span class="token key atrule">input_type</span><span class="token punctuation">:</span> log                <span class="token comment" spellcheck="true"># 第一个prospector</span>
-      <span class="token key atrule">paths</span><span class="token punctuation">:</span>
-        <span class="token punctuation">-</span> c<span class="token punctuation">:</span>\programdata\elasticsearch\logs\*
-
-    <span class="token punctuation">-</span> <span class="token key atrule">input_type</span><span class="token punctuation">:</span> stdin                <span class="token comment" spellcheck="true"># 第二个prospector</span></code></pre>
-<h3 id="Filebeat-Output配置简介"><a href="#Filebeat-Output配置简介" class="headerlink" title="Filebeat Output配置简介"></a>Filebeat Output配置简介</h3><ul>
-<li>Console</li>
-<li>Elasticsearch</li>
-<li>Logstash</li>
-<li>Kafka</li>
-<li>Redis</li>
-<li>File</li>
-</ul>
-<p>例1:</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 输出信息到elasticsearch</span>
-<span class="token key atrule">output.elasticsearch</span><span class="token punctuation">:</span>
-    <span class="token key atrule">hosts</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"localhost:9200"</span><span class="token punctuation">]</span>
-    <span class="token key atrule">username</span><span class="token punctuation">:</span> <span class="token string">"elastic"</span>
-    <span class="token key atrule">password</span><span class="token punctuation">:</span> <span class="token string">"changeme"</span></code></pre>
-<p>例2:</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token comment" spellcheck="true"># 输出信息到控制台</span>
-<span class="token key atrule">output.console</span><span class="token punctuation">:</span>
-    <span class="token key atrule">pretty</span><span class="token punctuation">:</span> <span class="token boolean important">true        </span><span class="token comment" spellcheck="true"># 表示把输出的json格式化,更方便阅读</span></code></pre>
-<h3 id="Filebeat-Filter配置简介"><a href="#Filebeat-Filter配置简介" class="headerlink" title="Filebeat Filter配置简介"></a>Filebeat Filter配置简介</h3><ul>
-<li>Input时处理<ul>
-<li>include_lines                    # 满足条件读取这一行</li>
-<li>exclude_lines                    # 满足条件不读取这一行</li>
-<li>exclude_files                     # 满足条件不读取这个文件</li>
-</ul>
-</li>
-<li>Output前处理 (– Processor)<ul>
-<li>drop_event                        # 满足条件直接删除</li>
-<li>drop_fields                        # 满足条件直接删除这个字段</li>
-<li>decode_json_fields          # 对满足条件的json字段进行解析</li>
-<li>include_fields                   # 满足条件加入这些字段, 或者过滤通过这些字段</li>
-</ul>
-</li>
-</ul>
-<p>例1:</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">processor</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> <span class="token key atrule">drop_event</span><span class="token punctuation">:</span>         <span class="token comment" spellcheck="true"># 当正则匹配就删除这个信息</span>
-       <span class="token key atrule">when</span><span class="token punctuation">:</span> 
-           <span class="token key atrule">regexp</span><span class="token punctuation">:</span>
-               <span class="token key atrule">message</span><span class="token punctuation">:</span> <span class="token string">"^DBG:"</span></code></pre>
-<p>例2:</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">processor</span><span class="token punctuation">:</span>
-    <span class="token punctuation">-</span> <span class="token key atrule">decode_json_fields</span><span class="token punctuation">:</span>
-        <span class="token key atrule">fields</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"inner"</span><span class="token punctuation">]</span></code></pre>
-<p>例2用来处理形如下信息的信息</p>
-<p><code>{&quot;outer&quot;: &quot;value&quot;, &quot;inner&quot;: &quot;{\&quot;data\&quot;: \&quot;value\&quot;}&quot;}</code></p>
-<p>处理后结果为</p>
-<p><code>{&quot;outer&quot;: &quot;value&quot;, &quot;inner&quot;: &quot;{&quot;data&quot;: &quot;value&quot;}&quot;}</code></p>
-<h3 id="Filebeat-Elasticsearch-Ingest-Node"><a href="#Filebeat-Elasticsearch-Ingest-Node" class="headerlink" title="Filebeat + Elasticsearch Ingest Node"></a>Filebeat + Elasticsearch Ingest Node</h3><ul>
-<li>Filebeat 缺乏数据转换的能力</li>
-<li>Elasticsearch Ingest Node<ul>
-<li>新增的node类型</li>
-<li>在数据写入es之前对数据进行处理转换</li>
-<li>pipeline api (Ingest Node 使用的处理api)</li>
-</ul>
-</li>
-</ul>
-<h3 id="Filebeat-Module简介"><a href="#Filebeat-Module简介" class="headerlink" title="Filebeat Module简介"></a>Filebeat Module简介</h3><p>对于社区常见的需求进行配置封装增加易用性,其中封装了如下常见需求:</p>
-<ul>
-<li>nginx</li>
-<li>Apache</li>
-<li>MySQL</li>
-<li>……</li>
-</ul>
-<p>封装内容:</p>
-<ul>
-<li>filebeat.yml配置</li>
-<li>ingest node pipeline配置</li>
-<li>Kibana dashboard</li>
-</ul>
-<p>这些Module是最佳实践参考, 可以不使用,但其中蕴含的最佳配置是参考的不二人选.</p>
-<h3 id="Filebeat-收集-nginx-log"><a href="#Filebeat-收集-nginx-log" class="headerlink" title="Filebeat 收集 nginx log"></a>Filebeat 收集 nginx log</h3><ul>
-<li>通过stdin收集日志</li>
-<li>通过console输出结果</li>
-</ul>
-<ol>
-<li>下载Filebeat</li>
-</ol>
-<p>​    下载地址: <a href="https://www.elastic.co/cn/" target="_blank" rel="noopener">https://www.elastic.co/cn/</a></p>
-<ol start="2">
-<li><p>运行filebeat命令</p>
-<p>其中, 要收集的日志信息形如下:</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost es]$ head -n 2 ./access.log 
-127.0.0.1 - - [27/Jan/2020:23:15:54 +0800] "GET / HTTP/1.1" 200 612 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
-127.0.0.1 - - [27/Jan/2020:23:38:36 +0800] "GET / HTTP/1.1" 304 0 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"</code></pre>
-</li>
-</ol>
-<p>   其中,使用的Filebeat配置文件(nginx.yml)内容如下:</p>
-<pre class=" language-yaml"><code class="language-yaml">   <span class="token key atrule">filebeat.prospectors</span><span class="token punctuation">:</span>
-       <span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> stdin
-
-   <span class="token key atrule">output.console</span><span class="token punctuation">:</span>
-       <span class="token key atrule">pretty</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
-<p>   解压运行filebeat</p>
-<pre class=" language-shell"><code class="language-shell">   # 解压filebeat
-   [jlc@localhost es]$ tar -zxf filebeat-6.1.1-linux-x86_64.tar.gz
-
-   # 运行
-   [jlc@localhost filebeat-6.1.1-linux-x86_64]$ head -n 2 ../access.log | ./filebeat -e -c ./nginx.yml</code></pre>
-<ol start="3">
-<li><p>运行输出结果</p>
-<pre class=" language-shell"><code class="language-shell">[jlc@localhost filebeat-6.1.1-linux-x86_64]$ head -n 2 ../access.log | ./filebeat -e -c ./nginx.yml 
-2020/04/01 16:55:38.579816 beat.go:436: INFO Home path: [/usr/local/es/filebeat-6.1.1-linux-x86_64] Config path: [/usr/local/es/filebeat-6.1.1-linux-x86_64] Data path: [/usr/local/es/filebeat-6.1.1-linux-x86_64/data] Logs path: [/usr/local/es/filebeat-6.1.1-linux-x86_64/logs]
-2020/04/01 16:55:38.580153 beat.go:443: INFO Beat UUID: 150db773-661f-4fab-b139-07e0ffc8e768
-2020/04/01 16:55:38.580182 beat.go:203: INFO Setup Beat: filebeat; Version: 6.1.1
-2020/04/01 16:55:38.580475 metrics.go:23: INFO Metrics logging every 30s
-2020/04/01 16:55:38.580689 module.go:76: INFO Beat name: localhost.localdomain
-2020/04/01 16:55:38.583042 beat.go:276: INFO filebeat start running.
-2020/04/01 16:55:38.583207 registrar.go:71: INFO No registry file found under: /usr/local/es/filebeat-6.1.1-linux-x86_64/data/registry. Creating a new registry file.
-2020/04/01 16:55:38.586759 registrar.go:108: INFO Loading registrar data from /usr/local/es/filebeat-6.1.1-linux-x86_64/data/registry
-2020/04/01 16:55:38.586816 registrar.go:119: INFO States Loaded from registrar: 0
-2020/04/01 16:55:38.586869 filebeat.go:261: WARN Filebeat is unable to load the Ingest Node pipelines for the configured modules because the Elasticsearch output is not configured/enabled. If you have already loaded the Ingest Node pipelines or are using Logstash pipelines, you can ignore this warning.
-2020/04/01 16:55:38.586889 crawler.go:48: INFO Loading Prospectors: 1
-2020/04/01 16:55:38.587132 prospector.go:87: INFO Starting prospector of type: stdin; ID: 16876905907669988323 
-2020/04/01 16:55:38.587146 crawler.go:82: INFO Loading and starting Prospectors completed. Enabled prospectors: 1
-2020/04/01 16:55:38.587232 registrar.go:150: INFO Starting Registrar
-2020/04/01 16:55:38.587425 harvester.go:215: INFO Harvester started for file: -
-2020/04/01 16:55:38.587716 harvester.go:238: INFO End of file reached: . Closing because close_eof is enabled.
-{
-  "@timestamp": "2020-04-01T16:55:38.587Z",
-  "@metadata": {
-    "beat": "filebeat",
-    "type": "doc",
-    "version": "6.1.1"
-  },
-  "offset": 190,
-  "message": "127.0.0.1 - - [27/Jan/2020:23:15:54 +0800] \"GET / HTTP/1.1\" 200 612 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36\"",
-  "source": "",
-  "prospector": {
-    "type": "stdin"
-  },
-  "beat": {
-    "name": "localhost.localdomain",
-    "hostname": "localhost.localdomain",
-    "version": "6.1.1"
-  }
-}
-{
-  "@timestamp": "2020-04-01T16:55:38.587Z",
-  "@metadata": {
-    "beat": "filebeat",
-    "type": "doc",
-    "version": "6.1.1"
-  },
-  "source": "",
-  "offset": 188,
-  "message": "127.0.0.1 - - [27/Jan/2020:23:38:36 +0800] \"GET / HTTP/1.1\" 304 0 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36\"",
-  "prospector": {
-    "type": "stdin"
-  },
-  "beat": {
-    "name": "localhost.localdomain",
-    "hostname": "localhost.localdomain",
-    "version": "6.1.1"
-  }
-}
-2020/04/01 16:56:08.582776 metrics.go:39: INFO Non-zero metrics in the last 30s: beat.info.uptime.ms=30004 beat.memstats.gc_next=4473924 beat.memstats.memory_alloc=2924304 beat.memstats.memory_total=2924304 filebeat.events.active=2 filebeat.events.added=2 filebeat.harvester.closed=1 filebeat.harvester.open_files=-1 filebeat.harvester.running=0 filebeat.harvester.started=1 libbeat.config.module.running=0 libbeat.output.events.acked=2 libbeat.output.events.batches=1 libbeat.output.events.total=2 libbeat.output.type=console libbeat.output.write.bytes=1078 libbeat.pipeline.clients=0 libbeat.pipeline.events.active=0 libbeat.pipeline.events.published=2 libbeat.pipeline.events.total=2 libbeat.pipeline.queue.acked=2 registrar.states.current=0 registrar.writes=1</code></pre>
-</li>
-</ol>
-<h2 id="Packetbeat-简介"><a href="#Packetbeat-简介" class="headerlink" title="Packetbeat 简介"></a>Packetbeat 简介</h2><ul>
-<li>实时抓取网络包</li>
-<li>自动解析应用层协议<ul>
-<li>ICMP (v4 and v6)</li>
-<li>DNS</li>
-<li>HTTP</li>
-<li>Mysql</li>
-<li>Redis</li>
-<li>……</li>
-</ul>
-</li>
-<li>Wireshark (Packetbeat 可以当做轻量级的Wireshark)</li>
-</ul>
-<h3 id="Packetbeat解析HTTP协议"><a href="#Packetbeat解析HTTP协议" class="headerlink" title="Packetbeat解析HTTP协议"></a>Packetbeat解析HTTP协议</h3><h4 id="解析Elasticsearch-http请求"><a href="#解析Elasticsearch-http请求" class="headerlink" title="解析Elasticsearch http请求"></a>解析Elasticsearch http请求</h4><ol>
-<li><p>下载Packetbeat</p>
-<p>下载地址: <a href="https://www.elastic.co/cn/" target="_blank" rel="noopener">https://www.elastic.co/cn/</a></p>
-</li>
-<li><p>配置配置文件(http.yml)</p>
-<pre class=" language-yaml"><code class="language-yaml"><span class="token key atrule">packetbeat.interfaces.device</span><span class="token punctuation">:</span> lo   <span class="token comment" spellcheck="true"># packetbeat监听的网卡</span>
-
-<span class="token key atrule">packetbeat.protocols</span><span class="token punctuation">:</span>               <span class="token comment" spellcheck="true"># packetbeat监听的协议</span>
-<span class="token punctuation">-</span> <span class="token key atrule">type</span><span class="token punctuation">:</span> http
-  <span class="token key atrule">ports</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token number">9200</span><span class="token punctuation">]</span>                    <span class="token comment" spellcheck="true"># packetbeat监听的端口</span>
-  <span class="token key atrule">send_request</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
-  <span class="token key atrule">include_body_for</span><span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">"application/json"</span><span class="token punctuation">,</span><span class="token string">"x-www-form-urlencoded"</span><span class="token punctuation">]</span>
-
-<span class="token key atrule">output.console</span><span class="token punctuation">:</span>
-  <span class="token key atrule">pretty</span><span class="token punctuation">:</span> <span class="token boolean important">true</span></code></pre>
-</li>
-<li><p>运行Packetbeat</p>
-<pre class=" language-shell"><code class="language-shell"># sudo 抓包时,需要有root权限
-# -strict.perms=false Packetbeat运行时需要检查配置文件,加上这句就不会检查了,方便运行
-
-[jlc@localhost packetbeat-6.1.1-linux-x86_64]$ sudo ./packetbeat -e -c http.yml -strict.perms=false</code></pre>
-</li>
-<li><p>在浏览器输入请求</p>
-<pre><code>http://localhost:9200/</code></pre></li>
-<li><p>控制台得到输出</p>
-<pre class=" language-shell"><code class="language-shell">{
-  "@timestamp": "2020-04-01T17:40:05.307Z",
-  "@metadata": {
-    "beat": "packetbeat",
-    "type": "doc",
-    "version": "6.1.1"
-  },
-  "status": "OK",
-  "proc": "",
-  "path": "/",
-  "query": "GET /",
-  "beat": {
-    "name": "localhost.localdomain",
-    "hostname": "localhost.localdomain",
-    "version": "6.1.1"
-  },
-  "client_port": 54914,
-  "port": 9200,
-  "server": "localhost.localdomain",
-  "type": "http",
-  "http": {
-    "request": {
-      "headers": {
-        "content-length": 0
-      },
-      "params": ""
-    },
-    "response": {
-      "code": 200,
-      "phrase": "OK",
-      "headers": {
-        "content-length": 278,
-        "content-type": "application/json; charset=UTF-8"
-      },
-      "body": "\u001f\ufffd\u0008\u0000\u0000\u0000\u0000\u0000\u0000\u0000|\ufffd[K\ufffd@\u0010\ufffd\ufffd\ufffd+\ufffd\u003c\ufffd!\ufffd\ufffd\ufffd\ufffdc\ufffd\ufffd\ufffd ־ԗ\ufffdI\u0026fd/e/\ufffdP\ufffd\ufffd\ufffdE\ufffdA\ufffdq\ufffd\ufffdo\ufffd\ufffd\\\u0002BB\ufffd%\ufffd$#\ufffd\ufffd5\ufffd\ufffdv\ufffd\ufffd\ufffd\ufffd\ufffd[\u0007\u0026\ufffdUAp밴\ufffdM\ufffdL=\ufffdc5LX?ܭء\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd#\ufffd\ufffd\ufffd\ufffdh\ufffd\u0000cQ\ufffd\ufffdw\ufffd\ufffd~\ufffd\ufffd\u0005\ufffd\u0001\\F4\ufffd\ufffd\ufffd\ufffd\u0017\u001eE\ufffd7\ufffd6\ufffdVT+\u0006i=U+\ufffd\ufffd\ufffd,\ufffd露9M\u000f,\ufffdX\ufffd\ufffdE\ufffd$\ufffd\ufffdS\ufffdU\ufffdd\u001b\ufffdz\ufffd\ufffd\ufffd\ufffd\ufffd*\ufffdKP\ufffd\ufffdd\u000b\ufffd.J\ufffdCKT(\ufffd\ufffd\ufffdh /\ufffd\u003cq\ufffd\u0005\nt\ufffd\ufffdYD˿\u000c\ufffd\n\u003e\ufffd\ufffd\ufffd\u000e\ufffdN\ufffd\u000e\ufffdq\ufffdM\ufffd\u001a\ufffd:jO\ufffdJ\ufffdg\ufffdֆ\ufffd\ufffd/\u000f\ufffd\ufffd\u0017\u0000\u0000\u0000\ufffd\ufffd\u0003\u0000\ufffd+Cɰ\u0001\u0000\u0000"
-    }
-  },
-  "bytes_out": 389,
-  "client_server": "localhost.localdomain",
-  "client_ip": "::1",
-  "bytes_in": 385,
-  "client_proc": "",
-  "responsetime": 3,
-  "request": "GET / HTTP/1.1\r\nHost: localhost:9200\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\r\nAccept-Encoding: gzip, deflate\r\nConnection: keep-alive\r\nUpgrade-Insecure-Requests: 1\r\nCache-Control: max-age=0\r\n\r\n",
-  "ip": "::1",
-  "method": "GET"
-}
-{
-  "@timestamp": "2020-04-01T17:40:05.407Z",
-  "@metadata": {
-    "beat": "packetbeat",
-    "type": "doc",
-    "version": "6.1.1"
-  },
-  "bytes_in": 340,
-  "client_ip": "::1",
-  "status": "OK",
-  "proc": "",
-  "client_port": 54914,
-  "client_proc": "",
-  "client_server": "localhost.localdomain",
-  "query": "GET /favicon.ico",
-  "method": "GET",
-  "server": "localhost.localdomain",
-  "request": "GET /favicon.ico HTTP/1.1\r\nHost: localhost:9200\r\nUser-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0\r\nAccept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2\r\nAccept-Encoding: gzip, deflate\r\nConnection: keep-alive\r\n\r\n",
-  "path": "/favicon.ico",
-  "bytes_out": 1652,
-  "port": 9200,
-  "http": {
-    "request": {
-      "headers": {
-        "content-length": 0
-      },
-      "params": ""
-    },
-    "response": {
-      "phrase": "OK",
-      "headers": {
-        "content-length": 1559,
-        "content-type": "image/x-icon"
-      },
-      "code": 200
-    }
-  },
-  "ip": "::1",
-  "beat": {
-    "name": "localhost.localdomain",
-    "hostname": "localhost.localdomain",
-    "version": "6.1.1"
-  },
-  "type": "http",
-  "responsetime": 16
-}
-{
-  "@timestamp": "2020-04-01T17:39:59.949Z",
-  "@metadata": {
-    "beat": "packetbeat",
-    "type": "doc",
-    "version": "6.1.1"
-  },
-  "client_proc": "",
-  "client_ip": "127.0.0.1",
-  "proc": "",
-  "responsetime": 7524,
-  "query": "GET /_nodes/_local",
-  "bytes_out": 519,
-  "server": "localhost.localdomain",
-  "beat": {
-    "name": "localhost.localdomain",
-    "hostname": "localhost.localdomain",
-    "version": "6.1.1"
-  },
-  "request": "GET /_nodes/_local?filter_path=nodes.*.settings.tribe HTTP/1.1\r\nHost: localhost:9200\r\nContent-Length: 0\r\nConnection: keep-alive\r\n\r\n",
-  "ip": "127.0.0.1",
-  "path": "/_nodes/_local",
-  "method": "GET",
-  "client_port": 48786,
-  "http": {
-    "response": {
-      "body": "HTTP/1.1 200 OK\r\ncontent-type: application/json; charset=UTF-8\r\ncontent-length: 329\r\n\r\n{\"nodes\":{\"Eyro1LLhQOSsyBQNJV86kQ\":{\"ip\":\"127.0.0.1\",\"version\":\"6.1.1\",\"http\":{\"publish_address\":\"127.0.0.1:9200\"}},\"1P40_XHRTKKnKP-covkxLg\":{\"ip\":\"127.0.0.1\",\"version\":\"6.1.1\",\"http\":{\"publish_address\":\"127.0.0.1:7200\"}},\"_d5BzFgWQZGxUcT9KAEFaA\":{\"ip\":\"127.0.0.1\",\"version\":\"6.1.1\",\"http\":{\"publish_address\":\"127.0.0.1:8200\"}}}}HTTP/1.1 200 OK\r",
-      "code": 200,
-      "phrase": "OK",
-      "headers": {
-        "content-length": 432,
-        "content-type": "application/json; charset=UTF-8"
-      }
-    },
-    "request": {
-      "headers": {
-        "content-length": 0
-      },
-      "params": "filter_path=nodes.%2A.settings.tribe"
-    }
-  },
-  "client_server": "localhost.localdomain",
-  "port": 9200,
-  "bytes_in": 131,
-  "type": "http",
-  "status": "OK"
-}</code></pre>
-</li>
-</ol>
 
             </div>
             <hr/>
@@ -973,9 +664,9 @@ P">
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《Beats入门》
+                    《Elasticsearch Stack概述》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/02/2.Beats、Filebeat入门/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/05/Elastic Search/第1章-Elasticsearch Stack概述/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -1041,24 +732,24 @@ P">
             <div class="article-badge left-badge text-color">
                 <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2020/04/03/3.Logstash入门/">
+                <a href="/2020/04/06/Elastic Search/第2章-Elasticsearch篇之入门/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Logstash入门">
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Elasticsearch篇之入门">
                         
-                        <span class="card-title">Logstash入门</span>
+                        <span class="card-title">Elasticsearch篇之入门</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Elastic Stack
+                            Elastic Stack系列(六)
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-03
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-06
                         </span>
                         <span class="publish-author">
                             
@@ -1075,8 +766,8 @@ P">
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Logstash/" target="_blank">
-                        <span class="chip bg-color">Logstash</span>
+                    <a href="/tags/Elasticsearch/" target="_blank">
+                        <span class="chip bg-color">Elasticsearch</span>
                     </a>
                     
                 </div>
@@ -1090,24 +781,24 @@ P">
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/01/1.ElasticSearch与Kibana/">
+                <a href="/2020/04/04/Elastic Search/4.案例实战/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="ElasticSearch与Kibana入门">
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="实战-分析Elasticsearch 查询语句">
                         
-                        <span class="card-title">ElasticSearch与Kibana入门</span>
+                        <span class="card-title">实战-分析Elasticsearch 查询语句</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Elastic Stack
+                            Elastic Stack系列(四)
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-01
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-04
                             </span>
                         <span class="publish-author">
                             
@@ -1130,6 +821,14 @@ P">
                     
                     <a href="/tags/Kibana/" target="_blank">
                         <span class="chip bg-color">Kibana</span>
+                    </a>
+                    
+                    <a href="/tags/Beats/" target="_blank">
+                        <span class="chip bg-color">Beats</span>
+                    </a>
+                    
+                    <a href="/tags/Logstash/" target="_blank">
+                        <span class="chip bg-color">Logstash</span>
                     </a>
                     
                 </div>
@@ -1287,7 +986,7 @@ P">
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">38.2k</span>
+                <span class="white-color">46.6k</span>
             
 
             

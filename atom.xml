@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2020-04-11T20:01:22.864Z</updated>
+  <updated>2020-04-13T16:50:09.492Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Elasticsearch篇之聚合分析入门</title>
+    <link href="https://lylgjiavg.github.io/2020/04/12/Elastic%20Search/%E7%AC%AC8%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8B%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90%E5%85%A5%E9%97%A8/"/>
+    <id>https://lylgjiavg.github.io/2020/04/12/Elastic Search/第8章-Elasticsearch篇之聚合分析入门/</id>
+    <published>2020-04-12T15:58:53.000Z</published>
+    <updated>2020-04-13T16:50:09.492Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Elasticsearch篇之聚合分析入门&quot;&gt;&lt;a href=&quot;#Elasticsearch篇之聚合分析入门&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Elastic Stack" scheme="https://lylgjiavg.github.io/categories/Elastic-Stack/"/>
+    
+    
+      <category term="ElasticSearch" scheme="https://lylgjiavg.github.io/tags/ElasticSearch/"/>
+    
+      <category term="聚合分析" scheme="https://lylgjiavg.github.io/tags/%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90/"/>
+    
+  </entry>
   
   <entry>
     <title>Elasticsearch篇之深入了解Search的运行机制</title>
@@ -232,11 +260,11 @@
       <category term="Elastic Stack" scheme="https://lylgjiavg.github.io/categories/Elastic-Stack/"/>
     
     
-      <category term="Beats" scheme="https://lylgjiavg.github.io/tags/Beats/"/>
-    
       <category term="ElasticSearch" scheme="https://lylgjiavg.github.io/tags/ElasticSearch/"/>
     
       <category term="Kibana" scheme="https://lylgjiavg.github.io/tags/Kibana/"/>
+    
+      <category term="Beats" scheme="https://lylgjiavg.github.io/tags/Beats/"/>
     
       <category term="Logstash" scheme="https://lylgjiavg.github.io/tags/Logstash/"/>
     
@@ -533,34 +561,6 @@
         
         
           &lt;h2 id=&quot;Confirm消息确认机制&quot;&gt;&lt;a href=&quot;#Confirm消息确认机制&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>生产端的可靠性投递</title>
-    <link href="https://lylgjiavg.github.io/2019/09/04/RabbitMQ06/"/>
-    <id>https://lylgjiavg.github.io/2019/09/04/RabbitMQ06/</id>
-    <published>2019-09-04T12:59:07.000Z</published>
-    <updated>2019-09-04T14:17:40.851Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;消息如何保证100-的投递成功&quot;&gt;&lt;a href=&quot;#消息如何保证100-的投递成功&quot; class=&quot;headerlink&quot; title=&quot;消息如何保证100%的投递成功?&quot;&gt;&lt;/a&gt;消息如何保证100%的投递成功?&lt;/h1&gt;&lt;h2
         
       
     

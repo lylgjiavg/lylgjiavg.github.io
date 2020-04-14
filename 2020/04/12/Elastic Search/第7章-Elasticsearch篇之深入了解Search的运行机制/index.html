@@ -1710,11 +1710,14 @@ GET /test_search_index/_search
 </li>
 </ul>
 <h3 id="排序过程"><a href="#排序过程" class="headerlink" title="排序过程"></a>排序过程</h3><ul>
-<li>排序的过程实质是对字段原始内容排序的过程, 这个过程中倒排索引无法发挥作用, 需要用到正排索引, 也就是通过文档Id和字段可以快速得到字段原始内容.</li>
-<li>es对此提供了2种实现方式:<ul>
+<li><p>排序的过程实质是对字段原始内容排序的过程, 这个过程中倒排索引无法发挥作用, 需要用到正排索引, 也就是通过文档Id和字段可以快速得到字段原始内容.</p>
+</li>
+<li><p>es对此提供了2种实现方式:</p>
+<ul>
 <li>fielddata (默认禁用)</li>
 <li>doc values (默认启用, 且对text类型无效)</li>
 </ul>
+<p><img src="https://i.loli.net/2020/04/15/GB7oF9rplC1cb4g.jpg" alt="2020-04-12_021220"></p>
 </li>
 </ul>
 <h4 id="Fielddata"><a href="#Fielddata" class="headerlink" title="Fielddata"></a>Fielddata</h4><ul>
@@ -2100,7 +2103,7 @@ GET /test_search_index/_search
 <li>from指明开始位置</li>
 <li>size指明获取总数</li>
 </ul>
-<p><img src="https://i.loli.net/2020/04/12/ypFYAzNg2virmd9.jpg" alt="2020-04-12_024729"></p>
+<p><img src="https://i.loli.net/2020/04/12/ypFYAzNg2virmd9.jpg" alt="2020-04-12_024126"></p>
 </li>
 </ul>
 <h3 id="深度分页"><a href="#深度分页" class="headerlink" title="深度分页"></a>深度分页</h3><ul>
@@ -3036,7 +3039,7 @@ GET /test_search_index/_search
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">49.3k</span>
+                <span class="white-color">53.8k</span>
             
 
             

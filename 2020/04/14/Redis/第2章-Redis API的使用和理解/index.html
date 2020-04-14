@@ -1,0 +1,1747 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Redis API的使用和理解, Jiavg">
+    <meta name="description" content="Redis API的使用和理解
+通用命令
+字符串类型
+哈希类型
+列表类型
+集合类型
+有序集合类型
+
+通用命令和数据结构通用命令keys
+遍历所有的key
+API:
+keys [pattern]
+
+keys命令一般不在生产环境使用
+
+keys">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Redis API的使用和理解 | Jiavg</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Jiavg</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Jiavg</div>
+        <div class="logo-desc">
+            
+            个人技术总结
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Redis API的使用和理解
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Redis/" target="_blank">
+                                <span class="chip bg-color">Redis</span>
+                            </a>
+                        
+                            <a href="/tags/Redis-API/" target="_blank">
+                                <span class="chip bg-color">Redis API</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                Redis
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-04-14
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        3,646
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        18 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Redis-API的使用和理解"><a href="#Redis-API的使用和理解" class="headerlink" title="Redis API的使用和理解"></a>Redis API的使用和理解</h1><ul>
+<li>通用命令</li>
+<li>字符串类型</li>
+<li>哈希类型</li>
+<li>列表类型</li>
+<li>集合类型</li>
+<li>有序集合类型</li>
+</ul>
+<h2 id="通用命令和数据结构"><a href="#通用命令和数据结构" class="headerlink" title="通用命令和数据结构"></a>通用命令和数据结构</h2><h3 id="通用命令"><a href="#通用命令" class="headerlink" title="通用命令"></a>通用命令</h3><h4 id="keys"><a href="#keys" class="headerlink" title="keys"></a>keys</h4><ul>
+<li><p>遍历所有的key</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell">keys [pattern]</code></pre>
+</li>
+<li><p>keys命令一般不在生产环境使用</p>
+<ul>
+<li>keys是一个比较重的命令, 复杂度为O(n), Redis是一个单线程的, 所以此命令会阻塞其他命令</li>
+<li>本身在生产环境中使用此命令没有太大意义, 如若确有此需求 可以使用scan命令</li>
+</ul>
+</li>
+<li><p>keys * 怎么用</p>
+<ul>
+<li>热备从节点 (此节点一般不会部署到生产环境中)</li>
+<li>scan</li>
+</ul>
+</li>
+<li><p>演示1:</p>
+<pre class=" language-shell"><code class="language-shell">[root@localhost soft]# redis-cli -h 127.0.0.1 -p 6379
+127.0.0.1:6379> set hello world
+OK
+127.0.0.1:6379> set name Jiavg
+OK
+127.0.0.1:6379> set java best
+OK
+127.0.0.1:6379> keys *
+1) "name"
+2) "hello"
+3) "java"
+127.0.0.1:6379> dbsize
+(integer) 3</code></pre>
+</li>
+<li><p>演示2:</p>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> mset hello world hehe haha php good phe his
+OK
+127.0.0.1:6379> keys he*
+1) "hehe"
+2) "hello"
+127.0.0.1:6379> keys he[a-h]*
+1) "hehe"
+127.0.0.1:6379> keys ph?
+1) "phe"
+2) "php"</code></pre>
+</li>
+</ul>
+<h4 id="dbsize"><a href="#dbsize" class="headerlink" title="dbsize"></a>dbsize</h4><ul>
+<li><p>计算key的总数</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell">dbsize</code></pre>
+<ul>
+<li>dbsize可以在线上使用, Redis内置一个计数器, 会实时更新, 故其时间复杂度为O(1)</li>
+</ul>
+</li>
+<li><p>演示</p>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> dbsize
+(integer) 0
+127.0.0.1:6379> mset k1 v1 k2 v2 k3 v3 k4 v4
+OK
+127.0.0.1:6379> dbsize
+(integer) 4
+127.0.0.1:6379> sadd a b c d
+(integer) 3
+127.0.0.1:6379> dbsize
+(integer) 5</code></pre>
+</li>
+</ul>
+<h4 id="exists"><a href="#exists" class="headerlink" title="exists"></a>exists</h4><ul>
+<li><p>检查key是否存在</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell">exists key1 [key2 ...]</code></pre>
+<ul>
+<li><p>存在: 返回1, 不存在: 返回0</p>
+</li>
+<li><p>一般情况下可以随意使用, 时间复杂度为O(1), 但是存在特殊情况, 后面将会介绍</p>
+</li>
+</ul>
+</li>
+<li><p>演示:</p>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> dbsize
+(integer) 0
+127.0.0.1:6379> set k1 v1
+OK
+127.0.0.1:6379> exists k1
+(integer) 1
+127.0.0.1:6379> del k1
+(integer) 1
+127.0.0.1:6379> exists k1
+(integer) 0</code></pre>
+</li>
+</ul>
+<h4 id="del"><a href="#del" class="headerlink" title="del"></a>del</h4><ul>
+<li><p>删除指定的key-value</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell">del key1 [key2 ...]</code></pre>
+<ul>
+<li>删除成功: 返回1, 删除失败: 返回0</li>
+</ul>
+</li>
+<li><p>演示:</p>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> dbsize
+(integer) 0
+127.0.0.1:6379> mset k1 v1 k2 v2
+OK
+127.0.0.1:6379> get k1
+"v1"
+127.0.0.1:6379> del k1
+(integer) 1
+127.0.0.1:6379> get k1
+(nil)
+127.0.0.1:6379> del k3
+(integer) 0</code></pre>
+</li>
+</ul>
+<h4 id="expire-ttl-persist"><a href="#expire-ttl-persist" class="headerlink" title="expire, ttl, persist"></a>expire, ttl, persist</h4><ul>
+<li><p>expire</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell"># 除了指定时间间隔, 也可以指定时间戳
+expire key seconds</code></pre>
+<ul>
+<li>指定key过期时间</li>
+</ul>
+</li>
+<li><p>ttl</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell">ttl key</code></pre>
+<ul>
+<li>查看key剩余过期时间<ul>
+<li>返回-2: 代表key已经不存在</li>
+<li>返回-1: 代表key存在, 并且没有过期时间</li>
+<li>返回正整数: 代表key距离过期时间的秒数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>persist</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell">persist key</code></pre>
+<ul>
+<li>去掉key的过期时间</li>
+</ul>
+</li>
+<li><p>示例:</p>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> dbsize
+(integer) 0
+127.0.0.1:6379> set k1 v1
+OK
+127.0.0.1:6379> expire k1 10
+(integer) 1
+127.0.0.1:6379> ttl k1
+(integer) 6
+127.0.0.1:6379> ttl k1
+(integer) 2
+127.0.0.1:6379> ttl k1
+(integer) -2
+127.0.0.1:6379> ttl k1
+(integer) -2
+127.0.0.1:6379> set k2 v2
+OK
+127.0.0.1:6379> expire k2 10
+(integer) 1
+127.0.0.1:6379> persist k2
+(integer) 1
+127.0.0.1:6379> ttl k2
+(integer) -1</code></pre>
+</li>
+</ul>
+<h4 id="type"><a href="#type" class="headerlink" title="type"></a>type</h4><ul>
+<li><p>返回key的类型</p>
+<p>API:</p>
+<pre class=" language-shell"><code class="language-shell">type key</code></pre>
+<ul>
+<li>返回值有: string, hash, list, set, zset, none(代表key不存在)</li>
+</ul>
+</li>
+<li><p>演示:</p>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> dbsize
+(integer) 0
+127.0.0.1:6379> set k1 v1
+OK
+127.0.0.1:6379> type k1
+string
+127.0.0.1:6379> sadd myset a b c
+(integer) 3
+127.0.0.1:6379> type myset
+set</code></pre>
+</li>
+</ul>
+<h4 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h4><p><img src="https://i.loli.net/2020/04/14/368zOykT9CmNcn4.jpg" alt="2020-04-14_175048"></p>
+<h3 id="数据结构和内部编码"><a href="#数据结构和内部编码" class="headerlink" title="数据结构和内部编码"></a>数据结构和内部编码</h3><img src="https://i.loli.net/2020/04/14/zuFbQBDWaS3pvds.jpg" alt="2020-04-14_200442" style="zoom:67%;">
+
+<h4 id="Redis-Object"><a href="#Redis-Object" class="headerlink" title="Redis Object"></a>Redis Object</h4><p><img src="https://i.loli.net/2020/04/14/TI4JR5u8EsmC6KL.jpg" alt="2020-04-14_200859"></p>
+<h2 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h2><h3 id="单线程"><a href="#单线程" class="headerlink" title="单线程"></a>单线程</h3><p><img src="https://i.loli.net/2020/04/14/WQhx7Zb84kU5YmM.jpg" alt="2020-04-14_201230"></p>
+<h3 id="单线程为什么这么快"><a href="#单线程为什么这么快" class="headerlink" title="单线程为什么这么快?"></a>单线程为什么这么快?</h3><ol>
+<li>纯内存</li>
+<li>非阻塞IO</li>
+<li>避免线程切换和竞态消耗</li>
+</ol>
+<p><img src="https://i.loli.net/2020/04/15/lyiaYjEmrzAPGdK.jpg" alt="2020-04-14_201701"></p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li><p>一次只运行一条命令</p>
+</li>
+<li><p>拒绝长慢命令</p>
+<p>(keys, flushall, flushdb, slow lua script, mutil/exec, operate big value (collection)</p>
+</li>
+<li><p>其实不是单线程</p>
+<p>redis也是多线程的, 但是redis的主线程处理业务, 而其他三个线程跟主要功能是关系不到的.</p>
+<p>redis为了保证其高效, 一些比较耗时的动作会起线程或者进程来完成, 不会阻塞在业务主线程上.</p>
+<p>(例如: fysnc file descriptor 和 close file descriptor会开起新线程)</p>
+</li>
+</ul>
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><h3 id="字符串键值结构"><a href="#字符串键值结构" class="headerlink" title="字符串键值结构"></a>字符串键值结构</h3><p><img src="https://i.loli.net/2020/04/15/DOTxX6cmvZn3NbL.jpg" alt="2020-04-14_203442"></p>
+<h3 id="字符串使用场景"><a href="#字符串使用场景" class="headerlink" title="字符串使用场景"></a>字符串使用场景</h3><ul>
+<li>缓存</li>
+<li>计数器</li>
+<li>分布式锁</li>
+<li>……</li>
+</ul>
+<h3 id="get-set-del"><a href="#get-set-del" class="headerlink" title="get, set, del"></a>get, set, del</h3><pre class=" language-shell"><code class="language-shell"># 获取key对应的value   O(1)时间复杂度
+get key
+
+# 设置key-value       O(1)时间复杂度
+set key value
+
+# 删除key-value       O(1)时间复杂度
+del key</code></pre>
+<ul>
+<li>演示:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> dbsize
+(integer) 0
+127.0.0.1:6379> set hello "world"
+OK
+127.0.0.1:6379> get hello
+"world"
+127.0.0.1:6379> del hello
+(integer) 1
+127.0.0.1:6379> get hello
+(nil)</code></pre>
+<h3 id="incr-decr-incrby-decrby"><a href="#incr-decr-incrby-decrby" class="headerlink" title="incr, decr, incrby, decrby"></a>incr, decr, incrby, decrby</h3><pre class=" language-shell"><code class="language-shell"># key自增1, 如果key不存在, 自增后get(key)=1   O(1)时间复杂度
+incr key
+
+# key自减1, 如果key不存在, 自增后get(key)=-1  O(1)时间复杂度
+decr key
+
+# key自增k, 如果key不存在, 自增后get(key)=k   O(1)时间复杂度
+incrby key k
+
+# key自减k, 如果key不存在, 自增后get(key)=-k  O(1)时间复杂度
+decrby key k</code></pre>
+<ul>
+<li>演示:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> get counter
+(nil)
+127.0.0.1:6379> incr counter
+(integer) 1
+127.0.0.1:6379> get counter
+"1"
+127.0.0.1:6379> incrby counter 99
+(integer) 100
+127.0.0.1:6379> decrby counter 50
+(integer) 50
+127.0.0.1:6379> decr counter
+(integer) 49</code></pre>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><ul>
+<li><p>实现如下功能:</p>
+<p>记录网站每个用户个人主页的访问量?</p>
+<p><code>incr userid:pageview</code> (单线程, 无竞争)</p>
+</li>
+<li><p>实现如下功能:</p>
+<p>缓存视频的基本信息 (数据源在MySQL中)伪代码?</p>
+<p><img src="https://i.loli.net/2020/04/15/fHjImeKzbvYtX3O.jpg" alt="2020-04-14_210146"></p>
+</li>
+<li><p>实现如下功能:</p>
+<p>分布式id生成器?</p>
+<p><code>incr id</code> (原子操作 [基础思路, 实际操作较为复杂])</p>
+<p><img src="https://i.loli.net/2020/04/15/Pu8oWCZixMklU2K.jpg" alt="2020-04-14_210321"></p>
+</li>
+</ul>
+<h3 id="set-setnx-set-xx"><a href="#set-setnx-set-xx" class="headerlink" title="set, setnx, set xx"></a>set, setnx, set xx</h3><pre class=" language-shell"><code class="language-shell"># 不管key是否存在, 都设置    O(1)时间复杂度
+set key value
+
+# key不存在, 才设置         O(1)时间复杂度
+setnx key value
+
+# key存在, 才设置           O(1)时间复杂度
+set key value xx
+
+# 将value关联到key, 并将key的生存时间设为seconds(以秒为单位)。
+# 将set命令和expire命令结合为原子操作, 在做一些分布式锁方面很有用
+# O(1)时间复杂度
+setex key seconds value  
+</code></pre>
+<ul>
+<li>演示:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> exists name
+(integer) 0
+127.0.0.1:6379> set name Jiavg
+OK
+127.0.0.1:6379> setnx name lylgjiavg
+(integer) 0
+127.0.0.1:6379> setnx username jiavag
+(integer) 1
+127.0.0.1:6379> set name root xx
+OK
+127.0.0.1:6379> set name1 root xx
+(nil)
+127.0.0.1:6379> setex school 10 lylg
+OK
+127.0.0.1:6379> ttl school
+(integer) 4</code></pre>
+<h3 id="mget-mset"><a href="#mget-mset" class="headerlink" title="mget, mset"></a>mget, mset</h3><pre class=" language-shell"><code class="language-shell"># 批量获取key, 原子操作     时间复杂度O(n): n为获得key的数量
+mget key1 key2 key3 [key4...]
+
+# 批量设置key-value        时间复杂度O(n): n为获得key的数量
+mset key1 value1 key2 value2 key3 value3</code></pre>
+<ul>
+<li>示例:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> mset name jiavg school lylg addr henan
+OK
+127.0.0.1:6379> mget name school addr
+1) "jiavg"
+2) "lylg"
+3) "henan"</code></pre>
+<ul>
+<li>n次get</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/prdnbU4MeyjfAKg.jpg" alt="2020-04-14_213018"></p>
+<ul>
+<li>1次mget</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/MH1fbyCucVQI7NL.jpg" alt="2020-04-14_213100"></p>
+<h3 id="getset-append-strlen"><a href="#getset-append-strlen" class="headerlink" title="getset, append, strlen"></a>getset, append, strlen</h3><pre class=" language-shell"><code class="language-shell"># set key newvalue 并返回旧的value    O(1)时间复杂度
+getset key newvalue
+
+# 将value追加到旧的value              O(1)时间复杂度
+append key value
+
+# 返回字符串的长度 (注意中文)           O(1)时间复杂度
+strlen key</code></pre>
+<ul>
+<li>示例</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> set name jiavg
+OK
+127.0.0.1:6379> getset name lylgjiavg
+"jiavg"
+127.0.0.1:6379> append name ", hi!"
+(integer) 14
+127.0.0.1:6379> get name
+"lylgjiavg, hi!"
+127.0.0.1:6379> strlen name
+(integer) 14
+127.0.0.1:6379> set hello "你好"
+OK
+127.0.0.1:6379> strlen hello
+(integer) 6</code></pre>
+<h3 id="incrbyfloat-getrange-setrange"><a href="#incrbyfloat-getrange-setrange" class="headerlink" title="incrbyfloat, getrange, setrange"></a>incrbyfloat, getrange, setrange</h3><pre class=" language-shell"><code class="language-shell"># 增加key对应的浮点值                O(1)时间复杂度
+incrbyfloat key floatvalue
+
+# 获取字符串指定下标所有的值           O(1)时间复杂度
+getrange key start end
+
+# 设置指定下标所有对应的值             O(1)时间复杂度
+setrange key index value</code></pre>
+<ul>
+<li>示例:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> set counter 1
+OK
+127.0.0.1:6379> incrbyfloat counter 1.5
+"2.5"
+127.0.0.1:6379> get counter
+"2.5"
+127.0.0.1:6379> set username lylgjiavg
+OK
+127.0.0.1:6379> getrange username 0 3
+"lylg"
+127.0.0.1:6379> setrange username 7 n
+(integer) 9
+127.0.0.1:6379> get username
+"lylgjiang"</code></pre>
+<h3 id="字符串总结"><a href="#字符串总结" class="headerlink" title="字符串总结"></a>字符串总结</h3><p><img src="https://i.loli.net/2020/04/15/BlbYirmajOHpyI4.jpg" alt="2020-04-14_215422"></p>
+<h2 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h2><h3 id="哈希键值结构"><a href="#哈希键值结构" class="headerlink" title="哈希键值结构"></a>哈希键值结构</h3><p><img src="https://i.loli.net/2020/04/15/j3PvMWDrO4Zd7cI.jpg" alt="2020-04-14_215737"></p>
+<p><img src="https://i.loli.net/2020/04/15/8BVXHTYoZgp71eP.jpg" alt="2020-04-14_215809"></p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>Mapmap (即map中含有map的结构)</li>
+<li>field不能相同, value可以相同</li>
+</ul>
+<h3 id="hget-hset-hdel"><a href="#hget-hset-hdel" class="headerlink" title="hget, hset, hdel"></a>hget, hset, hdel</h3><pre class=" language-shell"><code class="language-shell"># 获取hash key 对应的field的value      O(1)时间复杂度
+hget key field
+
+# 设置hash key对应的field的value       O(1)时间复杂度
+hset key field value
+
+# 删除hash key对应field的value         O(1)时间复杂度
+hdel key field</code></pre>
+<ul>
+<li>示例:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> hset user:1:info name jiavg
+(integer) 1
+127.0.0.1:6379> hset user:1:info age 22
+(integer) 1
+127.0.0.1:6379> hgetall user:1:info
+1) "name"
+2) "jiavg"
+3) "age"
+4) "22"
+127.0.0.1:6379> hdel user:1:info age
+(integer) 1
+127.0.0.1:6379> hgetall user:1:info
+1) "name"
+2) "jiavg"</code></pre>
+<h3 id="hexists-hlen"><a href="#hexists-hlen" class="headerlink" title="hexists, hlen"></a>hexists, hlen</h3><pre class=" language-shell"><code class="language-shell"># 判断hash key是否有field        O(1)时间复杂度
+hexist key field
+
+# 获取hash key field的数量       O(1)时间复杂度
+hlen key</code></pre>
+<ul>
+<li>示例:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> hgetall user:1:info
+1) "name"
+2) "jiavg"
+3) "age"
+4) "22"
+127.0.0.1:6379> hexists user:1:info age
+(integer) 1
+127.0.0.1:6379> hlen user:1:info
+(integer) 2</code></pre>
+<h3 id="hmget-hmset"><a href="#hmget-hmset" class="headerlink" title="hmget, hmset"></a>hmget, hmset</h3><pre class=" language-shell"><code class="language-shell"># 批量获取hash key的一批field对应的值   时间复杂度O(n): n为获得key的数量
+hmget key field1 field2 [field3...]
+
+# 批量设置hash key的一批field value    时间复杂度O(n): n为获得key的数量
+hmset key field1 value1 field2 value2 [field3 value3...]</code></pre>
+<ul>
+<li>示例</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> hmset user:1:addr addr1 china addr2 henan addr3 zhoukou
+OK
+127.0.0.1:6379> hmget user:1:addr addr1 addr3
+1) "china"
+2) "zhoukou"</code></pre>
+<h3 id="实战-1"><a href="#实战-1" class="headerlink" title="实战"></a>实战</h3><ul>
+<li><p>实现如下功能:</p>
+<p>记录网站每个用户个人主页的访问量?</p>
+<p><code>hincrby user:1:info pageview count</code></p>
+</li>
+<li><p>实现如下功能:</p>
+<p>缓存视频的基本信息(数据源在MySQL中)伪代码?</p>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/gDHxUlfqK9vuwSz.jpg" alt="2020-04-14_222420"></p>
+<h3 id="hgetall-hvals-hkeys"><a href="#hgetall-hvals-hkeys" class="headerlink" title="hgetall, hvals, hkeys"></a>hgetall, hvals, hkeys</h3><pre class=" language-shell"><code class="language-shell"># 返回hash key对应的所有field和value
+# 时间复杂度O(n): n为获得key的数量
+hgetall key
+
+# 返回hash key对应的所有field的value
+# 时间复杂度O(n): n为获得key的数量
+hvals key
+
+# 返回hash key对应所有的field
+# 时间复杂度O(n): n为获得key的数量
+hkeys key</code></pre>
+<ul>
+<li>示例:</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> hgetall user:1:info
+1) "name"
+2) "jiavg"
+3) "age"
+4) "22"
+127.0.0.1:6379> hvals user:1:info
+1) "jiavg"
+2) "22"
+127.0.0.1:6379> hkeys user:1:info
+1) "name"
+2) "age"</code></pre>
+<h3 id="小心使用hgetall"><a href="#小心使用hgetall" class="headerlink" title="小心使用hgetall"></a>小心使用hgetall</h3><ul>
+<li>小心使用, 牢记单线程</li>
+<li>如果hgetall的key的field很多将会造成其他命令阻塞</li>
+</ul>
+<h3 id="字符串-vs-哈希"><a href="#字符串-vs-哈希" class="headerlink" title="字符串 vs 哈希"></a>字符串 vs 哈希</h3><ul>
+<li>相似的API</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/daDBu18fJO62lsI.jpg" alt="2020-04-14_223836"></p>
+<h3 id="如何存储用户属性"><a href="#如何存储用户属性" class="headerlink" title="如何存储用户属性?"></a>如何存储用户属性?</h3><h4 id="用户信息-string-v1-实现"><a href="#用户信息-string-v1-实现" class="headerlink" title="用户信息 (string v1 实现)"></a>用户信息 (string v1 实现)</h4><p><img src="https://i.loli.net/2020/04/15/4bSAgXtxYJFOGZq.jpg" alt="2020-04-14_223959"></p>
+<h4 id="用户信息-string-v2-实现"><a href="#用户信息-string-v2-实现" class="headerlink" title="用户信息 (string v2 实现)"></a>用户信息 (string v2 实现)</h4><p><img src="https://i.loli.net/2020/04/15/lCz2yOidLguAQmR.jpg" alt="2020-04-14_224048"></p>
+<h4 id="用户信息-hash-实现"><a href="#用户信息-hash-实现" class="headerlink" title="用户信息 (hash 实现)"></a>用户信息 (hash 实现)</h4><p><img src="https://i.loli.net/2020/04/15/bPsoxURhTazE6Sl.jpg" alt="2020-04-14_224139"></p>
+<h4 id="三种方案比较"><a href="#三种方案比较" class="headerlink" title="三种方案比较"></a>三种方案比较</h4><p><img src="https://i.loli.net/2020/04/15/R2LeEmCbWVkr4xy.jpg" alt="2020-04-14_224224"></p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><h3 id="列表结构"><a href="#列表结构" class="headerlink" title="列表结构"></a>列表结构</h3><p><img src="https://i.loli.net/2020/04/15/F2Sr1GWIztnfORj.jpg" alt="2020-04-14_224647"></p>
+<p><img src="https://i.loli.net/2020/04/15/gQr4onu6BJhdteU.jpg" alt="2020-04-14_224714"></p>
+<h3 id="特点-1"><a href="#特点-1" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>有序</li>
+<li>可以重复</li>
+<li>左右两边插入弹出</li>
+</ul>
+<h3 id="rpush-lpush"><a href="#rpush-lpush" class="headerlink" title="rpush, lpush"></a>rpush, lpush</h3><pre class=" language-shell"><code class="language-shell"># 从列表右端插入值 (1~n个)    时间复杂度O(1~n)
+rpush key value1 value2 [value3...]
+
+# 从列表左端插入值 (1~n个)    时间复杂度O(1~n)
+lpush key value1 value2 [value3...]</code></pre>
+<p><img src="https://i.loli.net/2020/04/15/TKAjugYW4LlkmMO.jpg" alt="2020-04-14_224955"></p>
+<p><img src="https://i.loli.net/2020/04/15/Yg16fZRWAtznV3J.jpg" alt="2020-04-14_225017"></p>
+<h3 id="linsert"><a href="#linsert" class="headerlink" title="linsert"></a>linsert</h3><pre class=" language-shell"><code class="language-shell"># 在list指定的值前|后插入newvalue
+# 时间复杂度O(n)
+linsert key before|after value newvalue</code></pre>
+<h3 id="lpop-rpop"><a href="#lpop-rpop" class="headerlink" title="lpop, rpop"></a>lpop, rpop</h3><pre class=" language-shell"><code class="language-shell"># 从列表左侧弹出一个item
+# 时间复杂度O(1)
+lpop key
+
+# 从列表右侧弹出一个item
+# 时间复杂度O(1)
+rpop key</code></pre>
+<h3 id="lrem"><a href="#lrem" class="headerlink" title="lrem"></a>lrem</h3><p><img src="https://i.loli.net/2020/04/15/HesKlBi5oCGfT4k.jpg" alt="2020-04-14_231707"></p>
+<h3 id="ltrim"><a href="#ltrim" class="headerlink" title="ltrim"></a>ltrim</h3><pre class=" language-shell"><code class="language-shell"># 按照索引范围修剪列表
+# 时间复杂度O(n)
+ltrim key start end</code></pre>
+<p><img src="https://i.loli.net/2020/04/15/zo2I5F8K6GhPxVb.jpg" alt="2020-04-14_232017"></p>
+<h3 id="lrange"><a href="#lrange" class="headerlink" title="lrange"></a>lrange</h3><p><img src="https://i.loli.net/2020/04/15/mdjW4YgtNG2iHxz.jpg" alt="2020-04-14_232246"></p>
+<h3 id="lindex"><a href="#lindex" class="headerlink" title="lindex"></a>lindex</h3><pre class=" language-shell"><code class="language-shell"># 获取列表指定索引的item
+# 时间复杂度O(n)
+lindex key index</code></pre>
+<h3 id="llen"><a href="#llen" class="headerlink" title="llen"></a>llen</h3><pre class=" language-shell"><code class="language-shell"># 获取列表长度
+# 时间复杂度O(1)
+llen key</code></pre>
+<h3 id="lset"><a href="#lset" class="headerlink" title="lset"></a>lset</h3><pre class=" language-shell"><code class="language-shell"># 设置列表指定索引值为newvalue
+# 时间复杂度O(n)
+lset key index newvalue</code></pre>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> lpush mylist a b c 
+(integer) 3
+127.0.0.1:6379> rpush mylist d e f
+(integer) 6
+127.0.0.1:6379> lrange mylist 1 -1
+1) "b"
+2) "a"
+3) "d"
+4) "e"
+5) "f"
+127.0.0.1:6379> lrange mylist 0 -1
+1) "c"
+2) "b"
+3) "a"
+4) "d"
+5) "e"
+6) "f"
+127.0.0.1:6379> lpop mylist
+"c"
+127.0.0.1:6379> rpop mylist
+"f"
+127.0.0.1:6379> lrange mylist 0 -1
+1) "b"
+2) "a"
+3) "d"
+4) "e"
+127.0.0.1:6379> linsert mylist before a a1
+(integer) 5
+127.0.0.1:6379> lrange mylist 0 -1
+1) "b"
+2) "a1"
+3) "a"
+4) "d"
+5) "e"
+127.0.0.1:6379> lrem mylist 0 a
+(integer) 1
+127.0.0.1:6379> lrange mylist 0 -1
+1) "b"
+2) "a1"
+3) "d"
+4) "e"
+127.0.0.1:6379> ltrim mylist 1 3
+OK
+127.0.0.1:6379> lrange mylist 0 -1
+1) "a1"
+2) "d"
+3) "e"
+127.0.0.1:6379> lindex mylist 0
+"a1"
+127.0.0.1:6379> llen mylist
+(integer) 3
+127.0.0.1:6379> lset mylist 0 a
+OK
+127.0.0.1:6379> lrange mylist 0 -1
+1) "a"
+2) "d"
+3) "e"</code></pre>
+<h3 id="blpop-brpop"><a href="#blpop-brpop" class="headerlink" title="blpop, brpop"></a>blpop, brpop</h3><pre class=" language-shell"><code class="language-shell"># lpop阻塞版本, timeout是阻塞超时时间, timeout=0为永远不阻塞
+# 时间复杂度O(1)
+blpop key timeout
+
+# rpop阻塞版本, timeout是阻塞超时时间, timeout=0为永远不阻塞
+# 时间复杂度O(1)
+brpop key timeout</code></pre>
+<h3 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h3><ol>
+<li>lpush + lpop = Stack</li>
+<li>lpush + rpop = Queue</li>
+<li>lpush + ltrim = Capped Collection</li>
+<li>lpush + brpop = Message Queue</li>
+</ol>
+<h2 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h2><h3 id="集合结构"><a href="#集合结构" class="headerlink" title="集合结构"></a>集合结构</h3><p><img src="https://i.loli.net/2020/04/15/Bl6omUjR3LFa2zS.jpg" alt="2020-04-14_234554"></p>
+<p><img src="https://i.loli.net/2020/04/15/yIeX72skmZVgLqG.jpg" alt="2020-04-14_234905"></p>
+<h3 id="特点-2"><a href="#特点-2" class="headerlink" title="特点"></a>特点</h3><ul>
+<li>无序</li>
+<li>无重复</li>
+<li>支持集合间操作</li>
+</ul>
+<h3 id="sadd-srem"><a href="#sadd-srem" class="headerlink" title="sadd, srem"></a>sadd, srem</h3><pre class=" language-shell"><code class="language-shell"># 向集合key添加1element(如果element已经存在, 添加失败)
+# 时间复杂度O(1)
+sadd key element
+
+# 将集合key中的element移除掉
+# 时间复杂度O(1)
+srem key element</code></pre>
+<h3 id="scard-sismember-srandmember-spop-smembers"><a href="#scard-sismember-srandmember-spop-smembers" class="headerlink" title="scard, sismember, srandmember, spop, smembers"></a>scard, sismember, srandmember, spop, smembers</h3><ul>
+<li>小心使用smembers</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/6FuHnMzxDCmS5di.jpg" alt="2020-04-14_235407"></p>
+<h3 id="演示-1"><a href="#演示-1" class="headerlink" title="演示"></a>演示</h3><pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> sadd names jiavg znc lx ycg
+(integer) 4
+127.0.0.1:6379> smembers names
+1) "lx"
+2) "ycg"
+3) "jiavg"
+4) "znc"
+127.0.0.1:6379> spop names
+"lx"
+127.0.0.1:6379> smembers names
+1) "ycg"
+2) "jiavg"
+3) "znc"
+127.0.0.1:6379> scard names
+(integer) 3
+127.0.0.1:6379> sismember names lx
+(integer) 0</code></pre>
+<h3 id="实战-2"><a href="#实战-2" class="headerlink" title="实战"></a>实战</h3><ul>
+<li>抽奖系统</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/lji7cNP84Q1oqbh.jpg" alt="2020-04-15_000013"></p>
+<ul>
+<li>Like, 赞, 踩</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/ewyao5Zz4gQU2Af.jpg" alt="2020-04-15_000056"></p>
+<ul>
+<li>标签</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/9XKfBkE2TLxirJh.jpg" alt="2020-04-15_000142"></p>
+<h3 id="集合间API-sdiff-sinter-sunion"><a href="#集合间API-sdiff-sinter-sunion" class="headerlink" title="集合间API (sdiff, sinter, sunion)"></a>集合间API (sdiff, sinter, sunion)</h3><p><img src="https://i.loli.net/2020/04/15/sZfimzavP1hXcKO.jpg" alt="2020-04-15_000408"></p>
+<h3 id="集合间实战"><a href="#集合间实战" class="headerlink" title="集合间实战"></a>集合间实战</h3><ul>
+<li>共同关注</li>
+</ul>
+<img src="https://i.loli.net/2020/04/15/vldG8pPWzQrhgcA.jpg" alt="2020-04-15_000531" style="zoom:50%;">
+
+<h3 id="TIPS-1"><a href="#TIPS-1" class="headerlink" title="TIPS"></a>TIPS</h3><ul>
+<li>sadd = tagging</li>
+<li>spop/srandmember = random item</li>
+<li>sadd + sinter = social graph</li>
+</ul>
+<h2 id="有序集合"><a href="#有序集合" class="headerlink" title="有序集合"></a>有序集合</h2><h3 id="有序集合结构"><a href="#有序集合结构" class="headerlink" title="有序集合结构"></a>有序集合结构</h3><p><img src="https://i.loli.net/2020/04/15/xrp2yMCTBJeuZF8.jpg" alt="2020-04-15_001535"></p>
+<h3 id="集合-vs-有序集合"><a href="#集合-vs-有序集合" class="headerlink" title="集合 vs 有序集合"></a>集合 vs 有序集合</h3><p><img src="https://i.loli.net/2020/04/15/mdHnI7MDjWFoviS.jpg" alt="2020-04-15_001429"></p>
+<h3 id="列表-vs-有序集合"><a href="#列表-vs-有序集合" class="headerlink" title="列表 vs 有序集合"></a>列表 vs 有序集合</h3><p><img src="https://i.loli.net/2020/04/15/P2bWD7RVHK1ELFh.jpg" alt="2020-04-15_001706"></p>
+<h3 id="zadd"><a href="#zadd" class="headerlink" title="zadd"></a>zadd</h3><pre class=" language-shell"><code class="language-shell"># 添加score和element, element不可重复, score可以重复(可以多对)
+# 时间复杂度O(logN)
+zadd key score element </code></pre>
+<h3 id="zrem"><a href="#zrem" class="headerlink" title="zrem"></a>zrem</h3><pre class=" language-shell"><code class="language-shell"># 删除元素 (可以是多个) 
+# 时间复杂度O(1)
+zrem key element</code></pre>
+<h3 id="zscore"><a href="#zscore" class="headerlink" title="zscore"></a>zscore</h3><pre class=" language-shell"><code class="language-shell"># 返回元素的分数
+# 时间复杂度O(1)
+zscore key element</code></pre>
+<h3 id="zincrby"><a href="#zincrby" class="headerlink" title="zincrby"></a>zincrby</h3><pre class=" language-shell"><code class="language-shell"># 增加或减少元素的分数
+# 时间复杂度O(1)
+zincrby key increScore element</code></pre>
+<h3 id="zcard"><a href="#zcard" class="headerlink" title="zcard"></a>zcard</h3><pre class=" language-shell"><code class="language-shell"># 返回元素的总个数
+# 时间复杂度O(1)
+zcard key</code></pre>
+<h3 id="zrange"><a href="#zrange" class="headerlink" title="zrange"></a>zrange</h3><pre class=" language-shell"><code class="language-shell"># 返回指定索引范围内的升序元素[是否显示分值]
+# 时间复杂度O(logn + m): n指有序集合元素个数, m指获取范围内元素个数
+zrange key start end [withscores]</code></pre>
+<h3 id="zrangebyscore"><a href="#zrangebyscore" class="headerlink" title="zrangebyscore"></a>zrangebyscore</h3><pre class=" language-shell"><code class="language-shell"># 返回指定分数范围内的升序元素[是否显示分值]
+# 时间复杂度O(logn + m): n指有序集合元素个数, m指获取范围内元素个数
+zrange key minscore maxscore [withscores]</code></pre>
+<h3 id="zcount"><a href="#zcount" class="headerlink" title="zcount"></a>zcount</h3><pre class=" language-shell"><code class="language-shell"># 返回有序集合指定分数范围内的元素个数
+# 时间复杂度O(logn + m): n指有序集合元素个数, m指获取范围内元素个数
+zcount key minscore maxscore</code></pre>
+<h3 id="zremrangebyrank"><a href="#zremrangebyrank" class="headerlink" title="zremrangebyrank"></a>zremrangebyrank</h3><pre class=" language-shell"><code class="language-shell"># 删除指定排名内的升序元素
+# 时间复杂度O(logn + m): n指有序集合元素个数, m指删除范围内元素个数
+zremrangebyrank key start end</code></pre>
+<h3 id="zremrangebyscore"><a href="#zremrangebyscore" class="headerlink" title="zremrangebyscore"></a>zremrangebyscore</h3><pre class=" language-shell"><code class="language-shell"># 删除指定分数内的升序元素
+# 时间复杂度O(logn + m): n指有序集合元素个数, m指删除范围内元素个数
+zremrangebyscore key minscore maxscore</code></pre>
+<h3 id="演示-2"><a href="#演示-2" class="headerlink" title="演示"></a>演示</h3><p><img src="https://i.loli.net/2020/04/15/IQlBcmeGTkYK6LU.jpg" alt="2020-04-15_002620"></p>
+<p><img src="https://i.loli.net/2020/04/15/ukQBwIvt81JHSWj.jpg" alt="2020-04-15_003832"></p>
+<h3 id="实战-3"><a href="#实战-3" class="headerlink" title="实战"></a>实战</h3><ul>
+<li>排行榜</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/T7EAYUm6uaNLw1O.jpg" alt="2020-04-15_003932"></p>
+<p>score: timestamp, salecount, followcount</p>
+<h3 id="查漏补缺"><a href="#查漏补缺" class="headerlink" title="查漏补缺"></a>查漏补缺</h3><ul>
+<li>zrevrank</li>
+<li>zrevrange</li>
+<li>zrevrangebyscore</li>
+<li>zinterstore</li>
+<li>zunionstore</li>
+</ul>
+<h3 id="有序集合总结"><a href="#有序集合总结" class="headerlink" title="有序集合总结"></a>有序集合总结</h3><p><img src="https://i.loli.net/2020/04/15/BShN5uRv2wqWkUf.jpg" alt="2020-04-15_004354"></p>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Redis API的使用和理解》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/14/Redis/第2章-Redis API的使用和理解/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jiavg
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC80NTAyMi8yMTU0MA==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2020/04/14/Redis/第2章-Redis API的使用和理解/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis API的使用和理解">
+                        
+                        <span class="card-title">Redis API的使用和理解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Redis系列(二)
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/" target="_blank">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                    <a href="/tags/Redis-API/" target="_blank">
+                        <span class="chip bg-color">Redis API</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/14/Redis/第1章-Redis初识/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Redis初识">
+                        
+                        <span class="card-title">Redis初识</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Redis系列(一)
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/" target="_blank">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Jiavg<br />'
+            + '作者: Jiavg<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://lylgjiavg.github.io/" target="_blank">Jiavg</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">53.8k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/lylgjiavg" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1370221084@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1370221084" class="tooltipped" data-tooltip="QQ联系我: 1370221084" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

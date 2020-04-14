@@ -523,7 +523,7 @@ es支持集群模式, 是一个分布式系统, 其好处主要有两个:
 <li><p>我们通过如下api创建一个索引</p>
 <ul>
 <li><p>PUT test_index</p>
-<p><img src="https://i.loli.net/2020/04/12/c9WC7VNDylHY6un.jpg" alt="2020-04-11_023655"></p>
+<p><img src="https://i.loli.net/2020/04/12/c9WC7VNDylHY6un.jpg" alt="2020-04-11_023412"></p>
 </li>
 <li><p>创建索引后, cerebro界面信息如下</p>
 <p><img src="https://i.loli.net/2020/04/12/xJm3zIj81rdawWE.jpg" alt="2020-04-11_023655"></p>
@@ -607,7 +607,7 @@ es支持集群模式, 是一个分布式系统, 其好处主要有两个:
 </ul>
 <h3 id="副本与分片演示"><a href="#副本与分片演示" class="headerlink" title="副本与分片演示"></a>副本与分片演示</h3><ul>
 <li><p>我们将要构建一个如下图所示的es集群</p>
-<img src="https://i.loli.net/2020/04/12/JKZRzg1ac6eWQLI.jpg" alt="2020-04-11_031143" style="zoom: 80%;">
+<img src="https://i.loli.net/2020/04/12/JKZRzg1ac6eWQLI.jpg" alt="2020-04-11_031217" style="zoom: 80%;">
 </li>
 </ul>
 <ol>
@@ -622,12 +622,12 @@ es支持集群模式, 是一个分布式系统, 其好处主要有两个:
 [jlc@localhost elasticsearch-6.1.1]$ bin/elasticsearch -Ecluster.name=my_cluster -Epath.data=my_cluster_node3 -Enode.name=node3 -Ehttp.port=7200</code></pre>
 </li>
 <li><p>创建test_shard_replic索引, 并设置副本为1, 分片数为3 (其中在cerebro中创建方式如下)</p>
-<p><img src="https://i.loli.net/2020/04/12/JtRSw1n87oTQZKD.jpg" alt="2020-04-11_032728"></p>
+<p><img src="https://i.loli.net/2020/04/12/JtRSw1n87oTQZKD.jpg" alt="2020-04-11_032540"></p>
 </li>
 <li><p>创建完毕后, cerebro显示的集群状态如下图所示</p>
 <p><img src="https://i.loli.net/2020/04/12/3tM7ZboysFwCgGN.jpg" alt="2020-04-11_032728"></p>
 <p>注: 如果磁盘空间太小, es默认不能分配, 需要修改如下配置进行分配</p>
-<p><img src="https://i.loli.net/2020/04/12/XJxWflHC2OgIG9A.jpg" alt="2020-04-11_032728"></p>
+<p><img src="https://i.loli.net/2020/04/12/XJxWflHC2OgIG9A.jpg" alt="2020-04-11_033146"></p>
 </li>
 </ol>
 <h3 id="两个问题"><a href="#两个问题" class="headerlink" title="两个问题"></a>两个问题</h3><ul>
@@ -1356,7 +1356,7 @@ GET /_cluster/health
 
             
                 &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
-                <span class="white-color">49.3k</span>
+                <span class="white-color">53.8k</span>
             
 
             

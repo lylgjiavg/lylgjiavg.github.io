@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2020-04-13T16:50:09.492Z</updated>
+  <updated>2020-04-14T17:42:16.000Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -17,11 +17,65 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Redis API的使用和理解</title>
+    <link href="https://lylgjiavg.github.io/2020/04/14/Redis/%E7%AC%AC2%E7%AB%A0-Redis%20API%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E7%90%86%E8%A7%A3/"/>
+    <id>https://lylgjiavg.github.io/2020/04/14/Redis/第2章-Redis API的使用和理解/</id>
+    <published>2020-04-14T08:47:49.000Z</published>
+    <updated>2020-04-14T17:42:16.000Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Redis-API的使用和理解&quot;&gt;&lt;a href=&quot;#Redis-API的使用和理解&quot; class=&quot;headerlink&quot; title=&quot;Redis API的使用和理解&quot;&gt;&lt;/a&gt;Redis
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/tags/Redis/"/>
+    
+      <category term="Redis API" scheme="https://lylgjiavg.github.io/tags/Redis-API/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis初识</title>
+    <link href="https://lylgjiavg.github.io/2020/04/14/Redis/%E7%AC%AC1%E7%AB%A0-Redis%E5%88%9D%E8%AF%86/"/>
+    <id>https://lylgjiavg.github.io/2020/04/14/Redis/第1章-Redis初识/</id>
+    <published>2020-04-13T17:22:34.000Z</published>
+    <updated>2020-04-14T17:42:01.886Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Redis初识&quot;&gt;&lt;a href=&quot;#Redis初识&quot; class=&quot;headerlink&quot; title=&quot;Redis初识&quot;&gt;&lt;/a&gt;Redis初识&lt;/h1&gt;&lt;h2 id=&quot;盛赞Redis&quot;&gt;&lt;a href=&quot;#盛赞Redis&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Elasticsearch篇之聚合分析入门</title>
     <link href="https://lylgjiavg.github.io/2020/04/12/Elastic%20Search/%E7%AC%AC8%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8B%E8%81%9A%E5%90%88%E5%88%86%E6%9E%90%E5%85%A5%E9%97%A8/"/>
     <id>https://lylgjiavg.github.io/2020/04/12/Elastic Search/第8章-Elasticsearch篇之聚合分析入门/</id>
     <published>2020-04-12T15:58:53.000Z</published>
-    <updated>2020-04-13T16:50:09.492Z</updated>
+    <updated>2020-04-14T17:40:15.536Z</updated>
     
     <summary type="html">
     
@@ -49,7 +103,7 @@
     <link href="https://lylgjiavg.github.io/2020/04/12/Elastic%20Search/%E7%AC%AC7%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8B%E6%B7%B1%E5%85%A5%E4%BA%86%E8%A7%A3Search%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6/"/>
     <id>https://lylgjiavg.github.io/2020/04/12/Elastic Search/第7章-Elasticsearch篇之深入了解Search的运行机制/</id>
     <published>2020-04-11T16:19:47.000Z</published>
-    <updated>2020-04-11T20:01:22.864Z</updated>
+    <updated>2020-04-14T17:37:02.187Z</updated>
     
     <summary type="html">
     
@@ -77,7 +131,7 @@
     <link href="https://lylgjiavg.github.io/2020/04/11/Elastic%20Search/%E7%AC%AC6%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8B%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%B9%E6%80%A7/"/>
     <id>https://lylgjiavg.github.io/2020/04/11/Elastic Search/第6章-Elasticsearch篇之分布式特性/</id>
     <published>2020-04-10T17:06:54.000Z</published>
-    <updated>2020-04-11T20:01:11.906Z</updated>
+    <updated>2020-04-14T17:31:32.993Z</updated>
     
     <summary type="html">
     
@@ -105,7 +159,7 @@
     <link href="https://lylgjiavg.github.io/2020/04/09/Elastic%20Search/%E7%AC%AC5%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8BSearch%20API/"/>
     <id>https://lylgjiavg.github.io/2020/04/09/Elastic Search/第5章-Elasticsearch篇之Search API/</id>
     <published>2020-04-09T15:44:39.000Z</published>
-    <updated>2020-04-11T20:01:00.266Z</updated>
+    <updated>2020-04-14T17:28:42.913Z</updated>
     
     <summary type="html">
     
@@ -133,7 +187,7 @@
     <link href="https://lylgjiavg.github.io/2020/04/09/Elastic%20Search/%E7%AC%AC4%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8BMapping%E8%AE%BE%E7%BD%AE/"/>
     <id>https://lylgjiavg.github.io/2020/04/09/Elastic Search/第4章-Elasticsearch篇之Mapping设置/</id>
     <published>2020-04-08T16:18:34.000Z</published>
-    <updated>2020-04-11T20:00:49.132Z</updated>
+    <updated>2020-04-14T17:25:45.313Z</updated>
     
     <summary type="html">
     
@@ -161,7 +215,7 @@
     <link href="https://lylgjiavg.github.io/2020/04/08/Elastic%20Search/%E7%AC%AC3%E7%AB%A0-Elasticsearch%E7%AF%87%E4%B9%8B%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95%E4%B8%8E%E5%88%86%E8%AF%8D/"/>
     <id>https://lylgjiavg.github.io/2020/04/08/Elastic Search/第3章-Elasticsearch篇之倒排索引与分词/</id>
     <published>2020-04-07T17:24:47.000Z</published>
-    <updated>2020-04-11T20:00:39.104Z</updated>
+    <updated>2020-04-14T17:23:38.204Z</updated>
     
     <summary type="html">
     
@@ -243,7 +297,7 @@
     <link href="https://lylgjiavg.github.io/2020/04/04/Elastic%20Search/4.%E6%A1%88%E4%BE%8B%E5%AE%9E%E6%88%98/"/>
     <id>https://lylgjiavg.github.io/2020/04/04/Elastic Search/4.案例实战/</id>
     <published>2020-04-04T14:28:50.000Z</published>
-    <updated>2020-04-11T20:12:46.035Z</updated>
+    <updated>2020-04-11T20:12:56.051Z</updated>
     
     <summary type="html">
     
@@ -301,7 +355,7 @@
     <link href="https://lylgjiavg.github.io/2020/04/02/Elastic%20Search/2.Beats%E3%80%81Filebeat%E5%85%A5%E9%97%A8/"/>
     <id>https://lylgjiavg.github.io/2020/04/02/Elastic Search/2.Beats、Filebeat入门/</id>
     <published>2020-04-02T14:28:50.000Z</published>
-    <updated>2020-04-11T19:59:33.386Z</updated>
+    <updated>2020-04-14T17:18:30.081Z</updated>
     
     <summary type="html">
     
@@ -505,62 +559,6 @@
         
         
           &lt;h1 id=&quot;消费端限流&quot;&gt;&lt;a href=&quot;#消费端限流&quot; class=&quot;headerlink&quot; title=&quot;消费端限流&quot;&gt;&lt;/a&gt;消费端限流&lt;/h1&gt;&lt;h2 id=&quot;什么是消费端限流&quot;&gt;&lt;a href=&quot;#什么是消费端限流&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RabbitMQ-Return消息机制</title>
-    <link href="https://lylgjiavg.github.io/2019/09/08/RabbitMQ08/"/>
-    <id>https://lylgjiavg.github.io/2019/09/08/RabbitMQ08/</id>
-    <published>2019-09-08T02:28:53.000Z</published>
-    <updated>2019-09-08T03:42:59.636Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;RabbitMQ的Return消息机制&quot;&gt;&lt;a href=&quot;#RabbitMQ的Return消息机制&quot; class=&quot;headerlink&quot; title=&quot;RabbitMQ的Return消息机制&quot;&gt;&lt;/a&gt;RabbitMQ的Return消息机制&lt;/h1&gt;&lt;h2
-        
-      
-    
-    </summary>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RabbitMQ-Confirm确认消息</title>
-    <link href="https://lylgjiavg.github.io/2019/09/07/RabbitMQ07/"/>
-    <id>https://lylgjiavg.github.io/2019/09/07/RabbitMQ07/</id>
-    <published>2019-09-07T02:10:12.000Z</published>
-    <updated>2019-09-07T03:57:31.620Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;Confirm消息确认机制&quot;&gt;&lt;a href=&quot;#Confirm消息确认机制&quot; class=&quot;headerlink&quot;
         
       
     

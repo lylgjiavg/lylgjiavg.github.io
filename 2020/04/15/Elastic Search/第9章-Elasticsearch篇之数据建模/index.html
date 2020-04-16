@@ -1,0 +1,1557 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head><meta name="generator" content="Hexo 3.9.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Elasticsearch篇之数据建模, Jiavg">
+    <meta name="description" content="Elasticsearch篇之数据建模数据建模
+英文名为 Data Modeling, 为创建数据模型的过程
+数据模型 (Data Model)
+对现实世界进行抽象描述的一种工具和方法
+通过抽象的实体及实体之间的联系的形式去描述业务规则, ">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Elasticsearch篇之数据建模 | Jiavg</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+    <style type="text/css">
+        
+    </style>
+
+    <script src="/libs/jquery/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+
+<header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Jiavg</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fa fa-navicon"></i></a>
+<ul class="right">
+    
+    <li class="hide-on-med-and-down">
+        <a href="/" class="waves-effect waves-light">
+            
+            <i class="fa fa-home"></i>
+            
+            <span>首页</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/tags" class="waves-effect waves-light">
+            
+            <i class="fa fa-tags"></i>
+            
+            <span>标签</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/categories" class="waves-effect waves-light">
+            
+            <i class="fa fa-bookmark"></i>
+            
+            <span>分类</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/archives" class="waves-effect waves-light">
+            
+            <i class="fa fa-archive"></i>
+            
+            <span>归档</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/about" class="waves-effect waves-light">
+            
+            <i class="fa fa-user-circle-o"></i>
+            
+            <span>关于</span>
+        </a>
+    </li>
+    
+    <li class="hide-on-med-and-down">
+        <a href="/friends" class="waves-effect waves-light">
+            
+            <i class="fa fa-address-book"></i>
+            
+            <span>友情链接</span>
+        </a>
+    </li>
+    
+    <li>
+        <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+            <i id="searchIcon" class="fa fa-search" title="搜索"></i>
+        </a>
+    </li>
+</ul>
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Jiavg</div>
+        <div class="logo-desc">
+            
+            个人技术总结
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li>
+            <a href="/" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-home"></i>
+                
+                首页
+            </a>
+        </li>
+        
+        <li>
+            <a href="/tags" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-tags"></i>
+                
+                标签
+            </a>
+        </li>
+        
+        <li>
+            <a href="/categories" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-bookmark"></i>
+                
+                分类
+            </a>
+        </li>
+        
+        <li>
+            <a href="/archives" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-archive"></i>
+                
+                归档
+            </a>
+        </li>
+        
+        <li>
+            <a href="/about" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-user-circle-o"></i>
+                
+                关于
+            </a>
+        </li>
+        
+        <li>
+            <a href="/friends" class="waves-effect waves-light">
+                
+                <i class="fa fa-fw fa-address-book"></i>
+                
+                友情链接
+            </a>
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fa fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/lylgjiavg/lylgjiavg.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/6.jpg')">
+    <div class="container">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <div class="description center-align post-title">
+                        Elasticsearch篇之数据建模
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #toc-content .is-active-link::before {
+        background-color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 20px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/ElasticSearch/" target="_blank">
+                                <span class="chip bg-color">ElasticSearch</span>
+                            </a>
+                        
+                            <a href="/tags/数据建模/" target="_blank">
+                                <span class="chip bg-color">数据建模</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fa fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                Elastic Stack
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                <div class="post-date info-break-policy">
+                    <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2020-04-15
+                </div>
+
+                
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
+                        2,168
+                    </div>
+                    
+
+                    
+                    <div class="info-break-policy">
+                        <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                        8 分
+                    </div>
+                    
+                
+				
+				
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="fa fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="Elasticsearch篇之数据建模"><a href="#Elasticsearch篇之数据建模" class="headerlink" title="Elasticsearch篇之数据建模"></a>Elasticsearch篇之数据建模</h1><h2 id="数据建模"><a href="#数据建模" class="headerlink" title="数据建模"></a>数据建模</h2><ul>
+<li>英文名为 Data Modeling, 为创建数据模型的过程</li>
+<li>数据模型 (Data Model)<ul>
+<li>对现实世界进行抽象描述的一种工具和方法</li>
+<li>通过抽象的实体及实体之间的联系的形式去描述业务规则, 从而实现对现实世界的映射</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据建模的过程"><a href="#数据建模的过程" class="headerlink" title="数据建模的过程"></a>数据建模的过程</h3><ul>
+<li>概念模型<ul>
+<li>确定系统的核心需求和范围边界, 设计实体和实体间的关系</li>
+</ul>
+</li>
+<li>逻辑模型<ul>
+<li>进一步梳理业务需求, 确定每个实体的属性, 关系和约束等</li>
+</ul>
+</li>
+<li>物理模型<ul>
+<li>结合具体的数据库产品, 在满足业务读写性能等需求的前提下确定最终的定义</li>
+<li>MySQL, MongoDB, Elasticsearch等</li>
+<li>第三范式</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据建模的意义"><a href="#数据建模的意义" class="headerlink" title="数据建模的意义"></a>数据建模的意义</h3><img src="https://i.loli.net/2020/04/15/xyo9zv128EBuV4c.jpg" alt="2020-04-15_225946" style="zoom:67%;">
+
+<h3 id="重视数据建模"><a href="#重视数据建模" class="headerlink" title="重视数据建模"></a>重视数据建模</h3><ul>
+<li>牵一发而动全身</li>
+</ul>
+<h2 id="ES中的数据建模"><a href="#ES中的数据建模" class="headerlink" title="ES中的数据建模"></a>ES中的数据建模</h2><ul>
+<li>ES是基于Lucene以倒排索引为基础实现的储存体系, 不完全遵循关系型数据库中的范式约定</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/15/WCpKQ754l6iNTIe.jpg" alt="2020-04-15_230344"></p>
+<h3 id="Mapping字段的相关设置"><a href="#Mapping字段的相关设置" class="headerlink" title="Mapping字段的相关设置"></a>Mapping字段的相关设置</h3><ul>
+<li>enabled<ul>
+<li>true</li>
+<li>false<ul>
+<li>仅存储, 不做搜索或聚合分析</li>
+<li>节省磁盘空间</li>
+<li>示例: 在web应用存储cookie, session等字段</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>index<ul>
+<li>true</li>
+<li>false<ul>
+<li>是否构建倒排索引</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>index_options<ul>
+<li>docs | freqs | positions | offsets</li>
+<li>存储倒排索引的哪些信息</li>
+</ul>
+</li>
+<li>norms<ul>
+<li>true</li>
+<li>false<ul>
+<li>是否存储归一化相关参数, 如果字段仅用于过滤和聚合分析(不进行相关性算分), 可关闭</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>doc_values<ul>
+<li>true<ul>
+<li>用于排序和聚合分析</li>
+</ul>
+</li>
+<li>false<ul>
+<li>仅用于搜索, 可关闭</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>field_data<ul>
+<li>false</li>
+<li>true<ul>
+<li>是否为text类型启用field_data, 实现排序和聚合分析</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>store<ul>
+<li>true</li>
+<li>false<ul>
+<li>不存储该字段值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>coerce<ul>
+<li>true<ul>
+<li>开启自动数据类型转换功能, 比如字符串转为数字, 浮点型转为整型</li>
+</ul>
+</li>
+<li>false</li>
+</ul>
+</li>
+<li>mutifields多字段<ul>
+<li>灵活使用多字段特性来解决多样的业务需求</li>
+</ul>
+</li>
+<li>dynamic<ul>
+<li>true | false | strict</li>
+<li>控制mapping自动更新</li>
+</ul>
+</li>
+<li>date_detection<ul>
+<li>true | false</li>
+<li>是否自动识别日期类型</li>
+</ul>
+</li>
+</ul>
+<h3 id="Mapping字段属性的设定流程"><a href="#Mapping字段属性的设定流程" class="headerlink" title="Mapping字段属性的设定流程"></a>Mapping字段属性的设定流程</h3><img src="https://i.loli.net/2020/04/15/VSLNbiC5OjXzf6Q.jpg" alt="2020-04-15_232310" style="zoom:67%;">
+
+<h4 id="是何种类型"><a href="#是何种类型" class="headerlink" title="是何种类型?"></a>是何种类型?</h4><ul>
+<li>字符串类型<ul>
+<li>需要分词则设定为text类型, 否则设置为keyword类型</li>
+</ul>
+</li>
+<li>枚举类型<ul>
+<li>基于性能考虑将其设置为keyword类型, 即便该数据为整型</li>
+</ul>
+</li>
+<li>数值类型<ul>
+<li>尽量选择贴近的类型, 比如byte即可表示所有数值时, 即选用byte, 不要用long</li>
+</ul>
+</li>
+<li>其他类型<ul>
+<li>比如布尔类型, 日期, 地理位置数据等</li>
+</ul>
+</li>
+</ul>
+<h4 id="是否需要检索"><a href="#是否需要检索" class="headerlink" title="是否需要检索?"></a>是否需要检索?</h4><ul>
+<li>完全不需要检索, 排序, 聚合分析的字段<ul>
+<li>enabled设置为false</li>
+</ul>
+</li>
+<li>不需要检索的字段<ul>
+<li>index设置为false</li>
+</ul>
+</li>
+<li>需要检索的字段, 可以通过如下配置设定需要的存储粒度<ul>
+<li>index_options结合需要设定</li>
+<li>norms不需要归一化数据时关闭即可</li>
+</ul>
+</li>
+</ul>
+<h4 id="是否需要排序和聚合分析"><a href="#是否需要排序和聚合分析" class="headerlink" title="是否需要排序和聚合分析?"></a>是否需要排序和聚合分析?</h4><ul>
+<li>不需要排序或者聚合分析功能<ul>
+<li>doc_values 设定为false</li>
+<li>fielddata 设定为false</li>
+</ul>
+</li>
+</ul>
+<h4 id="是否需要另行存储"><a href="#是否需要另行存储" class="headerlink" title="是否需要另行存储"></a>是否需要另行存储</h4><ul>
+<li>是否需要专门存储当前字段的数据?<ul>
+<li>store 设定为true, 即可存储该字段的原始内容 (与_source中的不相关)</li>
+<li>一般结合_source的enabled设定为false时使用</li>
+</ul>
+</li>
+</ul>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><h3 id="博客文章blog-index"><a href="#博客文章blog-index" class="headerlink" title="博客文章blog_index"></a>博客文章blog_index</h3><ul>
+<li>标题 title</li>
+<li>发布日期 publish_date</li>
+<li>作者 author</li>
+<li>摘要 abstract</li>
+<li>网络地址 url</li>
+</ul>
+<h3 id="Mapping设置"><a href="#Mapping设置" class="headerlink" title="Mapping设置"></a>Mapping设置</h3><ul>
+<li>blog_index的mapping设置如下</li>
+</ul>
+<img src="https://i.loli.net/2020/04/15/eySOYiEn21vZJXD.jpg" alt="2020-04-15_234332" style="zoom:50%;">
+
+<h3 id="索引主体变更"><a href="#索引主体变更" class="headerlink" title="索引主体变更"></a>索引主体变更</h3><ul>
+<li>当向blog_index添加一个 <code>内容 content</code> 时, 由于该字段内容有可能数据量非常大, 故将会带来以下问题<ul>
+<li>在进行其他字段搜索时, 由于显示_source字段时把所有原始数据显示出来, 显示的content字段内容将会带来很大的性能问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="Mapping设置-改进"><a href="#Mapping设置-改进" class="headerlink" title="Mapping设置 (改进)"></a>Mapping设置 (改进)</h3><ul>
+<li>blog_index的mapping设置如下</li>
+</ul>
+<img src="https://i.loli.net/2020/04/15/ohnXCKZ9ryuIRzF.jpg" alt="2020-04-15_234836" style="zoom:50%;">
+
+<p>​    注意: 由于_source设置为了false, 故在设置url时不能简单的设置enabled为false</p>
+<h3 id="检索改进"><a href="#检索改进" class="headerlink" title="检索改进"></a>检索改进</h3><img src="https://i.loli.net/2020/04/16/vj5sLfhYCmd2ykZ.jpg" alt="2020-04-15_235434" style="zoom:50%;">
+
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><pre class=" language-shell"><code class="language-shell"># request
+# 设置blog_index的mapping (版本1)
+PUT blog_index
+{
+  "mappings": {
+    "doc":{
+      "properties": {
+        "title":{
+          "type": "text",
+          "fields": {
+            "keyword":{
+              "type":"keyword",
+              "ignore_above": 100
+            }
+          }
+        },
+        "publish_date":{
+          "type":"date"
+        },
+        "author":{
+          "type":"keyword",
+          "ignore_above": 100
+        },
+        "abstract":{
+          "type": "text"
+        },
+        "url":{
+          "enabled":false
+        },
+        "content":{
+          "type":"text"
+        }
+      }
+    }
+  }
+}
+
+# 为blog_index索引添加文档
+POST blog_index/doc/1
+{
+  "title": "blog title",
+  "content": "blog content"
+}
+
+# 检索blog_index索引的数据
+GET blog_index/_search
+# response
+# 可见由于_source字段把所有属性及其内容全部展示, 假设content数据内容非常大将及其耗费性能 (如果进行网络通信, 也将及其耗费带宽)
+{
+  "took": 56,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "blog_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 1,
+        "_source": {
+          "title": "blog title",
+          "content": "blog content"
+        }
+      }
+    ]
+  }
+}
+
+# 或许可以利用如下搜索
+# 但此搜索的底层原理只是在已经检索出数据后进行简单的过滤, 在检索context时也避免不了性能问题
+GET blog_index/_search?_source=title
+# response
+{
+  "took": 64,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 1,
+    "hits": [
+      {
+        "_index": "blog_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 1,
+        "_source": {
+          "title": "blog title"
+        }
+      }
+    ]
+  }
+}
+
+# 结合以上产生的问题, 解决思路如下所示
+# 设置blog_index的mapping (版本2)
+PUT blog_index
+{
+  "mappings": {
+    "doc": {
+      "_source": {
+        "enabled": false
+      },
+      "properties": {
+        "title": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 100
+            }
+          },
+          "store": true
+        },
+        "publish_date": {
+          "type": "date",
+          "store": true
+        },
+        "author": {
+          "type": "keyword",
+          "ignore_above": 100, 
+          "store": true
+        },
+        "abstract": {
+          "type": "text",
+          "store": true
+        },
+        "content": {
+          "type": "text",
+          "store": true
+        },
+        "url": {
+          "type": "keyword",
+          "doc_values":false,
+          "norms":false,
+          "ignore_above": 100, 
+          "store": true
+        }
+      }
+    }
+  }
+}
+
+# 为blog_index索引添加文档
+POST blog_index/doc/1
+{
+  "title": "blog title",
+  "content": "blog content"
+}
+
+# 检索blog_index索引的数据
+# 此时可以利用stored_fields有条件的进行检索
+GET blog_index/_search
+{
+  "stored_fields": ["title"],
+  "query":{
+    "match": {
+      "content": "blog"
+    }
+  },
+  "highlight": {
+    "fields": {"content": {}}
+  }
+}
+# response
+{
+  "took": 567,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "skipped": 0,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1,
+    "max_score": 0.2876821,
+    "hits": [
+      {
+        "_index": "blog_index",
+        "_type": "doc",
+        "_id": "1",
+        "_score": 0.2876821,
+        "fields": {
+          "title": [
+            "blog title"
+          ]
+        },
+        "highlight": {
+          "content": [
+            "<em>blog</em> content"
+          ]
+        }
+      }
+    ]
+  }
+}</code></pre>
+<h2 id="关联关系处理"><a href="#关联关系处理" class="headerlink" title="关联关系处理"></a>关联关系处理</h2><ul>
+<li>ES不擅长处理关系型数据库中的关联关系, 比如文章表blog与评论表comment之间通过blog_id关联, 在ES中可以通过如下两种手段变相解决<ul>
+<li>Nested Object</li>
+<li>Parent/Child</li>
+</ul>
+</li>
+<li>评论表comment<ul>
+<li>文章Id blog_id</li>
+<li>评论人 username</li>
+<li>评论日期 date</li>
+<li>评论内容 content</li>
+</ul>
+</li>
+</ul>
+<h3 id="文章表与评论表在关系型数据库中的表示"><a href="#文章表与评论表在关系型数据库中的表示" class="headerlink" title="文章表与评论表在关系型数据库中的表示"></a>文章表与评论表在关系型数据库中的表示</h3><img src="https://i.loli.net/2020/04/16/xiRYXDIZKO598aB.jpg" alt="2020-04-16_002631" style="zoom:50%;">
+
+
+
+<h3 id="关联关系处理之Nested-Object"><a href="#关联关系处理之Nested-Object" class="headerlink" title="关联关系处理之Nested Object"></a>关联关系处理之Nested Object</h3><ul>
+<li>ES中存储关联关系其中一个思路如下</li>
+</ul>
+<img src="https://i.loli.net/2020/04/16/M9dOX7nhVD6aty5.jpg" alt="2020-04-16_002912" style="zoom:50%;">
+
+<ul>
+<li>但是其实这样存储会带来一些问题, 如下:</li>
+</ul>
+<img src="https://i.loli.net/2020/04/16/gyoDkT43tlriw2G.jpg" alt="2020-04-16_003011" style="zoom:50%;">
+
+<ul>
+<li>其原因是因为, Comment表默认存储为Object Array类型, 存储结构类似下面的形式:</li>
+</ul>
+<img src="https://i.loli.net/2020/04/16/eCXqLnB6vGrgi8c.jpg" alt="2020-04-16_003148" style="zoom:50%;">
+
+<ul>
+<li>Nested Object可以解决这个问题</li>
+</ul>
+<img src="https://i.loli.net/2020/04/16/MpcEsDxy1m2K3qt.jpg" alt="2020-04-16_003442" style="zoom:50%;">
+
+<ul>
+<li>再次查询是将会得到正确的结果</li>
+</ul>
+<img src="https://i.loli.net/2020/04/16/TYxQjA1GyudX3CW.jpg" alt="2020-04-16_003538" style="zoom:50%;">
+
+<ul>
+<li>Nested Object Array的存储结构类似下面的形式</li>
+</ul>
+<img src="https://i.loli.net/2020/04/16/MAmiJtfzx6Sajop.jpg" alt="2020-04-16_003646" style="zoom:67%;">
+
+<h3 id="关联关系处理之Parent-Child"><a href="#关联关系处理之Parent-Child" class="headerlink" title="关联关系处理之Parent/Child"></a>关联关系处理之Parent/Child</h3><ul>
+<li>ES还提供了类似于关系型数据库中join的实现方式, 使用join数据类型实现</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/16/vMIadNKoA8GwctC.jpg" alt="2020-04-16_005405"></p>
+<ul>
+<li>使用join创建文档</li>
+</ul>
+<img src="https://i.loli.net/2020/04/16/MUL9d3JWuIrkq64.jpg" alt="2020-04-16_005458" style="zoom: 50%;">
+
+<ul>
+<li><p>常见query语法包括如下几种:</p>
+<ul>
+<li>parent_id返回某父文档的子文档</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/16/oby89Vs6Tc1SBgH.jpg" alt="2020-04-16_005759"></p>
+<ul>
+<li>has_child返回包含某子文档的父文档</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/16/M2eWEsbdPfHqG8F.jpg" alt="2020-04-16_005832"></p>
+<ul>
+<li>has_parent返回包含某父文档的子文档</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/16/tLc8UfCliAbenpH.jpg" alt="2020-04-16_005908"></p>
+</li>
+</ul>
+<h3 id="Nested-Object-vs-Parent-Child"><a href="#Nested-Object-vs-Parent-Child" class="headerlink" title="Nested Object vs Parent/Child"></a>Nested Object vs Parent/Child</h3><p><img src="https://i.loli.net/2020/04/16/UHt73MjpYx2dQLy.jpg" alt="2020-04-16_010133"></p>
+<h2 id="Reindex"><a href="#Reindex" class="headerlink" title="Reindex"></a>Reindex</h2><ul>
+<li>指重建所有数据的过程, 一般发生在如下情况:<ul>
+<li>mapping 设置变更, 比如字段类型变化, 分词器字典更新等</li>
+<li>index设置变更, 比如分片数更改等</li>
+<li>迁移数据</li>
+</ul>
+</li>
+<li>ES提供了现成的API用于完成该工作<ul>
+<li>_update_by_query在现有索引上重建</li>
+<li>_reindex在其他索引上重建</li>
+</ul>
+</li>
+</ul>
+<h3 id="update-by-query"><a href="#update-by-query" class="headerlink" title="_update_by_query"></a>_update_by_query</h3><img src="https://i.loli.net/2020/04/16/EI8ozCqbXYnQc7h.jpg" alt="2020-04-16_011714" style="zoom:50%;">
+
+<h3 id="reindex"><a href="#reindex" class="headerlink" title="_reindex"></a>_reindex</h3><img src="https://i.loli.net/2020/04/16/R5UPfbEY2Dygchv.jpg" alt="2020-04-16_011754" style="zoom:50%;">
+
+
+
+<img src="https://i.loli.net/2020/04/16/HrmBScT8aGyofsv.jpg" alt="2020-04-16_011831" style="zoom:50%;">
+
+<h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><ul>
+<li><p>数据重建的时间受索引文档规模的影响, 当规模越大时, 所需时间越多, 此时需要通过设定url参数 wait_for_completion为false来异步执行, ES以task来描述此类执行任务</p>
+</li>
+<li><p>ES提供了Task API来查看任务的执行进度和相关数据</p>
+</li>
+</ul>
+<h2 id="其他建议"><a href="#其他建议" class="headerlink" title="其他建议"></a>其他建议</h2><h3 id="数据模型版本管理"><a href="#数据模型版本管理" class="headerlink" title="数据模型版本管理"></a>数据模型版本管理</h3><ul>
+<li>对Mapping进行版本管理<ul>
+<li>包含在代码或者以专门文件进行管理, 添加好注释, 并加入GIt等版本管理仓库中, 方便回顾</li>
+<li>为每一个增加metadata字段, 在其维护的一些文档相关的元数据, 方便对数据进行管理</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/16/qpLO9EWXn52mS7e.jpg" alt="2020-04-16_013038"></p>
+<h3 id="防止字段过多"><a href="#防止字段过多" class="headerlink" title="防止字段过多"></a>防止字段过多</h3><ul>
+<li>字段过多有如下坏处:<ul>
+<li>难以维护, 当字段成百上千时, 基本很难有人能明确知道每个字段的含义</li>
+<li>mapping的信息存储在cluster state里面, 过多的字段会导致mapping过大, 最终导致更新变慢</li>
+</ul>
+</li>
+<li>通过index.mapping.total_field.limit可以限定索引中最大字段数, 默认是1000</li>
+<li>可以通过key/value的方式解决字段过多的问题, 但并不完美</li>
+</ul>
+<h4 id="key-value详解"><a href="#key-value详解" class="headerlink" title="key/value详解"></a>key/value详解</h4><img src="https://i.loli.net/2020/04/16/ihrvdFI9oeznjVH.jpg" alt="2020-04-16_013426" style="zoom:50%;">
+
+
+
+<img src="https://i.loli.net/2020/04/16/O3AyPgL5Kx6isSE.jpg" alt="2020-04-16_013504" style="zoom:50%;">
+
+
+
+<img src="https://i.loli.net/2020/04/16/kuQBfyeVnGISvTM.jpg" alt="2020-04-16_013534" style="zoom:50%;">
+
+<ul>
+<li>虽然可以通过这种方式极大地减少field数目, 但也有一些明显的坏处<ul>
+<li>query语句复杂度飙升, 且有一些可能无法实现, 比如聚合分析相关的</li>
+<li>不利于在kibana中做可视化分析</li>
+</ul>
+</li>
+<li>一般字段过多的原因是由于没有高质量的数据建模导致的, 比如dynamic设置为了true</li>
+<li>考虑拆分多个索引来解决问题</li>
+</ul>
+
+            </div>
+            <hr/>
+
+            
+            <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.88rem;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-large waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fa fa-close"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.png" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+            
+
+            <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+
+<div id="article-share">
+    
+    <div class="social-share" data-disabled="qzone" data-wechat-qrcode-helper="<p>微信里点“发现”->“扫一扫”二维码便可查看分享。</p>"></div>
+    
+</div>
+
+<script src="/libs/share/js/social-share.min.js"></script>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        <p class="reprint-tip">
+            <i class="fa fa-exclamation-triangle"></i>&nbsp;&nbsp;
+            <span>转载规则</span>
+        </p>
+        
+            <div class="center-align">
+                <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                    <img alt=""
+                         style="border-width:0"
+                         src="https://i.creativecommons.org/l/by/4.0/88x31.png"/>
+                </a>
+            </div>
+            <br/>
+            <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
+                  property="dct:title" rel="dct:type">
+                    《Elasticsearch篇之数据建模》
+                </span> 由
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/15/Elastic Search/第9章-Elasticsearch篇之数据建模/" property="cc:attributionName"
+               rel="cc:attributionURL">
+                Jiavg
+            </a> 采用
+            <a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh">
+                知识共享署名 4.0 国际许可协议
+            </a>进行许可。
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+    <div class="livere-card card" data-aos="fade-up">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" class="card-content" data-id="city" data-uid="MTAyMC80NTAyMi8yMTU0MA==">
+        <script type="text/javascript">
+            (function (d, s) {
+                let j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') {
+                    return;
+                }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript。</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+</div>
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2020/04/16/Elastic Search/第10章-Elasticsearch篇之集群调优建议/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Elasticsearch篇之集群调优建议">
+                        
+                        <span class="card-title">Elasticsearch篇之集群调优建议</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Elastic Stack系列(十四)
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-16
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Elastic-Stack/" class="post-category" target="_blank">
+                                    Elastic Stack
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/ElasticSearch/" target="_blank">
+                        <span class="chip bg-color">ElasticSearch</span>
+                    </a>
+                    
+                    <a href="/tags/集群调优/" target="_blank">
+                        <span class="chip bg-color">集群调优</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fa fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/04/14/Redis/第2章-Redis API的使用和理解/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/7.jpg" class="responsive-img" alt="Redis API的使用和理解">
+                        
+                        <span class="card-title">Redis API的使用和理解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Redis系列(二)
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-14
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fa fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Redis/" target="_blank">
+                        <span class="chip bg-color">Redis</span>
+                    </a>
+                    
+                    <a href="/tags/Redis-API/" target="_blank">
+                        <span class="chip bg-color">Redis API</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Jiavg<br />'
+            + '作者: Jiavg<br />'
+            + '链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fa fa-list"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            // headingsOffset: -205,
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).slideUp(500);
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).slideDown(500);
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+    
+
+</main>
+
+
+<footer class="page-footer bg-color">
+    <div class="container row center-align">
+        <div class="col s12 m8 l8 copy-right">
+            本站由&copy;<a href="https://lylgjiavg.github.io/" target="_blank">Jiavg</a>基于
+            <a href="https://hexo.io/" target="_blank">Hexo</a> 的
+            <a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">hexo-theme-matery</a>主题搭建.
+
+            
+                &nbsp;<i class="fa fa-area-chart"></i>&nbsp;站点总字数:&nbsp;
+                <span class="white-color">57.7k</span>
+            
+
+            
+			
+                <br>
+                
+                <span id="busuanzi_container_site_pv">
+                    <i class="fa fa-heart-o"></i>
+                    本站总访问量 <span id="busuanzi_value_site_pv" class="white-color"></span>
+                </span>
+                
+                
+                <span id="busuanzi_container_site_uv">
+                    <i class="fa fa-users"></i>
+                    次,&nbsp;访客数 <span id="busuanzi_value_site_uv" class="white-color"></span> 人.
+                </span>
+                
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/lylgjiavg" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fa fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1370221084@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fa fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1370221084" class="tooltipped" data-tooltip="QQ联系我: 1370221084" data-position="top" data-delay="50">
+        <i class="fa fa-qq"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fa fa-rss"></i>
+    </a>
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fa fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/" + "search.xml", 'searchInput', 'searchResult');
+});
+</script>
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fa fa-angle-up"></i>
+    </a>
+</div>
+
+
+<script src="/libs/materialize/materialize.min.js"></script>
+<script src="/libs/masonry/masonry.pkgd.min.js"></script>
+<script src="/libs/aos/aos.js"></script>
+<script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+<script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+<script src="/js/matery.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id="></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', '');
+</script>
+
+
+
+    <script src="/libs/others/clicklove.js"></script>
+
+
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+
+
+</body>
+</html>

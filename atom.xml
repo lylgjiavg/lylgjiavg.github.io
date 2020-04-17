@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2020-04-16T15:13:16.060Z</updated>
+  <updated>2020-04-17T17:30:03.770Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -15,6 +15,88 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>EXPLAIN用法和结果分析</title>
+    <link href="https://lylgjiavg.github.io/2020/04/18/SQL/2.SQL-%E7%B4%A2%E5%BC%95%E7%9A%84%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%88%99/"/>
+    <id>https://lylgjiavg.github.io/2020/04/18/SQL/2.SQL-索引的使用原则/</id>
+    <published>2020-04-17T16:09:31.000Z</published>
+    <updated>2020-04-17T17:30:03.770Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;索引的使用原则&quot;&gt;&lt;a href=&quot;#索引的使用原则&quot; class=&quot;headerlink&quot; title=&quot;索引的使用原则&quot;&gt;&lt;/a&gt;索引的使用原则&lt;/h1&gt;&lt;h2 id=&quot;问题引出&quot;&gt;&lt;a href=&quot;#问题引出&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="SQL" scheme="https://lylgjiavg.github.io/categories/SQL/"/>
+    
+    
+      <category term="SQL" scheme="https://lylgjiavg.github.io/tags/SQL/"/>
+    
+      <category term="SQL索引" scheme="https://lylgjiavg.github.io/tags/SQL%E7%B4%A2%E5%BC%95/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Redis的其他功能</title>
+    <link href="https://lylgjiavg.github.io/2020/04/17/Redis/%E7%AC%AC4%E7%AB%A0-Redis%E7%9A%84%E5%85%B6%E4%BB%96%E5%8A%9F%E8%83%BD/"/>
+    <id>https://lylgjiavg.github.io/2020/04/17/Redis/第4章-Redis的其他功能/</id>
+    <published>2020-04-16T20:27:43.000Z</published>
+    <updated>2020-04-17T20:42:27.284Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;瑞士军刀Redis&quot;&gt;&lt;a href=&quot;#瑞士军刀Redis&quot; class=&quot;headerlink&quot;
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/tags/Redis/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>EXPLAIN用法和结果分析</title>
+    <link href="https://lylgjiavg.github.io/2020/04/17/SQL/1.SQL-EXPLAIN%E7%94%A8%E6%B3%95%E5%92%8C%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90/"/>
+    <id>https://lylgjiavg.github.io/2020/04/17/SQL/1.SQL-EXPLAIN用法和结果分析/</id>
+    <published>2020-04-16T17:17:28.000Z</published>
+    <updated>2020-04-17T17:29:09.815Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;EXPLAIN用法和结果分析&quot;&gt;&lt;a href=&quot;#EXPLAIN用法和结果分析&quot; class=&quot;headerlink&quot; title=&quot;EXPLAIN用法和结果分析&quot;&gt;&lt;/a&gt;EXPLAIN用法和结果分析&lt;/h1&gt;&lt;h2 id=&quot;EXPLAIN简介&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="SQL" scheme="https://lylgjiavg.github.io/categories/SQL/"/>
+    
+    
+      <category term="SQL" scheme="https://lylgjiavg.github.io/tags/SQL/"/>
+    
+      <category term="EXPLAIN" scheme="https://lylgjiavg.github.io/tags/EXPLAIN/"/>
+    
+  </entry>
   
   <entry>
     <title>Elasticsearch篇之集群调优建议</title>
@@ -485,91 +567,6 @@
       <category term="SpringBoot" scheme="https://lylgjiavg.github.io/tags/SpringBoot/"/>
     
       <category term="Cache" scheme="https://lylgjiavg.github.io/tags/Cache/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RabbitMQ-死信队列</title>
-    <link href="https://lylgjiavg.github.io/2019/09/10/RabbitMQ12/"/>
-    <id>https://lylgjiavg.github.io/2019/09/10/RabbitMQ12/</id>
-    <published>2019-09-10T07:20:02.000Z</published>
-    <updated>2019-09-10T08:10:31.962Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;死信队列&quot;&gt;&lt;a href=&quot;#死信队列&quot; class=&quot;headerlink&quot; title=&quot;死信队列&quot;&gt;&lt;/a&gt;死信队列&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;利用DLX,当消息在一个队列中变成死信(dead
-        
-      
-    
-    </summary>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RabbitMQ-TTL队列/消息</title>
-    <link href="https://lylgjiavg.github.io/2019/09/10/RabbitMQ11/"/>
-    <id>https://lylgjiavg.github.io/2019/09/10/RabbitMQ11/</id>
-    <published>2019-09-10T06:26:07.000Z</published>
-    <updated>2019-09-10T07:21:25.856Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;RabbitMQ之TTL队列-消息&quot;&gt;&lt;a href=&quot;#RabbitMQ之TTL队列-消息&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>RabbitMQ-消费端ACK与重回队列</title>
-    <link href="https://lylgjiavg.github.io/2019/09/09/RabbitMQ10/"/>
-    <id>https://lylgjiavg.github.io/2019/09/09/RabbitMQ10/</id>
-    <published>2019-09-09T12:27:02.000Z</published>
-    <updated>2019-09-09T13:52:13.645Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h1 id=&quot;RabbitMQ的消费端ACK与重回队列&quot;&gt;&lt;a href=&quot;#RabbitMQ的消费端ACK与重回队列&quot; class=&quot;headerlink&quot;
-        
-      
-    
-    </summary>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/categories/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
-    
-    
-      <category term="RabbitMQ" scheme="https://lylgjiavg.github.io/tags/RabbitMQ/"/>
-    
-      <category term="消息中间件" scheme="https://lylgjiavg.github.io/tags/%E6%B6%88%E6%81%AF%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
     
   </entry>
   

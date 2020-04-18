@@ -4,10 +4,15 @@
 
 <head><meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
-    <meta name="keywords" content="RabbitMQ命令行与管控台, Jiavg">
-    <meta name="description" content="命令行与管控台-基础操作  启动应用  [root@Jiavg /]# rabbitmqctl start_app  Starting node rabbit@Jiavg …
-  节点状态
-[root@Jiavg /]# rabbitmqc">
+    <meta name="keywords" content="Redis持久化的取舍和选择, Jiavg">
+    <meta name="description" content="Redis持久化的取舍和选择持久化的作用什么是持久化
+Redis所有数据保存在内存中, 对数据的更新异步的保存到磁盘上就是持久化.
+
+
+持久化的方式
+快照
+把某个状态的数据信息拍一张’照片’, 保存在磁盘上, 保存的是某个时刻的数据信息
+例">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -15,7 +20,7 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>RabbitMQ命令行与管控台 | Jiavg</title>
+    <title>Redis持久化的取舍和选择 | Jiavg</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/font-awesome.min.css">
@@ -262,13 +267,13 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
     <div class="container">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
                     <div class="description center-align post-title">
-                        RabbitMQ命令行与管控台
+                        Redis持久化的取舍和选择
                     </div>
                 </div>
             </div>
@@ -379,12 +384,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/RabbitMQ/" target="_blank">
-                                <span class="chip bg-color">RabbitMQ</span>
+                            <a href="/tags/Redis/" target="_blank">
+                                <span class="chip bg-color">Redis</span>
                             </a>
                         
-                            <a href="/tags/消息中间件/" target="_blank">
-                                <span class="chip bg-color">消息中间件</span>
+                            <a href="/tags/Redis持久化/" target="_blank">
+                                <span class="chip bg-color">Redis持久化</span>
                             </a>
                         
                     </div>
@@ -395,8 +400,8 @@
                     <div class="post-cate">
                         <i class="fa fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                消息中间件
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                Redis
                             </a>
                         
                     </div>
@@ -407,21 +412,21 @@
             <div class="post-info">
                 <div class="post-date info-break-policy">
                     <i class="fa fa-calendar-minus-o fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2019-09-02
+                    2020-04-18
                 </div>
 
                 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-file-word-o fa-fw"></i>文章字数:&nbsp;&nbsp;
-                        1,073
+                        2,877
                     </div>
                     
 
                     
                     <div class="info-break-policy">
                         <i class="fa fa-clock-o fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                        5 分
+                        12 分
                     </div>
                     
                 
@@ -437,126 +442,354 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="命令行与管控台-基础操作"><a href="#命令行与管控台-基础操作" class="headerlink" title="命令行与管控台-基础操作"></a>命令行与管控台-基础操作</h2><p>  <strong>启动应用</strong><br>  [root@Jiavg /]# rabbitmqctl start_app<br>  Starting node rabbit@Jiavg …</p>
-<p>  <strong>节点状态</strong></p>
-<pre><code>[root@Jiavg /]# rabbitmqctl status
-Status of node rabbit@Jiavg ...
-[{pid,24387},
- {running_applications,
-     [{rabbitmq_management,&quot;RabbitMQ Management Console&quot;,&quot;3.6.6&quot;},
-      {rabbitmq_management_agent,&quot;RabbitMQ Management Agent&quot;,&quot;3.6.6&quot;},
-      {rabbitmq_web_dispatch,&quot;RabbitMQ Web Dispatcher&quot;,&quot;3.6.6&quot;},
-      {rabbit,&quot;RabbitMQ&quot;,&quot;3.6.6&quot;},
-      {os_mon,&quot;CPO  CXC 138 46&quot;,&quot;2.4.1&quot;},
-      {amqp_client,&quot;RabbitMQ AMQP Client&quot;,&quot;3.6.6&quot;},
-      {rabbit_common,[],&quot;3.6.6&quot;},
-      {webmachine,&quot;webmachine&quot;,&quot;1.10.3&quot;},
-      {mochiweb,&quot;MochiMedia Web Server&quot;,&quot;2.13.1&quot;},
-      {mnesia,&quot;MNESIA  CXC 138 12&quot;,&quot;4.14&quot;},
-      {inets,&quot;INETS  CXC 138 49&quot;,&quot;6.3.2&quot;},
-      {ssl,&quot;Erlang/OTP SSL application&quot;,&quot;8.0.1&quot;},
-      {public_key,&quot;Public key infrastructure&quot;,&quot;1.2&quot;},
-      {xmerl,&quot;XML parser&quot;,&quot;1.3.11&quot;},
-      {crypto,&quot;CRYPTO&quot;,&quot;3.7&quot;},
-      {compiler,&quot;ERTS  CXC 138 10&quot;,&quot;7.0.1&quot;},
-      {asn1,&quot;The Erlang ASN1 compiler version 4.0.3&quot;,&quot;4.0.3&quot;},
-      {ranch,&quot;Socket acceptor pool for TCP protocols.&quot;,&quot;1.2.1&quot;},
-      {syntax_tools,&quot;Syntax tools&quot;,&quot;2.0&quot;},
-      {sasl,&quot;SASL  CXC 138 11&quot;,&quot;3.0&quot;},
-      {stdlib,&quot;ERTS  CXC 138 10&quot;,&quot;3.0.1&quot;},
-      {kernel,&quot;ERTS  CXC 138 10&quot;,&quot;5.0.1&quot;}]},
- {os,{unix,linux}},
- {erlang_version,
-     &quot;Erlang/OTP 19 [erts-8.0.3] [source] [64-bit] [smp:2:2] [async-threads:64] [hipe] [kernel-poll:true]\n&quot;},
- {memory,
-     [{total,55645528},
-      {connection_readers,0},
-      {connection_writers,0},
-      {connection_channels,0},
-      {connection_other,2832},
-      {queue_procs,2832},
-      {queue_slave_procs,0},
-      {plugins,770696},
-      {other_proc,18182848},
-      {mnesia,67616},
-      {mgmt_db,661496},
-      {msg_index,44080},
-      {other_ets,1430128},
-      {binary,29576},
-      {code,24640713},
-      {atom,1000625},
-      {other_system,8812086}]},
- {alarms,[]},
- {listeners,[{clustering,25672,&quot;::&quot;},{amqp,5672,&quot;::&quot;}]},
- {vm_memory_high_watermark,0.4},
- {vm_memory_limit,767174246},
- {disk_free_limit,50000000},
- {disk_free,20552192000},
- {file_descriptors,
-     [{total_limit,924},{total_used,2},{sockets_limit,829},{sockets_used,0}]},
- {processes,[{limit,1048576},{used,228}]},
- {run_queue,0},
- {uptime,80},
- {kernel,{net_ticktime,60}}]</code></pre><p>  <strong>关闭应用</strong><br>  [root@Jiavg /]# rabbitmqctl stop_app<br>  Stopping node rabbit@Jiavg …</p>
-<p>  注意:</p>
-<ul>
-<li><p>如果在关闭RabbitMQ管控台(即使用<em>rabbitmqctl stop_app</em>命令)后,重新启动管控台,可能会出现如下情况:</p>
-<pre><code>  [root@Jiavg /]# rabbitmqctl start_app   
-  Starting node rabbit@Jiavg ...
-  Error: unable to connect to node rabbit@Jiavg: nodedown
-
-  DIAGNOSTICS
-  ===========
-
-  attempted to contact: [rabbit@Jiavg]
-
-  rabbit@Jiavg:
-    * connected to epmd (port 4369) on Jiavg
-    * epmd reports: node &#39;rabbit&#39; not running at all
-                    no other nodes on Jiavg
-    * suggestion: start the node
-
-  current node details:
-  - node name: &#39;rabbitmq-cli-99@Jiavg&#39;
-  - home dir: /var/lib/rabbitmq
-  - cookie hash: aTORW4S5X/Uol6/P8PSLqw==
-
-  解决方案:
-  1.kill掉RabbitMQ所有进程
-  2.重启RabbitMQ服务
-  [root@Jiavg /]# rabbitmq-server start    
-                RabbitMQ 3.6.6. Copyright (C) 2007-2016 Pivotal Software, Inc.
-    ##  ##      Licensed under the MPL.  See http://www.rabbitmq.com/
-    ##  ##
-    ##########  Logs: /var/log/rabbitmq/rabbit@Jiavg.log
-    ######  ##        /var/log/rabbitmq/rabbit@Jiavg-sasl.log
-    ##########
-                Starting broker...
-   completed with 6 plugins.
-  3.重新运行rabbitmqctl start_app命令</code></pre></li>
+                <h1 id="Redis持久化的取舍和选择"><a href="#Redis持久化的取舍和选择" class="headerlink" title="Redis持久化的取舍和选择"></a>Redis持久化的取舍和选择</h1><h2 id="持久化的作用"><a href="#持久化的作用" class="headerlink" title="持久化的作用"></a>持久化的作用</h2><h3 id="什么是持久化"><a href="#什么是持久化" class="headerlink" title="什么是持久化"></a>什么是持久化</h3><ul>
+<li>Redis所有数据保存在内存中, 对数据的更新异步的保存到磁盘上就是持久化.</li>
 </ul>
-<p>  <strong>使用lsof命令查看RabbitMQ状态</strong><br>  lsof(list open files)是一个列出当前系统打开文件的工具。在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。因为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过lsof工具能够查看这个列表对系统监测以及排错将是很有帮助的。</p>
-<p>  [root@Jiavg /]# lsof -i:5672<br>  COMMAND    PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME<br>  beam.smp 24387 rabbitmq   53u  IPv6 139726      0t0  TCP *:amqp (LISTEN)</p>
-<p>  <strong>添加用户</strong><br>  <strong>rabbitmqctl add_user <em>username password</em></strong><br>  [root@Jiavg /]# rabbitmqctl add_user jiavg jiavg<br>  Creating user “jiavg” …</p>
-<p>  <strong>列出所有用户</strong><br>  <strong>rabbitmqctl list_users</strong><br>  [root@Jiavg /]# rabbitmqctl list_users<br>  Listing users …<br>  jiavg   []<br>  guest   [administrator]</p>
-<p>  <strong>修改密码</strong><br>  <strong>rabbitmqctl change_password <em>username newpassword</em></strong><br>  [root@Jiavg /]# rabbitmqctl change_password jiavg jiavg123<br>  Changing password for user “jiavg” ..</p>
-<p>  <strong>删除用户</strong><br>  <strong>rabbitmqctl delete_user <em>username</em></strong><br>  [root@Jiavg /]# rabbitmqctl delete_user jiavg<br>  Deleting user “jiavg” …</p>
-<p>  <strong>创建虚拟主机</strong><br>  <em>*rabbitmqctl add_vhost *vhostpath</em> **
-  [root@Jiavg /]# rabbitmqctl add_vhost /test<br>  Creating vhost “/test” …</p>
-<p>  <strong>列出所有虚拟主机</strong><br>  <strong>rabbitmqctl list_vhosts</strong><br>  [root@Jiavg /]# rabbitmqctl list_vhosts<br>  Listing vhosts …<br>  /test<br>  /</p>
-<p>  <strong>设置用户权限</strong><br>  <strong>rabbitmqctl set_permissions -p <em>vhostpath username “.</em>“ “.*” “.*”*</strong><br>  [root@Jiavg /]# rabbitmqctl set_permissions -p /test jiavg “.*” “.*” “.*”<br>  Setting permissions for user “jiavg” in vhost “/test” …</p>
-<p>  <strong>列出虚拟主机上所有权限</strong><br>  <strong>rabbitmqctl list_permissions -p <em>vhostpath</em></strong><br>  [root@Jiavg /]# rabbitmqctl list_permissions -p /test<br>  Listing permissions in vhost “/test” …<br>  jiavg   .*      .*      .*</p>
-<p>  <strong>清除用户权限</strong><br>  <strong>rabbitmqctl clear_permissions -p <em>vhostpath username</em></strong><br>  [root@Jiavg /]# rabbitmqctl clear_permissions -p /test jiavg<br>  Clearing permissions for user “jiavg” in vhost “/test” …</p>
-<p>  <strong>查看所有交换机信息</strong><br>  <strong>rabbitmqctl list_exchanges</strong><br>  [root@Jiavg /]# rabbitmqctl list_exchanges<br>  Listing exchanges …<br>          direct<br>  amq.fanout      fanout<br>  amq.headers     headers<br>  amq.rabbitmq.log        topic<br>  amq.direct      direct<br>  amq.match       headers<br>  amq.rabbitmq.trace      topic<br>  amq.topic       topic</p>
-<p>  <strong>查看所有队列信息</strong><br>  <strong>rabbitmqctl list_queues</strong><br>  [root@Jiavg /]# rabbitmqctl list_queues<br>  Listing queues …<br>  <em>注:此时没有队列</em></p>
-<p>  <strong>清除队列里的消息</strong><br>  <strong>rabbitmqctl -p <em>vhostpath</em> purge_queue <em>blue</em></strong></p>
-<h2 id="命令行与管控台-高级操作"><a href="#命令行与管控台-高级操作" class="headerlink" title="命令行与管控台-高级操作"></a>命令行与管控台-高级操作</h2><p>  <strong>移除所有数据,要在rabbitmqctl stop_app之后使用</strong><br>  <strong>rabbitmqctl reset</strong></p>
-<p>  <strong>组成集群命令</strong><br>  <strong>rabbitmqctl join_cluster <clusternode> [–ram]</clusternode></strong></p>
-<p>  <strong>查看集群状态</strong><br>  <strong>rabbitmqctl cluster_status</strong></p>
-<p>  <strong>修改集群节点的储存形式</strong><br>  <strong>rabbitmqctl change_cluster_node_type disc|ram</strong></p>
-<p>  <strong>忘记节点(摘除节点)</strong><br>  <strong>rabbitmqctl forget_cluster_node [–offline]</strong></p>
-<p>  <strong>修改节点名称</strong><br>  <strong>rabbitmqctl rename_cluster_node oldnode1 newnode1 [oldnode2] [newnode2…]</strong></p>
-<h2 id="管控台-Overview项预览"><a href="#管控台-Overview项预览" class="headerlink" title="管控台-Overview项预览"></a>管控台-Overview项预览</h2><p>  <img src="https://raw.githubusercontent.com/lylgjiavg/Blog-image/master/2019-8/2019-09-02_102428.jpg" alt></p>
+<p><img src="https://i.loli.net/2020/04/18/6z2tUorcJuKpdDn.jpg" alt="2020-04-18_231501"></p>
+<h3 id="持久化的方式"><a href="#持久化的方式" class="headerlink" title="持久化的方式"></a>持久化的方式</h3><ul>
+<li>快照<ul>
+<li>把某个状态的数据信息拍一张’照片’, 保存在磁盘上, 保存的是某个时刻的数据信息</li>
+<li>例: MySQL Dump, Redis RDB使用的是这种方式</li>
+</ul>
+</li>
+<li>写日志<ul>
+<li>数据库数据进行任何的更新, 将以写日志的方式保存. 当需要恢复时, 把日志信息重新’走一遍’就可恢复数据的状态.</li>
+<li>例: MySQL Biglog, Hbase Hlog, Redis AOF使用的是这种方式</li>
+</ul>
+</li>
+</ul>
+<h2 id="RDB"><a href="#RDB" class="headerlink" title="RDB"></a>RDB</h2><h3 id="什么是RDB"><a href="#什么是RDB" class="headerlink" title="什么是RDB"></a>什么是RDB</h3><ul>
+<li>redis数据保存在内存中, 当使用生成RDB的命令可以将redis内存中数据保存为磁盘上的RDB文件</li>
+<li>RDB文件可以用来做数据备份及数据恢复.</li>
+<li>RDB文件也是复制的媒介.(Redis主从复制)</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/18/Z8nTBHqUsA1iEgl.jpg" alt="2020-04-18_233327"></p>
+<h3 id="触发机制"><a href="#触发机制" class="headerlink" title="触发机制"></a>触发机制</h3><ul>
+<li>save (同步)</li>
+<li>bgsave (异步)</li>
+<li>自动 (某些条件达到时自动生成RDB文件)</li>
+</ul>
+<h4 id="save命令"><a href="#save命令" class="headerlink" title="save命令"></a>save命令</h4><ul>
+<li>save命令是一个同步的命令, 当数据量很大时可能造成阻塞.</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/18/AC4tFQeI25VfGoh.jpg" alt="2020-04-18_234056"></p>
+<ul>
+<li>文件策略: 执行命令时会把Redis内存中数据保存为一个临时的文件, 保存成功后删除旧的文件然后用新的文件代替之.</li>
+<li>复杂度: O(n)</li>
+</ul>
+<h4 id="bgsave命令"><a href="#bgsave命令" class="headerlink" title="bgsave命令"></a>bgsave命令</h4><ul>
+<li>bgsave命令是一个异步的命令, 当执行此命令时会利用redis的fork()函数生成一个子进程.</li>
+<li>fork()函数是非常快的, 但是极少情况下可能会出现慢的情况, 此时也有可能造成阻塞.</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/18/gDwPMJb6dqpaCz5.jpg" alt="2020-04-18_234728"></p>
+<ul>
+<li>文件策略和复杂度和save命令相同</li>
+</ul>
+<h4 id="save与bgsave"><a href="#save与bgsave" class="headerlink" title="save与bgsave"></a>save与bgsave</h4><p><img src="https://i.loli.net/2020/04/18/6kFMTjiX7BbLV15.jpg" alt="2020-04-18_235133"></p>
+<p>​    注: bgsave<code>不阻塞</code>客户端命令(不阻塞是带引号的, 因为fork()会发生阻塞, 但通常很短的时间)</p>
+<h4 id="自动生成RDB"><a href="#自动生成RDB" class="headerlink" title="自动生成RDB"></a>自动生成RDB</h4><ul>
+<li>Redis提供了一个配置使其自动生成RDB</li>
+<li>默认配置解释: 每900s 有1条改变|每300s 有10条改变|每60秒有10000条改变, 都会触发Redis自动生成RDB文件(内部使用bgsave命令).</li>
+<li>不是一种很好的方式, 写入时机不好控制(虽然能设置配置条件, 但无法满足实际需求).</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/18/2o8WbJ9LcQIT4vm.jpg" alt="2020-04-18_235623"></p>
+<h3 id="关于RDB配置"><a href="#关于RDB配置" class="headerlink" title="关于RDB配置"></a>关于RDB配置</h3><ul>
+<li>Redis默认关于RDB文件的配置</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 关于自动生成RDB文件的策略
+save 900 1
+save 300 10
+save 60 10000
+
+# 默认生成RDB文件名称 (包括执行save命令, bgsave命令, 自动生成RDB)
+dbfilename dump.rdb
+
+# 生成RDB文件位置
+dir ./
+
+# 在使用bgsave生成RDB文件出错时是否停止生成RDB文件
+stop-writes-on-bgsave-error yes
+
+# 生成的RDB文件是否采用压缩的格式
+rdbcompression yes
+
+# 是否对RDB文件进行校验和的检验
+rdbchecksum yes</code></pre>
+<ul>
+<li>最佳配置<ul>
+<li><code>dbfilename</code> 采用根据运行端口进行命令. (因为Redis是单线程, 所以通常一台机器会跑几个Redis进程, 通过这种命令方式, 避免各个进程之间的Redis生成的RDB文件造成覆写)</li>
+<li><code>dir</code> 选择一个大磁盘路径</li>
+<li><code>rdbcompression</code> 一般进行压缩, 方便进行主从复制</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/EhWeqoZc8FkSNXT.jpg" alt="2020-04-19_001049"></p>
+<h3 id="触发机制-不容忽视的方式"><a href="#触发机制-不容忽视的方式" class="headerlink" title="触发机制 - 不容忽视的方式"></a>触发机制 - 不容忽视的方式</h3><ul>
+<li><p>全量复制</p>
+<p>当进行主从复制时, Redis会自动生成一个RDB文件用于主从复制</p>
+</li>
+<li><p>debug reload</p>
+<p>当Redis使用debug方式进行重启时, 会生成一个RDB文件用于重启后的数据恢复</p>
+</li>
+<li><p>shutdown</p>
+<p>此命令有一个<code>-save</code>参数, 该参数会把Redis内存中的数据保存为RDB文件后进行关闭</p>
+</li>
+</ul>
+<h3 id="试验"><a href="#试验" class="headerlink" title="试验"></a>试验</h3><ul>
+<li>试验前配置</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">[root@localhost redis]# mkdir data
+[root@localhost redis]# mkdir config
+[root@localhost redis]# cp redis.conf ./config/redis-6379.conf
+[root@localhost redis]# pwd
+/usr/local/soft/redis
+[root@localhost redis]# vim ./config/redis-6379.conf
+
+# 修改redis-6379.conf文件的如下内容
+
+# ---------------------------#
+# 以守护进程的方式启动redis-server
+daemonize yes
+
+# 日志文件名
+logfile "6379.log"
+
+# 禁用掉自动生成RDB
+#save 900 1
+#save 300 10
+#save 60 10000
+
+# 生成的RDB文件名
+dbfilename dump-6379.rdb
+# ---------------------------#</code></pre>
+<h4 id="save阻塞"><a href="#save阻塞" class="headerlink" title="save阻塞"></a>save阻塞</h4><ul>
+<li>生成5000000条测试数据</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> debug populate 5000000
+OK
+(21.25s)
+127.0.0.1:6379> dbsize
+(integer) 5000000
+127.0.0.1:6379> info memory
+# Memory
+used_memory:627908040
+used_memory_human:598.82M
+used_memory_rss:647372800
+used_memory_peak:627908040
+used_memory_peak_human:598.82M
+used_memory_lua:36864
+mem_fragmentation_ratio:1.03
+mem_allocator:jemalloc-3.6.0
+</code></pre>
+<ul>
+<li>另开一个终端, 输入如下命令 (get hello在下一步再运行)</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">127.0.0.1:6379> set hello world
+OK
+127.0.0.1:6379> get hello</code></pre>
+<ul>
+<li>在本终端运行save命令, 然后在上一个终端运行get命令, 查看save命令是否阻塞</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 终端1
+127.0.0.1:6379> save
+OK
+(7.38s)
+
+# 终端2
+127.0.0.1:6379> get hello
+"world"
+(5.76s)</code></pre>
+<p>由上可见, save命令是一个阻塞命令.上诉情况在生产中是不可接受的</p>
+<ul>
+<li>查看生成的RDB文件</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">[root@localhost redis]# cd data/
+[root@localhost data]# ll
+总用量 129672
+-rw-r--r--. 1 root root      2306 4月  19 00:40 6379.log
+-rw-r--r--. 1 root root 132777813 4月  19 00:40 dump-6379.rdb</code></pre>
+<h4 id="bgsave-fork"><a href="#bgsave-fork" class="headerlink" title="bgsave fork"></a>bgsave fork</h4><ul>
+<li>验证bgsave非阻塞</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 在运行终端1的命令行立刻转到终端2运行命令
+# 终端1
+127.0.0.1:6379> bgsave
+Background saving started
+
+# 终端2
+127.0.0.1:6379> get hello
+"world"
+
+[root@localhost data]# tail 6379.log
+16995:M 19 Apr 00:46:04.613 * Background saving started by pid 17243
+17243:C 19 Apr 00:46:12.022 * DB saved on disk
+17243:C 19 Apr 00:46:12.024 * RDB: 8 MB of memory used by copy-on-write
+16995:M 19 Apr 00:46:12.035 * Background saving terminated with success</code></pre>
+<p>可见, bgsave命令不会阻塞redis-cli而影响其他命令的执行</p>
+<ul>
+<li>验证bgsave会fork一个子进程</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 在运行终端1的命令行立刻转到终端2运行命令
+# 终端1
+127.0.0.1:6379> bgsave
+Background saving started
+
+# 终端2
+[root@localhost data]# ps -aux | grep redis- | grep -v "redis-cli" | grep -v "grep"
+root      16995  2.1 16.3 763492 632228 ?       Ssl  00:28   0:30 redis-server *:6379
+root      17384 96.6 16.3 763496 631256 ?       R    00:51   0:02 redis-rdb-bgsave *:6379
+[root@localhost data]# ps -aux | grep redis- | grep -v "redis-cli" | grep -v "grep"
+root      16995  2.1 16.3 763492 632228 ?       Ssl  00:28   0:30 redis-server *:6379</code></pre>
+<p>可见, 执行bgsave命令是, Redis会fork一个子进程进行保存RDB文件的操作</p>
+<ul>
+<li>验证Redis生成RDB的文件策略</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell"># 在运行终端1的命令行立刻转到终端2运行命令
+# 终端1
+127.0.0.1:6379> bgsave
+Background saving started
+
+# 终端2
+[root@localhost data]# ll
+总用量 260680
+-rw-r--r--. 1 root root      2895 4月  19 00:55 6379.log
+-rw-r--r--. 1 root root 132777813 4月  19 00:51 dump-6379.rdb
+-rw-r--r--. 1 root root 121151488 4月  19 00:55 temp-17444.rdb
+[root@localhost data]# ll
+总用量 129672
+-rw-r--r--. 1 root root      3086 4月  19 00:55 6379.log
+-rw-r--r--. 1 root root 132777813 4月  19 00:55 dump-6379.rdb
+</code></pre>
+<p>可见, Redis生成RDB的文件策略是执行命令时会把Redis内存中数据保存为一个临时的文件, 保存成功后删除旧的文件然后用新的文件代替之.</p>
+<h4 id="真的自动"><a href="#真的自动" class="headerlink" title="真的自动?"></a>真的自动?</h4><ul>
+<li>设置配置文件如下内容, 并执行如下命令</li>
+</ul>
+<pre class=" language-shell"><code class="language-shell">save 60 5</code></pre>
+<pre><code>[root@localhost data]# vim ../config/redis-6379.conf 
+[root@localhost data]# redis-server ../config/redis-6379.conf 
+[root@localhost data]# redis-cli 
+127.0.0.1:6379&gt; dbsize
+(integer) 0
+127.0.0.1:6379&gt; set hello world
+OK
+127.0.0.1:6379&gt; set a b
+OK
+127.0.0.1:6379&gt; set c d
+OK
+127.0.0.1:6379&gt; set e f
+OK
+127.0.0.1:6379&gt; set g h
+OK
+127.0.0.1:6379&gt; set i j
+OK
+127.0.0.1:6379&gt; exit
+[root@localhost data]# ll
+总用量 12
+-rw-r--r--. 1 root root 5914 4月  19 01:08 6379.log
+-rw-r--r--. 1 root root   33 4月  19 01:08 dump-6379.rdb
+[root@localhost data]# tail 6379.log 
+17668:M 19 Apr 01:08:36.050 * 5 changes in 60 seconds. Saving...
+17668:M 19 Apr 01:08:36.052 * Background saving started by pid 17686
+17686:C 19 Apr 01:08:36.071 * DB saved on disk
+17686:C 19 Apr 01:08:36.072 * RDB: 4 MB of memory used by copy-on-write
+17668:M 19 Apr 01:08:36.152 * Background saving terminated with success
+17668:M 19 Apr 01:09:37.041 * 5 changes in 60 seconds. Saving...
+17668:M 19 Apr 01:09:37.043 * Background saving started by pid 17708
+17708:C 19 Apr 01:09:37.044 * DB saved on disk
+17708:C 19 Apr 01:09:37.045 * RDB: 4 MB of memory used by copy-on-write
+17668:M 19 Apr 01:09:37.144 * Background saving terminated with success
+</code></pre><p>可见, 在满足RDB自动生成配置后, redis自动生成了RDB文件</p>
+<h4 id="RDB长啥样"><a href="#RDB长啥样" class="headerlink" title="RDB长啥样?"></a>RDB长啥样?</h4><pre class=" language-shell"><code class="language-shell">[root@localhost data]# cat dump-6379.rdb 
+REDIS0006�ijhelloworldcdabefgh���9�ɺ�</code></pre>
+<h3 id="RDB总结"><a href="#RDB总结" class="headerlink" title="RDB总结"></a>RDB总结</h3><ul>
+<li>RDB是Redis内存到硬盘的快照, 用于持久化</li>
+<li>save通常会阻塞Redis</li>
+<li>bgsave不会阻塞Redis, 但会fork新进程</li>
+<li>save自动配置满足任一就会被执行</li>
+<li>有些RDB触发机制不容忽视</li>
+</ul>
+<h2 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h2><h3 id="RDB有什么问题"><a href="#RDB有什么问题" class="headerlink" title="RDB有什么问题"></a>RDB有什么问题</h3><h4 id="耗时-耗性能"><a href="#耗时-耗性能" class="headerlink" title="耗时, 耗性能"></a>耗时, 耗性能</h4><p><img src="https://i.loli.net/2020/04/19/54npT3MaIAmPoyd.jpg" alt="2020-04-19_011806"></p>
+<h4 id="不可控-丢失数据"><a href="#不可控-丢失数据" class="headerlink" title="不可控, 丢失数据"></a>不可控, 丢失数据</h4><p><img src="https://i.loli.net/2020/04/19/KCIyh15EukFozd3.jpg" alt="2020-04-19_011920"></p>
+<h3 id="什么是AOF"><a href="#什么是AOF" class="headerlink" title="什么是AOF"></a>什么是AOF</h3><h4 id="AOF运行原理-创建"><a href="#AOF运行原理-创建" class="headerlink" title="AOF运行原理 - 创建"></a>AOF运行原理 - 创建</h4><p><img src="https://i.loli.net/2020/04/19/pslMfFuVGdKQ9v6.jpg" alt="2020-04-19_012104"></p>
+<p>注: 上述AOF存储内容只是为了演示方便, 实际存储内容并不是那样</p>
+<h4 id="AOF运行原理-恢复"><a href="#AOF运行原理-恢复" class="headerlink" title="AOF运行原理 - 恢复"></a>AOF运行原理 - 恢复</h4><p><img src="https://i.loli.net/2020/04/19/95cZVS6rp1xWoyA.jpg" alt="2020-04-19_012256"></p>
+<h3 id="AOF的三种策略"><a href="#AOF的三种策略" class="headerlink" title="AOF的三种策略"></a>AOF的三种策略</h3><h4 id="always"><a href="#always" class="headerlink" title="always"></a>always</h4><ul>
+<li>每条命令都会触发Redis的fsync到硬盘, 这样就不会有数据丢失</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/9V8oO5d2MB1QNGC.jpg" alt="2020-04-19_012453"></p>
+<h4 id="everysec-默认"><a href="#everysec-默认" class="headerlink" title="everysec (默认)"></a>everysec (默认)</h4><ul>
+<li>每秒触发Redis的fsync到硬盘, 这样可以起到保护硬盘的作用</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/B5hWVHmwrKAio98.jpg" alt="2020-04-19_012815"></p>
+<h4 id="no"><a href="#no" class="headerlink" title="no"></a>no</h4><ul>
+<li>操作系统决定触发Redis的fsync到硬盘</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/FZ1BX6Q7uiGjKaW.jpg" alt="2020-04-19_012920"></p>
+<h3 id="三种策略选择"><a href="#三种策略选择" class="headerlink" title="三种策略选择"></a>三种策略选择</h3><ul>
+<li>一般使用默认的everysec (具体根据实际应用场景)</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/4GVa6w5gpsPANXC.jpg" alt="2020-04-19_013225"></p>
+<h3 id="AOF重写"><a href="#AOF重写" class="headerlink" title="AOF重写"></a>AOF重写</h3><ul>
+<li>AOF重写就是把过期的, 没有用的, 重复的, 可以优化的命令化简, 使得AOF文件变小</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/BM6CbgmhEnZ9GzN.jpg" alt="2020-04-19_013617"></p>
+<h4 id="AOF重写作用"><a href="#AOF重写作用" class="headerlink" title="AOF重写作用"></a>AOF重写作用</h4><ul>
+<li>减少磁盘占用量</li>
+<li>加速恢复速度</li>
+</ul>
+<h4 id="AOF重写实现两种方式"><a href="#AOF重写实现两种方式" class="headerlink" title="AOF重写实现两种方式"></a>AOF重写实现两种方式</h4><ul>
+<li>bgrewriteaof<ul>
+<li>和bgsave类似, fork一个子进程进行重写</li>
+</ul>
+</li>
+<li>AOF重写配置<ul>
+<li>实现自动重写</li>
+</ul>
+</li>
+</ul>
+<h5 id="bgrewriteaof"><a href="#bgrewriteaof" class="headerlink" title="bgrewriteaof"></a>bgrewriteaof</h5><p><img src="https://i.loli.net/2020/04/19/ngti2mkXCO1yLIF.jpg" alt="2020-04-19_014257"></p>
+<h5 id="AOF重写配置"><a href="#AOF重写配置" class="headerlink" title="AOF重写配置"></a>AOF重写配置</h5><ul>
+<li><code>aof-load-truncated</code> AOF有问题时(突然宕机或其他条件造成的),在重启加载AOF文件时是否忽略这部分错误.</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/UYFAo8ugS5TRNsy.jpg" alt="2020-04-19_014550"></p>
+<ul>
+<li>自动触发时机</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/3OngTvs5opltzuR.jpg" alt="2020-04-19_014630"></p>
+<h4 id="AOF重写流程"><a href="#AOF重写流程" class="headerlink" title="AOF重写流程"></a>AOF重写流程</h4><ul>
+<li>3-1阶段表示在执行AOF重写期间redis进行的写操作依然会通过aof_buf写入到旧的AOF文件中</li>
+<li>3-2阶段表示在执行AOF重写期间redis进行的写操作还会通过aof_rewrite_buf写入到新的AOF文件中,在完成AOF文件重写后, 在5-3阶段新的AOF文件会替换掉旧的AOF文件</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/gLQ6Pj5W4YaJBIK.jpg" alt="2020-04-19_014836"></p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><ul>
+<li><code>appendonly</code> 开启AOF重写</li>
+<li><code>appendfilename</code> AOF文件名</li>
+<li><code>appendfsync</code> AOF重写策略</li>
+<li><code>dir</code> 生成的RDB, AOF文件及日志目录</li>
+<li><code>no-appendfsync-on-rewrite</code> AOF重写时是否进行AOF的append操作, 即上图的3-1操作,(设置为no可能会在AOF重写失败时丢失AOF重写时间的这段数据, 一般为了性能设置为yes, 即不进行append操作)</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/WEbqH3JBcOKZ7Rp.jpg" alt="2020-04-19_015432"></p>
+<h2 id="RDB和AOF的抉择"><a href="#RDB和AOF的抉择" class="headerlink" title="RDB和AOF的抉择"></a>RDB和AOF的抉择</h2><h3 id="RDB与AOF"><a href="#RDB与AOF" class="headerlink" title="RDB与AOF"></a>RDB与AOF</h3><ul>
+<li>启动优先级: 当redis宕机后, 优先使用AOF文件进行数据恢复</li>
+<li>轻重: 操作的轻重, RDB需全部数据进行持久化, 而AOF则是增量数据持久化</li>
+</ul>
+<p><img src="https://i.loli.net/2020/04/19/TCo7KWp8MgvnReX.jpg" alt="2020-04-19_020851"></p>
+<h3 id="RDB”最佳策略”"><a href="#RDB”最佳策略”" class="headerlink" title="RDB”最佳策略”"></a>RDB”最佳策略”</h3><ul>
+<li>关 (其实是永远关不掉的, 因为主从复制需要进行全量复制, 需要进行RDB操作)</li>
+<li>集中管理 (数据备份很有作用)</li>
+<li>主从, 从开 (即使是从节点, RDB操作粒度也不要设置过小)</li>
+</ul>
+<h3 id="AOF最佳策略"><a href="#AOF最佳策略" class="headerlink" title="AOF最佳策略"></a>AOF最佳策略</h3><ul>
+<li>开 : 缓存和存储</li>
+<li>AOF重写集中管理 (fork会占用CPU, 内存, 故在进行AOF重写时要注意不要在Redis单机多部署时集中进行重写, 而要集中管理)</li>
+<li>everysec</li>
+</ul>
+<h3 id="最佳策略"><a href="#最佳策略" class="headerlink" title="最佳策略"></a>最佳策略</h3><ul>
+<li>小分片 使用maxmemory设置最大内存对Redis进行管理, fork, RDB传输都会产生较小的开销 (缺点是分布式情况下产生更多的redis进程, CPU可能占用更多一些)</li>
+<li>缓存或者存储</li>
+<li>监控 (硬盘, 内存, 负载, 网络)</li>
+<li>足够的内存 (不要把全部内存分配给Redis, 否则进行fork之类的操作会造成内存错误)</li>
+</ul>
 
             </div>
             <hr/>
@@ -715,9 +948,9 @@ Status of node rabbit@Jiavg ...
             <br/>
             <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text"
                   property="dct:title" rel="dct:type">
-                    《RabbitMQ命令行与管控台》
+                    《Redis持久化的取舍和选择》
                 </span> 由
-            <a xmlns:cc="http://creativecommons.org/ns#" href="/2019/09/02/Rabbitmq/RabbitMQ02/" property="cc:attributionName"
+            <a xmlns:cc="http://creativecommons.org/ns#" href="/2020/04/18/Redis/第5章-Redis持久化的取舍和选择/" property="cc:attributionName"
                rel="cc:attributionURL">
                 Jiavg
             </a> 采用
@@ -779,50 +1012,52 @@ Status of node rabbit@Jiavg ...
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6 overflow-policy" data-aos="fade-up">
+        <div class="article col s12 m6 overflow-policy" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fa fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="fa fa-dot-circle-o"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2019/09/02/Rabbitmq/RabbitMQ03/">
+                <a href="/2020/04/18/Redis/第5章-Redis持久化的取舍和选择/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="RabbitMQ快速入门">
+                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="Redis持久化的取舍和选择">
                         
-                        <span class="card-title">RabbitMQ快速入门</span>
+                        <span class="card-title">Redis持久化的取舍和选择</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ快速入门
+                            Redis系列(五)
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-02
-                        </span>
+                            <span class="publish-date">
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-18
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                    消息中间件
+                            <a href="/categories/Redis/" class="post-category" target="_blank">
+                                    Redis
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RabbitMQ/" target="_blank">
-                        <span class="chip bg-color">RabbitMQ</span>
+                    <a href="/tags/Redis/" target="_blank">
+                        <span class="chip bg-color">Redis</span>
                     </a>
                     
-                    <a href="/tags/消息中间件/" target="_blank">
-                        <span class="chip bg-color">消息中间件</span>
+                    <a href="/tags/Redis持久化/" target="_blank">
+                        <span class="chip bg-color">Redis持久化</span>
                     </a>
                     
                 </div>
@@ -836,31 +1071,31 @@ Status of node rabbit@Jiavg ...
                 下一篇&nbsp;<i class="fa fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/09/01/Rabbitmq/RabbitMQ安装01/">
+                <a href="/2020/04/18/SQL/2.SQL-索引的使用原则/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="RabbitMQ安装及基本设置">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="EXPLAIN用法和结果分析">
                         
-                        <span class="card-title">RabbitMQ安装及基本设置</span>
+                        <span class="card-title">EXPLAIN用法和结果分析</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RabbitMQ安装及基本设置
+                            SQL系列(二)
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="fa fa-clock-o fa-fw icon-date"></i>2019-09-01
+                                <i class="fa fa-clock-o fa-fw icon-date"></i>2020-04-18
                             </span>
                         <span class="publish-author">
                             
                             <i class="fa fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/消息中间件/" class="post-category" target="_blank">
-                                    消息中间件
+                            <a href="/categories/SQL/" class="post-category" target="_blank">
+                                    SQL
                                 </a>
                             
                             
@@ -870,12 +1105,12 @@ Status of node rabbit@Jiavg ...
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/RabbitMQ/" target="_blank">
-                        <span class="chip bg-color">RabbitMQ</span>
+                    <a href="/tags/SQL/" target="_blank">
+                        <span class="chip bg-color">SQL</span>
                     </a>
                     
-                    <a href="/tags/消息中间件/" target="_blank">
-                        <span class="chip bg-color">消息中间件</span>
+                    <a href="/tags/SQL索引/" target="_blank">
+                        <span class="chip bg-color">SQL索引</span>
                     </a>
                     
                 </div>

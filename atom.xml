@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://lylgjiavg.github.io/"/>
-  <updated>2020-04-17T17:30:03.770Z</updated>
+  <updated>2020-04-18T18:25:53.894Z</updated>
   <id>https://lylgjiavg.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis持久化的取舍和选择</title>
+    <link href="https://lylgjiavg.github.io/2020/04/18/Redis/%E7%AC%AC5%E7%AB%A0-Redis%E6%8C%81%E4%B9%85%E5%8C%96%E7%9A%84%E5%8F%96%E8%88%8D%E5%92%8C%E9%80%89%E6%8B%A9/"/>
+    <id>https://lylgjiavg.github.io/2020/04/18/Redis/第5章-Redis持久化的取舍和选择/</id>
+    <published>2020-04-18T15:10:51.000Z</published>
+    <updated>2020-04-18T18:25:53.894Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;Redis持久化的取舍和选择&quot;&gt;&lt;a href=&quot;#Redis持久化的取舍和选择&quot; class=&quot;headerlink&quot; title=&quot;Redis持久化的取舍和选择&quot;&gt;&lt;/a&gt;Redis持久化的取舍和选择&lt;/h1&gt;&lt;h2 id=&quot;持久化的作用&quot;&gt;&lt;a
+        
+      
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/categories/Redis/"/>
+    
+    
+      <category term="Redis" scheme="https://lylgjiavg.github.io/tags/Redis/"/>
+    
+      <category term="Redis持久化" scheme="https://lylgjiavg.github.io/tags/Redis%E6%8C%81%E4%B9%85%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>EXPLAIN用法和结果分析</title>
@@ -539,34 +567,6 @@
       <category term="ElasticSearch" scheme="https://lylgjiavg.github.io/tags/ElasticSearch/"/>
     
       <category term="Kibana" scheme="https://lylgjiavg.github.io/tags/Kibana/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>SpringBoot Cache初体验</title>
-    <link href="https://lylgjiavg.github.io/2019/10/18/SpringBoot%E7%BC%93%E5%AD%98%E5%88%9D%E4%BD%93%E9%AA%8C/"/>
-    <id>https://lylgjiavg.github.io/2019/10/18/SpringBoot缓存初体验/</id>
-    <published>2019-10-17T16:00:00.000Z</published>
-    <updated>2019-10-18T15:56:54.156Z</updated>
-    
-    <summary type="html">
-    
-      
-      
-        
-        
-          &lt;h2 id=&quot;SpringBoot-Cache初体验&quot;&gt;&lt;a href=&quot;#SpringBoot-Cache初体验&quot; class=&quot;headerlink&quot; title=&quot;SpringBoot Cache初体验&quot;&gt;&lt;/a&gt;SpringBoot Cache初体验&lt;/h2&gt;&lt;h3
-        
-      
-    
-    </summary>
-    
-      <category term="SpringBoot" scheme="https://lylgjiavg.github.io/categories/SpringBoot/"/>
-    
-    
-      <category term="SpringBoot" scheme="https://lylgjiavg.github.io/tags/SpringBoot/"/>
-    
-      <category term="Cache" scheme="https://lylgjiavg.github.io/tags/Cache/"/>
     
   </entry>
   
